@@ -11,6 +11,7 @@ import com.hjq.widget.view.SwitchButton;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.TitleBarFragment;
 import com.sgd.tjlb.zhxf.entity.AppConfigBean;
+import com.sgd.tjlb.zhxf.entity.UserInfo;
 import com.sgd.tjlb.zhxf.entity.VersionInfoBean;
 import com.sgd.tjlb.zhxf.helper.DialogHelper;
 import com.sgd.tjlb.zhxf.helper.MMKVHelper;
@@ -22,6 +23,7 @@ import com.sgd.tjlb.zhxf.ui.activity.CommunicationFlowActivity;
 import com.sgd.tjlb.zhxf.ui.activity.MineEquipmentActivity;
 import com.sgd.tjlb.zhxf.ui.activity.MyBankActivity;
 import com.sgd.tjlb.zhxf.ui.activity.MyInsuranceActivity;
+import com.sgd.tjlb.zhxf.ui.activity.user.PasswordResetActivity;
 import com.sgd.tjlb.zhxf.ui.activity.user.PersonalDataActivity;
 import com.sgd.tjlb.zhxf.ui.activity.StoreDataActivity;
 import com.sgd.tjlb.zhxf.ui.activity.func.FuncActivity;
@@ -39,19 +41,17 @@ public final class MineFragment extends TitleBarFragment<HomeActivity>
     private LinearLayout llUserdata;//用户信息
     private ImageView ivUserhead;//用户头像
     private TextView tvUsername;//用户名
-    private SettingBar sbStore;//门店信息
-    private SettingBar sbContractmanagement;//合同管理
     private SettingBar sbMyservice;//我的客服
     private SettingBar sbAboutus;//关于我们
     private SettingBar sbPrivacy;//检查更新
-    private TextView tvBtn;//检查更新
-    private TextView tvMyEquipment;//我的设备
-    private TextView tvMyInsurance;//我的保险
     private SettingBar sbPersonal;//个人信息
-    private SettingBar sbAgreement;//个人信息
-    private SettingBar sbBank;//我的银行
+    private SettingBar sbAgreement;//隐私协议
+    private SettingBar sbConstruction;//施单记录
+    private SettingBar sbUpdatepwd;//修改面
 
     private VersionInfoBean mVersionInfo;
+
+    private UserInfo mSelef;
 
     public static MineFragment newInstance() {
         return new MineFragment();
@@ -69,16 +69,13 @@ public final class MineFragment extends TitleBarFragment<HomeActivity>
         llUserdata = (LinearLayout) findViewById(R.id.ll_btn_main_userdata);
         ivUserhead = (ImageView) findViewById(R.id.iv_main_userhead);
         tvUsername = (TextView) findViewById(R.id.tv_main_username);
-        sbStore = (SettingBar) findViewById(R.id.sb_btn_main_store);
-        sbContractmanagement = (SettingBar) findViewById(R.id.sb_btn_main_contractmanagement);
         sbMyservice = (SettingBar) findViewById(R.id.sb_btn_main_myservice);
         sbAboutus = (SettingBar) findViewById(R.id.sb_btn_main_aboutus);
         sbPrivacy = (SettingBar) findViewById(R.id.sb_btn_main_privacy);
-        tvMyEquipment = (TextView) findViewById(R.id.tv_btn_main_myequipment);
-        tvMyInsurance = (TextView) findViewById(R.id.tv_btn_main_myinsurance);
         sbPersonal = (SettingBar) findViewById(R.id.sb_btn_main_personal);
         sbAgreement = (SettingBar) findViewById(R.id.sb_btn_main_agreement);
-        sbBank = (SettingBar) findViewById(R.id.sb_btn_main_bank);
+        sbConstruction = (SettingBar) findViewById(R.id.sb_btn_main_construction);
+        sbUpdatepwd = (SettingBar) findViewById(R.id.sb_btn_main_updatepwd);
 
         initListener();
 
@@ -86,14 +83,9 @@ public final class MineFragment extends TitleBarFragment<HomeActivity>
 
     private void initListener() {
 
-        llUserdata.setOnClickListener(view -> startActivity(StoreDataActivity.class));
+//        llUserdata.setOnClickListener(view -> startActivity(StoreDataActivity.class));
         //个人信息
         sbPersonal.setOnClickListener(view -> startActivity(PersonalDataActivity.class));
-        //门店信息
-        sbStore.setOnClickListener(view -> startActivity(StoreDataActivity.class));
-        //合同管理
-//        sbContractmanagement.setOnClickListener(view -> startActivity(ContractManagementActivity.class));
-        sbContractmanagement.setOnClickListener(view -> CommunicationFlowActivity.start(getContext()));
         //隐私协议
         sbAgreement.setOnClickListener(view ->
 //                BrowserActivity.start(getContext(), "https://github.com/getActivity/Donate")
@@ -107,14 +99,6 @@ public final class MineFragment extends TitleBarFragment<HomeActivity>
 
         //我的客服
         sbMyservice.setOnClickListener(view -> DialogHelper.getInstance().showCallDialog(getContext(), appConfigBean.getApp_tel()));
-        //我的保险
-        tvMyInsurance.setOnClickListener(view -> startActivity(MyInsuranceActivity.class));
-        //我的银行
-        sbBank.setOnClickListener(view -> MyBankActivity.start(getContext()));
-        //我的设备
-        tvMyEquipment.setOnClickListener(view ->
-                MineEquipmentActivity.start(getContext())
-        );
 
         //框架活动
         tv_btn.setOnClickListener(v -> {
@@ -122,6 +106,12 @@ public final class MineFragment extends TitleBarFragment<HomeActivity>
         });
 
         sbPrivacy.setOnClickListener(v -> findAppVersion());
+
+        //施单记录
+//        sbConstruction.setOnClickListener(v ->);
+        //修改密码
+        sbUpdatepwd.setOnClickListener(v ->
+                PasswordResetActivity.start(getContext(), mSelef.getTel(), ""));
     }
 
     //检查更新
@@ -145,6 +135,7 @@ public final class MineFragment extends TitleBarFragment<HomeActivity>
 
     @Override
     protected void initData() {
+        mSelef = MMKVHelper.getInstance().getUserInfo();
 
     }
 

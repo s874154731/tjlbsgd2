@@ -281,6 +281,7 @@
     <string name="title_main_myequipment">我的设备</string>
     <string name="title_main_myinsurance">我的流量</string>
     <string name="title_main_mybank">我的银行</string>
+    <string name="title_main_construction">施单记录</string>
 
     <!--用户信息-->
     <string name="text_update_pwd_phonenum">手机号：00000000000</string>
@@ -375,5 +376,15 @@
     <string name="text_tip_bank_no">卡号</string>
     <string name="text_tip_add_bank_no">添加银行卡</string>
     <string name="text_tip_update_bank_no">修改银行卡</string>
+
+    <string name="text_home_ordernum">施工单：共（0）个</string>
+
+    <!--首页-->
+    <string name="text_home_storename">门店名称</string>
+    <string name="text_home_ordertype">安装</string>
+    <string name="text_home_storeaddress">地址</string>
+    <string name="btn_home_acceptorder">接单</string>
+    <!--手机号-->
+    <string name="text_main_phonenum">00000000000</string>
 
 </resources>

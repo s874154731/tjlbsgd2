@@ -21,7 +21,7 @@
                 android:id="@+id/ll_btn_main_userdata"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_30"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingVertical="@dimen/dp_20"
@@ -30,79 +30,26 @@
 
                 <ImageView
                     android:id="@+id/iv_main_userhead"
-                    android:layout_width="@dimen/dp_20"
-                    android:layout_height="@dimen/dp_20"
+                    android:layout_width="20dp"
+                    android:layout_height="22dp"
                     android:layout_marginStart="@dimen/dp_30"
                     android:layout_marginEnd="@dimen/dp_10"
-                    android:src="@drawable/avatar_placeholder_ic" />
+                    android:src="@mipmap/icon_main_phone" />
 
                 <TextView
                     android:id="@+id/tv_main_username"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/title_main_store"
+                    android:text="@string/text_main_phonenum"
                     android:textColor="@color/black33333"
                     android:textSize="@dimen/sp_16" />
 
                 <ImageView
                     android:layout_width="@dimen/dp_30"
                     android:layout_height="@dimen/dp_30"
-                    android:src="@mipmap/img_ioc_break_right_enter" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_mine_ad"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_100"
-                android:layout_marginHorizontal="@dimen/dp_10"
-                android:background="@drawable/bg_white_radius_8dp_top"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_btn_main_userdata">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/bg_fj_3" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dp_10"
-                android:background="@drawable/bg_white_radius_8dp_bottom"
-                android:orientation="horizontal"
-                android:paddingVertical="@dimen/dp_10"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_mine_ad">
-
-                <TextView
-                    android:id="@+id/tv_btn_main_myequipment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/img_mine_equipment"
-                    android:drawablePadding="@dimen/dp_10"
-                    android:gravity="center"
-                    android:text="@string/title_main_myequipment"
-                    android:textSize="@dimen/sp_14" />
-
-                <TextView
-                    android:id="@+id/tv_btn_main_myinsurance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/img_mine_insurance"
-                    android:drawablePadding="@dimen/dp_10"
-                    android:gravity="center"
-                    android:text="@string/title_main_myinsurance"
-                    android:textSize="@dimen/sp_14" />
+                    android:src="@mipmap/img_ioc_break_right_enter"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -116,7 +63,7 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_3">
+                app:layout_constraintTop_toBottomOf="@id/ll_btn_main_userdata">
 
                 <com.hjq.widget.layout.SettingBar
                     android:id="@+id/sb_btn_main_personal"
@@ -124,45 +71,33 @@
                     android:layout_height="@dimen/dp_48"
                     android:clickable="true"
                     android:focusable="true"
-                    app:bar_leftTextSize="@dimen/sp_14"
+                    android:visibility="gone"
                     app:bar_leftDrawable="@mipmap/img_ioc_main_personal"
                     app:bar_leftDrawableSize="@dimen/dp_20"
                     app:bar_leftText="@string/personal_data_title"
-                    app:bar_rightDrawable="@drawable/arrows_right_ic" />
-
-                <com.hjq.widget.layout.SettingBar
-                    android:id="@+id/sb_btn_main_store"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_48"
-                    android:clickable="true"
-                    android:focusable="true"
                     app:bar_leftTextSize="@dimen/sp_14"
-                    app:bar_leftDrawable="@mipmap/img_ioc_main_store"
-                    app:bar_leftDrawableSize="@dimen/dp_20"
-                    app:bar_leftText="@string/title_main_store"
                     app:bar_rightDrawable="@drawable/arrows_right_ic" />
 
                 <com.hjq.widget.layout.SettingBar
-                    android:id="@+id/sb_btn_main_contractmanagement"
+                    android:id="@+id/sb_btn_main_updatepwd"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_48"
                     android:clickable="true"
                     android:focusable="true"
-                    app:bar_leftTextSize="@dimen/sp_14"
-                    app:bar_leftDrawable="@mipmap/img_ioc_main_contract"
-                    app:bar_leftDrawableSize="@dimen/dp_20"
-                    app:bar_leftText="@string/title_main_contractmanagement"
-                    app:bar_rightDrawable="@drawable/arrows_right_ic" />
-
-                <com.hjq.widget.layout.SettingBar
-                    android:id="@+id/sb_btn_main_bank"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_48"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:bar_leftDrawable="@mipmap/img_ioc_mybank"
+                    app:bar_leftDrawable="@mipmap/icon_mine_setting_password"
                     app:bar_leftDrawableSize="@dimen/dp_18"
-                    app:bar_leftText="@string/title_main_mybank"
+                    app:bar_leftText="@string/setting_password"
+                    app:bar_rightDrawable="@drawable/arrows_right_ic" />
+
+                <com.hjq.widget.layout.SettingBar
+                    android:id="@+id/sb_btn_main_construction"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:bar_leftDrawable="@mipmap/icon_mine_construction"
+                    app:bar_leftDrawableSize="@dimen/dp_18"
+                    app:bar_leftText="@string/title_main_construction"
                     app:bar_rightDrawable="@drawable/arrows_right_ic" />
 
                 <com.hjq.widget.layout.SettingBar
@@ -171,10 +106,11 @@
                     android:layout_height="@dimen/dp_48"
                     android:clickable="true"
                     android:focusable="true"
-                    app:bar_leftTextSize="@dimen/sp_14"
+                    android:visibility="gone"
                     app:bar_leftDrawable="@mipmap/img_ioc_main_service"
                     app:bar_leftDrawableSize="@dimen/dp_17"
                     app:bar_leftText="@string/title_main_myservice"
+                    app:bar_leftTextSize="@dimen/sp_14"
                     app:bar_rightDrawable="@drawable/arrows_right_ic" />
 
                 <com.hjq.widget.layout.SettingBar
@@ -183,10 +119,11 @@
                     android:layout_height="@dimen/dp_48"
                     android:clickable="true"
                     android:focusable="true"
-                    app:bar_leftTextSize="@dimen/sp_14"
+                    android:visibility="gone"
                     app:bar_leftDrawable="@mipmap/img_ioc_main_aboutus"
                     app:bar_leftDrawableSize="@dimen/dp_18"
                     app:bar_leftText="@string/title_main_aboutus"
+                    app:bar_leftTextSize="@dimen/sp_14"
                     app:bar_rightDrawable="@drawable/arrows_right_ic" />
 
                 <com.hjq.widget.layout.SettingBar
@@ -195,10 +132,11 @@
                     android:layout_height="@dimen/dp_48"
                     android:clickable="true"
                     android:focusable="true"
-                    app:bar_leftTextSize="@dimen/sp_14"
+                    android:visibility="gone"
                     app:bar_leftDrawable="@mipmap/img_ioc_main_agreement"
                     app:bar_leftDrawableSize="@dimen/dp_18"
                     app:bar_leftText="@string/setting_agreement"
+                    app:bar_leftTextSize="@dimen/sp_14"
                     app:bar_rightDrawable="@drawable/arrows_right_ic" />
 
                 <com.hjq.widget.layout.SettingBar
@@ -207,10 +145,10 @@
                     android:layout_height="@dimen/dp_48"
                     android:clickable="true"
                     android:focusable="true"
-                    app:bar_leftTextSize="@dimen/sp_14"
                     app:bar_leftDrawable="@mipmap/img_ioc_checkupdates"
                     app:bar_leftDrawableSize="@dimen/dp_20"
                     app:bar_leftText="@string/title_main_checkupdates"
+                    app:bar_leftTextSize="@dimen/sp_14"
                     app:bar_rightDrawable="@drawable/arrows_right_ic" />
 
             </LinearLayout>
