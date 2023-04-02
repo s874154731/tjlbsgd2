@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--可点击状态与不可点击状态字体颜色-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--设置图片的大小  -->
+    <item
+        android:width="@dimen/dp_14"
+        android:height="@dimen/dp_14">
+        <bitmap android:src="@drawable/img_icon_waring_normal" />
+    </item>
+
+
+</layer-list>

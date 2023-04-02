@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_15"
+    android:background="@drawable/bg_white_radius_4dp">
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_shop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="iv_shop,tv_shop_name,rv_shop_equipment"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_shop"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@mipmap/img_icon_shop"/>
+
+    <TextView
+        android:id="@+id/tv_shop_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/iv_shop"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_shop"
+        app:layout_constraintStart_toEndOf="@+id/iv_shop"
+        android:layout_marginStart="@dimen/dp_20"
+        android:maxEms="10"
+        android:maxLength="10"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:text="@string/tip_shop"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/black33333"/>
+
+    <TextView
+        android:id="@+id/tv_btn_add_shop"
+        style="@style/tv_btn_big_blue"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@+id/iv_shop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/tip_add_shop"
+        android:visibility="gone"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_shop_equipment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@+id/tv_btn_add_shop"
+        tools:itemCount="2"
+        tools:listitem="@layout/item_shop_equipment"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

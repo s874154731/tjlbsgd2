@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+ <!--   <com.sgd.tjlb.zhxf.widget.WeiXinMainPullViewGroup
+        android:id="@+id/wx_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/navigation"
+        android:paddingTop="40dp">
+
+        <com.example.kotlindemo.widget.weixin.WeiXinProgram
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="最近"
+                android:textColor="#C8C8C8"
+                android:textSize="17sp"></TextView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:background="#424459"
+                app:cardBackgroundColor="#424459"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="搜索小程序"
+                        android:textColor="#C8C8C8"
+                        android:textSize="15sp"></TextView>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <com.example.kotlindemo.widget.weixin.ProgramGridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+            </com.example.kotlindemo.widget.weixin.ProgramGridLayout>
+
+            <com.example.kotlindemo.widget.weixin.ProgramGridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+            </com.example.kotlindemo.widget.weixin.ProgramGridLayout>
+        </com.example.kotlindemo.widget.weixin.WeiXinProgram>
+
+        <com.example.kotlindemo.widget.weixin.WeiXinMainLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@color/navigation_color">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="微信(323)"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold"></TextView>
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="45dp"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_search"></ImageView>
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_add">
+
+                </ImageView>
+            </RelativeLayout>
+
+            <com.example.kotlindemo.widget.weixin.WeiXinChatSessionListView
+                android:id="@+id/chat_list"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FBFAFA"
+                android:dividerHeight="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+            </com.example.kotlindemo.widget.weixin.WeiXinChatSessionListView>
+
+        </com.example.kotlindemo.widget.weixin.WeiXinMainLayout>
+
+    </com.sgd.tjlb.zhxf.widget.WeiXinMainPullViewGroup>
+
+    <LinearLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/navigation_color"
+        android:orientation="vertical"></LinearLayout>
+
+    <View
+        android:id="@+id/status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/navigation_color"></View>-->
+</RelativeLayout>

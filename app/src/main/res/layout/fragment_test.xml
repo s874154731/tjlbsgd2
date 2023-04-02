@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.youth.banner.Banner
+        android:id="@+id/banner_home"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_230"
+        app:banner_indicator_selected_color="@color/common_accent_color"
+        app:banner_indicator_normal_color="@color/common_button_disable_color"
+        app:banner_indicator_normal_width="@dimen/dp_7"
+        app:banner_indicator_selected_width="@dimen/dp_10"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <com.youth.banner.indicator.CircleIndicator
+        android:id="@+id/cv_home_indicator"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_60"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/banner_home"/>
+
+    <LinearLayout
+        android:id="@+id/layout_equipment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_150"
+        app:layout_constraintTop_toBottomOf="@+id/cv_home_indicator"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:background="@drawable/bg_white_radius_4dp"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/layout_equipment">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_equipment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_popularize"/>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

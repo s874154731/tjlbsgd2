@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray_F8F8F8F8"
+    android:orientation="vertical">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/title_main_contractmanagement"
+        app:titleSize="@dimen/sp_16" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/bg_white_radius_4dp"
+        android:paddingVertical="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/tv_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_20"
+            android:text="@string/text_contract_management_buyflowcharge"
+            android:textColor="@color/black33333"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_5"
+            android:background="@color/black5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_1" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_communication_flow_img"
+            android:layout_width="@dimen/dp_75"
+            android:layout_height="@dimen/dp_75"
+            android:layout_marginHorizontal="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_1"
+            app:srcCompat="@drawable/example_bg"
+            tools:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/tv_communication_flow_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@string/text_tip_produce_name"
+            android:textColor="@color/black33333"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_communication_flow_img"
+            app:layout_constraintTop_toTopOf="@id/iv_communication_flow_img" />
+
+        <TextView
+            android:id="@+id/tv_communication_flow_money"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@string/common_money1"
+            android:textColor="@color/red"
+            android:textSize="@dimen/sp_18"
+            app:layout_constraintBottom_toBottomOf="@id/iv_communication_flow_img"
+            app:layout_constraintEnd_toStartOf="@id/ll_1"
+            app:layout_constraintStart_toEndOf="@id/iv_communication_flow_img" />
+
+        <LinearLayout
+            android:id="@+id/ll_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tv_communication_flow_money"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_communication_flow_money"
+            app:layout_constraintTop_toTopOf="@id/tv_communication_flow_money">
+
+
+            <ImageView
+                android:id="@+id/iv_btn_communication_flow_minus"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:padding="@dimen/dp_5"
+                android:src="@mipmap/img_ioc_minus_num" />
+
+            <com.hjq.widget.view.RegexEditText
+                android:id="@+id/et_communication_flow_buynum"
+                style="@style/EditTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_5"
+                android:text="1"
+                android:textColor="@color/black33333"
+                android:textSize="@dimen/sp_16"
+                app:regexType="number" />
+
+            <ImageView
+                android:id="@+id/iv_btn_communication_flow_add"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:padding="@dimen/dp_5"
+                android:src="@mipmap/img_ioc_add_num" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@color/black5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_communication_flow_img" />
+
+        <com.sgd.tjlb.zhxf.widget.InterceptLinearLayout
+            android:id="@+id/ll_communication_flow_oneyears"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/dp_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_3">
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/cb_communication_flow_oneyears"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:checked="true"
+                android:clickable="false"
+                android:paddingStart="@dimen/dp_10"
+                android:text="@string/text_buyflow_oneyears"
+                app:buttonCompat="@drawable/checkbox_selector" />
+
+            <TextView
+                android:id="@+id/tv_communication_flow_oneyearsmoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@string/common_money1"
+                android:textColor="@color/red"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintBottom_toBottomOf="@id/iv_communication_flow_img"
+                app:layout_constraintEnd_toStartOf="@id/ll_1"
+                app:layout_constraintStart_toEndOf="@id/iv_communication_flow_img" />
+
+        </com.sgd.tjlb.zhxf.widget.InterceptLinearLayout>
+
+        <View
+            android:id="@+id/view_4"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/black5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_communication_flow_oneyears" />
+
+        <com.sgd.tjlb.zhxf.widget.InterceptLinearLayout
+            android:id="@+id/ll_communication_flow_twoyears"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/dp_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_4">
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/cb_communication_flow_twoyears"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:checked="false"
+                android:clickable="false"
+                android:paddingStart="@dimen/dp_10"
+                android:text="@string/text_buyflow_twoyears"
+                app:buttonCompat="@drawable/checkbox_selector" />
+
+            <TextView
+                android:id="@+id/tv_communication_flow_twoyearsmoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@string/common_money1"
+                android:textColor="@color/red"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintBottom_toBottomOf="@id/iv_communication_flow_img"
+                app:layout_constraintEnd_toStartOf="@id/ll_1"
+                app:layout_constraintStart_toEndOf="@id/iv_communication_flow_img" />
+
+        </com.sgd.tjlb.zhxf.widget.InterceptLinearLayout>
+
+        <View
+            android:id="@+id/view_5"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/black5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_communication_flow_twoyears" />
+
+        <com.sgd.tjlb.zhxf.widget.InterceptLinearLayout
+            android:id="@+id/ll_communication_flow_threeyears"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/dp_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_5">
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/cb_communication_flow_threeyears"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:checked="false"
+                android:clickable="false"
+                android:paddingStart="@dimen/dp_10"
+                android:text="@string/text_buyflow_twoyears"
+                app:buttonCompat="@drawable/checkbox_selector" />
+
+            <TextView
+                android:id="@+id/tv_communication_flow_threeyearsmoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@string/common_money1"
+                android:textColor="@color/red"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintBottom_toBottomOf="@id/iv_communication_flow_img"
+                app:layout_constraintEnd_toStartOf="@id/ll_1"
+                app:layout_constraintStart_toEndOf="@id/iv_communication_flow_img" />
+
+        </com.sgd.tjlb.zhxf.widget.InterceptLinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/tv_communication_flow_pay"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_40"
+        android:layout_marginVertical="@dimen/dp_10"
+        android:text="@string/text_contract_management_pay" />
+
+
+</LinearLayout>

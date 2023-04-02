@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray_F8F8F8F8"
+    android:orientation="vertical">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/title_tip_applyfor_maintenance"
+        app:titleSize="@dimen/sp_16" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/bg_frame_gray_1dp_white_radius_4dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:text="@string/text_tip_applyfor_call"
+            android:textColor="@color/black33333"
+            android:textSize="@dimen/sp_14" />
+
+        <com.hjq.widget.view.RegexEditText
+            android:id="@+id/et_applyfor_maintenance_call"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/input_tip_applyfor_call"
+            android:paddingHorizontal="@dimen/dp_20"
+            android:paddingVertical="@dimen/dp_18"
+            android:textColor="@color/black33333"
+            android:textSize="@dimen/sp_14"
+            app:regexType="mobile" />
+
+    </LinearLayout>
+
+    <com.hjq.widget.view.RegexEditText
+        android:id="@+id/et_applyfor_maintenance_question"
+        style="@style/EditTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/bg_white_radius_4dp"
+        android:gravity="start"
+        android:hint="@string/input_tip_applyfor_problemdescription"
+        android:minLines="5"
+        android:textColor="@color/black33333"
+        app:regexType="nonnull" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_applyfor_maintenance_questionimg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_applyfor_maintenance_submit"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_40"
+        android:layout_marginVertical="@dimen/dp_30"
+        android:text="@string/common_step_commit" />
+
+</LinearLayout>

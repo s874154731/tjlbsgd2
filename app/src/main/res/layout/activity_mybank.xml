@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/bg_gray_F8F8F8F8"
+    android:orientation="vertical">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/text_title_mine_bankcard"
+        app:titleSize="@dimen/sp_16"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_apply_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_9"
+                android:layout_marginBottom="@dimen/dp_10"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_apply_bank"/>
+
+            <com.hjq.widget.layout.SettingBar
+                android:id="@+id/sb_btn_bank_applybank"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginHorizontal="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_1"
+                android:clickable="true"
+                android:focusable="true"
+                app:bar_leftText="@string/text_tip_add_bank_no"
+                app:bar_leftTextSize="@dimen/sp_14"
+                app:bar_rightDrawable="@mipmap/img_ioc_applyforbank"
+                app:bar_rightDrawableSize="@dimen/dp_30"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_20"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_bank"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

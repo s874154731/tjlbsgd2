@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--设置图片的大小  -->
+    <item
+        android:width="45dp"
+        android:height="45dp">
+        <bitmap android:src="@drawable/img_ioc_main_myequipment" />
+    </item>
+
+
+</layer-list>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_show_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="无设备"
+            android:textColor="@color/black33333"
+            android:textSize="@dimen/sp_12" />
+
+    </LinearLayout>
+
+    <!--    需要添加一个可以用到**android:layout_alignParentBottom=“true”**属性的TextView即可，这样系统就会认为我们的空布局的高度就是填充屏幕的高度-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>
+
+<!--
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_10">
+
+    <TextView
+        android:id="@+id/tv_btn_add"
+        style="@style/tv_btn_big_blue"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/text_tip_sign_a_contract"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>-->

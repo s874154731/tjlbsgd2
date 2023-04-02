@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray_F8F8F8F8"
+    android:orientation="vertical"
+    tools:context="com.sgd.tjlb.zhxf.ui.activity.user.PersonalDataActivity">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/personal_data_title"
+        app:titleSize="@dimen/sp_16" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/fl_person_data_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/white_selector"
+        android:visibility="gone"
+        app:bar_leftText="@string/personal_data_head"
+        app:bar_leftTextSize="@dimen/sp_14">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_person_data_avatar"
+            android:layout_width="@dimen/dp_110"
+            android:layout_height="@dimen/dp_110"
+            android:layout_gravity="end|center_vertical"
+            android:layout_margin="@dimen/dp_20"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/avatar_placeholder_ic" />
+
+    </com.hjq.widget.layout.SettingBar>
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_person_data_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/bg_white_radius_8dp_top"
+        app:bar_leftText="@string/personal_data_name"
+        app:bar_leftTextSize="@dimen/sp_14"
+        app:bar_rightTextSize="@dimen/sp_14"
+        tools:bar_rightText="@string/common_username" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_person_data_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:background="@drawable/bg_white_radius_8dp_bottom"
+        app:bar_leftText="@string/personal_data_phonenum"
+        app:bar_leftTextSize="@dimen/sp_14"
+        app:bar_rightTextSize="@dimen/sp_14" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_person_data_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:bar_leftText="@string/personal_data_address"
+        app:bar_rightDrawable="@drawable/arrows_right_ic"
+        app:bar_rightTextHint="@string/personal_data_address_hint" />
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_btn_person_data_updatepwd"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/bg_white_radius_8dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:bar_leftText="@string/setting_password"
+        app:bar_leftTextSize="@dimen/sp_14"
+        app:bar_rightDrawable="@drawable/arrows_right_ic" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_person_data_loginoout"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp_40"
+        android:layout_marginVertical="@dimen/dp_30"
+        android:text="@string/setting_exit" />
+
+</LinearLayout>

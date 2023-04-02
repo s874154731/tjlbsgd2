@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white_radius_4dp"
+    android:layout_marginHorizontal="@dimen/dp_10"
+    android:layout_marginTop="@dimen/dp_1">
+
+    <com.hjq.widget.layout.SettingBar
+        android:id="@+id/sb_item_bankname"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:clickable="true"
+        android:focusable="true"
+        app:bar_leftText="@string/text_tip_produce_bankname"
+        app:bar_leftTextSize="@dimen/sp_12"
+        app:bar_rightDrawableSize="@dimen/dp_15"
+        app:bar_rightDrawable="@drawable/arrows_right_ic"
+        app:bar_rightText="@string/btn_tip_produce_applyingbank"/>
+
+</LinearLayout>

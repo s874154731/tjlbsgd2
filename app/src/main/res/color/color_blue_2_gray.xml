@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--可点击状态与不可点击状态字体颜色-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/gray999" android:state_selected="false" />
+    <item android:color="@color/blue_main" android:state_selected="true" />
+</selector>

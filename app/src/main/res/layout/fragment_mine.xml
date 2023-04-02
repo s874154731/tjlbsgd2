@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray_F8F8F8F8"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_btn_main_userdata"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/dp_20"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/iv_main_userhead"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_marginStart="@dimen/dp_30"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:src="@drawable/avatar_placeholder_ic" />
+
+                <TextView
+                    android:id="@+id/tv_main_username"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/title_main_store"
+                    android:textColor="@color/black33333"
+                    android:textSize="@dimen/sp_16" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:src="@mipmap/img_ioc_break_right_enter" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_mine_ad"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_100"
+                android:layout_marginHorizontal="@dimen/dp_10"
+                android:background="@drawable/bg_white_radius_8dp_top"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_btn_main_userdata">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/bg_fj_3" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_10"
+                android:background="@drawable/bg_white_radius_8dp_bottom"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/dp_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_mine_ad">
+
+                <TextView
+                    android:id="@+id/tv_btn_main_myequipment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/img_mine_equipment"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:gravity="center"
+                    android:text="@string/title_main_myequipment"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/tv_btn_main_myinsurance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/img_mine_insurance"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:gravity="center"
+                    android:text="@string/title_main_myinsurance"
+                    android:textSize="@dimen/sp_14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@drawable/bg_white_radius_8dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_3">
+
+                <com.hjq.widget.layout.SettingBar
+                    android:id="@+id/sb_btn_main_personal"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:bar_leftTextSize="@dimen/sp_14"
+                    app:bar_leftDrawable="@mipmap/img_ioc_main_personal"
+                    app:bar_leftDrawableSize="@dimen/dp_20"
+                    app:bar_leftText="@string/personal_data_title"
+                    app:bar_rightDrawable="@drawable/arrows_right_ic" />
+
+                <com.hjq.widget.layout.SettingBar
+                    android:id="@+id/sb_btn_main_store"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:bar_leftTextSize="@dimen/sp_14"
+                    app:bar_leftDrawable="@mipmap/img_ioc_main_store"
+                    app:bar_leftDrawableSize="@dimen/dp_20"
+                    app:bar_leftText="@string/title_main_store"
+                    app:bar_rightDrawable="@drawable/arrows_right_ic" />
+
+                <com.hjq.widget.layout.SettingBar
+                    android:id="@+id/sb_btn_main_contractmanagement"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:bar_leftTextSize="@dimen/sp_14"
+                    app:bar_leftDrawable="@mipmap/img_ioc_main_contract"
+                    app:bar_leftDrawableSize="@dimen/dp_20"
+                    app:bar_leftText="@string/title_main_contractmanagement"
+                    app:bar_rightDrawable="@drawable/arrows_right_ic" />
+
+                <com.hjq.widget.layout.SettingBar
+                    android:id="@+id/sb_btn_main_bank"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:bar_leftDrawable="@mipmap/img_ioc_mybank"
+                    app:bar_leftDrawableSize="@dimen/dp_18"
+                    app:bar_leftText="@string/title_main_mybank"
+                    app:bar_rightDrawable="@drawable/arrows_right_ic" />
+
+                <com.hjq.widget.layout.SettingBar
+                    android:id="@+id/sb_btn_main_myservice"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:bar_leftTextSize="@dimen/sp_14"
+                    app:bar_leftDrawable="@mipmap/img_ioc_main_service"
+                    app:bar_leftDrawableSize="@dimen/dp_17"
+                    app:bar_leftText="@string/title_main_myservice"
+                    app:bar_rightDrawable="@drawable/arrows_right_ic" />
+
+                <com.hjq.widget.layout.SettingBar
+                    android:id="@+id/sb_btn_main_aboutus"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:bar_leftTextSize="@dimen/sp_14"
+                    app:bar_leftDrawable="@mipmap/img_ioc_main_aboutus"
+                    app:bar_leftDrawableSize="@dimen/dp_18"
+                    app:bar_leftText="@string/title_main_aboutus"
+                    app:bar_rightDrawable="@drawable/arrows_right_ic" />
+
+                <com.hjq.widget.layout.SettingBar
+                    android:id="@+id/sb_btn_main_agreement"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:bar_leftTextSize="@dimen/sp_14"
+                    app:bar_leftDrawable="@mipmap/img_ioc_main_agreement"
+                    app:bar_leftDrawableSize="@dimen/dp_18"
+                    app:bar_leftText="@string/setting_agreement"
+                    app:bar_rightDrawable="@drawable/arrows_right_ic" />
+
+                <com.hjq.widget.layout.SettingBar
+                    android:id="@+id/sb_btn_main_privacy"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:bar_leftTextSize="@dimen/sp_14"
+                    app:bar_leftDrawable="@mipmap/img_ioc_checkupdates"
+                    app:bar_leftDrawableSize="@dimen/dp_20"
+                    app:bar_leftText="@string/title_main_checkupdates"
+                    app:bar_rightDrawable="@drawable/arrows_right_ic" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/about_author"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
