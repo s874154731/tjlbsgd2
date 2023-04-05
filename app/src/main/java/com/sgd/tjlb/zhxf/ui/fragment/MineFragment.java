@@ -20,6 +20,7 @@ import com.sgd.tjlb.zhxf.http.model.HttpData;
 import com.sgd.tjlb.zhxf.other.AppConfig;
 import com.sgd.tjlb.zhxf.ui.activity.AgreementActivity;
 import com.sgd.tjlb.zhxf.ui.activity.CommunicationFlowActivity;
+import com.sgd.tjlb.zhxf.ui.activity.ConstructionRecordActivity;
 import com.sgd.tjlb.zhxf.ui.activity.MineEquipmentActivity;
 import com.sgd.tjlb.zhxf.ui.activity.MyBankActivity;
 import com.sgd.tjlb.zhxf.ui.activity.MyInsuranceActivity;
@@ -108,7 +109,7 @@ public final class MineFragment extends TitleBarFragment<HomeActivity>
         sbPrivacy.setOnClickListener(v -> findAppVersion());
 
         //施单记录
-//        sbConstruction.setOnClickListener(v ->);
+        sbConstruction.setOnClickListener(v -> ConstructionRecordActivity.start(getContext()));
         //修改密码
         sbUpdatepwd.setOnClickListener(v ->
                 PasswordResetActivity.start(getContext(), mSelef.getTel(), ""));

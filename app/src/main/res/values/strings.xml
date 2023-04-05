@@ -86,6 +86,8 @@
     <string name="common_username">用户名</string>
     <string name="common_contractname">合同名称</string>
     <string name="common_title">标题</string>
+    <string name="common_storename">店铺名称</string>
+    <string name="common_storetext_address">地址</string>
 
 
     <!-- 网络请求 -->
@@ -386,5 +388,15 @@
     <string name="btn_home_acceptorder">接单</string>
     <!--手机号-->
     <string name="text_main_phonenum">00000000000</string>
+
+    <!--我的施工单-->
+    <string name="title_myconstructionorder">我的施工单</string>
+    <string name="text_myconstructionorder_time">时间：</string>
+    <string name="text_myconstructionorder_storename">店铺名称：</string>
+    <string name="text_myconstructionorder_address">地址：</string>
+    <string name="text_myconstructionorder_workrecord">工作记录</string>
+    <string name="text_myconstructionorder_havecomplete">已完成</string>
+    <string name="text_myconstructionorder_description">描述：</string>
+    <string name="text_myconstructionorder_workdescription">工作描述</string>
 
 </resources>
