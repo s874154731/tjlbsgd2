@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 施单记录
+ * 施单记录 我的施工单 -- activity
  */
 public class ConstructionRecordActivity extends AppActivity {
 
@@ -61,7 +61,7 @@ public class ConstructionRecordActivity extends AppActivity {
         mAdapter.setmCallBack(new ConstructionRecordAdapter.CallBack() {
             @Override
             public void onItemClick(ConstructionRecordData data) {
-
+                WorkRecordActivity.start(ConstructionRecordActivity.this);
             }
         });
     }

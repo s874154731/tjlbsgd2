@@ -356,10 +356,16 @@
             android:name="com.sgd.tjlb.zhxf.ui.activity.CommunicationFlowActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+
         <!--施工记录-->
         <activity android:name=".ui.activity.ConstructionRecordActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+
+        <!--工作记录-->
+        <activity android:name=".ui.activity.WorkRecordActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
 
         <!--高德地图-->
         <meta-data

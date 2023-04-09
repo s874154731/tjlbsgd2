@@ -398,5 +398,9 @@
     <string name="text_myconstructionorder_havecomplete">已完成</string>
     <string name="text_myconstructionorder_description">描述：</string>
     <string name="text_myconstructionorder_workdescription">工作描述</string>
+    <string name="text_myconstructionorder_examine">检查：</string>
+    <string name="btn_myconstructionorder_modification">修改</string>
+    <string name="btn_myconstructionorder_install">安装</string>
+    <string name="btn_myconstructionorder_uploadpictures">上传图片</string>
 
 </resources>
