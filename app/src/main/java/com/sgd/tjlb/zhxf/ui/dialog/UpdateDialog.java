@@ -181,9 +181,9 @@ public final class UpdateDialog {
                     // 设置通知标题
                     .setContentTitle(getString(R.string.app_name))
                     // 设置通知小图标
-                    .setSmallIcon(R.mipmap.logo_icon_tjlb)
+                    .setSmallIcon(R.mipmap.logo_icon_tjlbsgd)
                     // 设置通知大图标
-                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.logo_icon_tjlb))
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.logo_icon_tjlbsgd))
                     // 设置通知静音
                     .setDefaults(NotificationCompat.FLAG_ONLY_ALERT_ONCE)
                     // 设置震动频率

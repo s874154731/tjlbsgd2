@@ -1,60 +1,25 @@
 package com.sgd.tjlb.zhxf.ui.fragment;
 
-import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.os.Build;
-import android.view.View;
-import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.listener.HttpCallback;
 import com.hjq.shape.view.ShapeTextView;
-import com.scwang.smart.refresh.layout.SmartRefreshLayout;
-import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.AppFragment;
 import com.sgd.tjlb.zhxf.entity.AppConfigBean;
-import com.sgd.tjlb.zhxf.entity.EquipmentInfo;
 import com.sgd.tjlb.zhxf.entity.HomeBannerData;
-import com.sgd.tjlb.zhxf.entity.HomeMsgBean;
 import com.sgd.tjlb.zhxf.entity.OrderData;
-import com.sgd.tjlb.zhxf.entity.PopularizeData;
-import com.sgd.tjlb.zhxf.entity.PopularizeTypeBean;
 import com.sgd.tjlb.zhxf.entity.ShopInfo;
 import com.sgd.tjlb.zhxf.helper.MMKVHelper;
 import com.sgd.tjlb.zhxf.http.api.AppConfigApi;
-import com.sgd.tjlb.zhxf.http.api.EquipmentInfoListApi;
-import com.sgd.tjlb.zhxf.http.api.GetShopApi;
-import com.sgd.tjlb.zhxf.http.api.HomeMsgsApi;
-import com.sgd.tjlb.zhxf.http.api.PopularizeListApi;
-import com.sgd.tjlb.zhxf.http.api.PopularizeTypeApi;
+import com.sgd.tjlb.zhxf.http.api.WarrantyListApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
-import com.sgd.tjlb.zhxf.ui.activity.NoticeActivity;
-import com.sgd.tjlb.zhxf.ui.activity.NoticeDetailActivity;
-import com.sgd.tjlb.zhxf.ui.activity.StoreDataActivity;
 import com.sgd.tjlb.zhxf.ui.activity.init.HomeActivity;
-import com.sgd.tjlb.zhxf.ui.adapter.EquipmentAdapter;
 import com.sgd.tjlb.zhxf.ui.adapter.OrderAdapter;
-import com.sgd.tjlb.zhxf.ui.adapter.PopularizeAdapter;
 import com.sgd.tjlb.zhxf.utils.ConstantUtil;
-import com.sgd.tjlb.zhxf.utils.SmartRefreshLayoutUtil;
-import com.sgd.tjlb.zhxf.widget.NoticeTextView;
-import com.youth.banner.Banner;
-import com.youth.banner.adapter.BannerImageAdapter;
-import com.youth.banner.holder.BannerImageHolder;
-import com.youth.banner.indicator.CircleIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.Group;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,9 +28,13 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public final class HomeFragment extends AppFragment<HomeActivity> {
 
+    private static final int Page_Type_Installation = 1;//申请安装
+    private static final int Page_Type_Maintenance = 3;//申请维修
+
     private final int mPageSize = ConstantUtil.PAGE_SIZE_20;
     private int mRefreshType = ConstantUtil.REFRESH_INIT;
     private int mPage = ConstantUtil.PAGE_INDEX;
+    private int mType = Page_Type_Installation;
 
     private List<HomeBannerData> mBannerDatas = new ArrayList<>();
     private AppConfigBean mAppConfig;
@@ -131,7 +100,6 @@ public final class HomeFragment extends AppFragment<HomeActivity> {
 
     @Override
     protected void initData() {
-//        findAppConfig();
 
         for (int i = 0; i < 5; i++) {
             OrderData orderData = new OrderData();
@@ -141,35 +109,24 @@ public final class HomeFragment extends AppFragment<HomeActivity> {
             orderDataList.add(orderData);
         }
         mAdapter.initData(orderDataList);
+        findWarrantyList();
     }
 
 
-    /*//获取app常量
-    private void findAppConfig() {
-        mAppConfig = MMKVHelper.getInstance().findAppConfig();
-        if (mAppConfig != null) {
-            mBannerDatas.clear();
-            if (mAppConfig.getApp_slide() != null) {
-                mBannerDatas.addAll(mAppConfig.getApp_slide());
-                mBannerAdapter.notifyDataSetChanged();
-            }
-            return;
-        }
-
+    //报修单list
+    private void findWarrantyList() {
         EasyHttp.post(this)
-                .api(new AppConfigApi())
-                .request(new HttpCallback<HttpData<AppConfigBean>>(this) {
+                .api(new WarrantyListApi()
+                        .setPage(mPage)
+                        .setType(mType)
+                )
+                .request(new HttpCallback<HttpData<List<ShopInfo>>>(this) {
 
                     @Override
-                    public void onSucceed(HttpData<AppConfigBean> data) {
+                    public void onSucceed(HttpData<List<ShopInfo>> data) {
                         if (data.getData() != null) {
 
-                            mBannerDatas.clear();
-                            if (data.getData().getApp_slide() != null) {
-                                mBannerDatas.addAll(data.getData().getApp_slide());
-                                mBannerAdapter.notifyDataSetChanged();
-                            }
-                            MMKVHelper.getInstance().saveAppConfig(data.getData());
+
                         }
                     }
 
@@ -178,5 +135,5 @@ public final class HomeFragment extends AppFragment<HomeActivity> {
                         super.onFail(e);
                     }
                 });
-    }*/
+    }
 }

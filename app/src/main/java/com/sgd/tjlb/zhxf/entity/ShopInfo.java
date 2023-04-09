@@ -6,7 +6,15 @@ import android.text.TextUtils;
  * 店铺信息
  */
 public class ShopInfo {
+
+    public static final int Page_Type_OK = 0;//申请安装
+    public static final int Page_Type_Installation = 1;//申请安装
+    public static final int Page_Type_Installation_Warring = 2;//安装异常
+    public static final int Page_Type_Apply_Maintenance = 3;//申请维修
+    public static final int Page_Type_Maintenance_Warring = 4;//维修异常
+
     private String user_id;
+    private String shop_id;//店铺id
     private String shop_name;//门店名称
     private int shop_type_id;//所属行业    选中
     private int city_id;//市
@@ -19,6 +27,8 @@ public class ShopInfo {
     private String shop_area;//门店面积
     private String shop_info;//门店详情
     private String sell_no;//销售编码
+
+    private String status;//0成功，1申请安装，2安装异常，3申请维修，4维修
 
     public String getUser_id() {
         return user_id;
@@ -122,5 +132,21 @@ public class ShopInfo {
 
     public void setSell_no(String sell_no) {
         this.sell_no = sell_no;
+    }
+
+    public String getShop_id() {
+        return shop_id;
+    }
+
+    public void setShop_id(String shop_id) {
+        this.shop_id = shop_id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

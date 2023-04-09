@@ -15,17 +15,17 @@ public final class UpdatePwApi implements IRequestApi {
     }
 
     /**用户 id*/
-    private String user_id;//
+    private String worker_id;//
     /**旧密码*/
-    private String user_pwd;//
+    private String worker_pwd;//
     /** 新密码 */
-    private String new_user_pwd;
+    private String new_worker_pwd;
     /** 确认新密码 */
-    private String rep_user_pwd;
+    private String rep_worker_pwd;
 
     public UpdatePwApi() {
         UserInfo userInfo = MMKVHelper.getInstance().getUserInfo();
-        this.user_id = userInfo.getUserID();
+        this.worker_id = userInfo.getUserID();
     }
 
     /**
@@ -33,7 +33,7 @@ public final class UpdatePwApi implements IRequestApi {
      * @param oldPwd
      */
     public UpdatePwApi setOldPwd(String oldPwd) {
-        this.user_pwd = oldPwd;
+        this.worker_pwd = oldPwd;
         return this;
     }
     /**
@@ -41,7 +41,7 @@ public final class UpdatePwApi implements IRequestApi {
      * @param newPwd
      */
     public UpdatePwApi setNewPwd(String newPwd) {
-        this.new_user_pwd = newPwd;
+        this.new_worker_pwd = newPwd;
         return this;
     }
 
@@ -50,7 +50,7 @@ public final class UpdatePwApi implements IRequestApi {
      * @param repPwd
      */
     public UpdatePwApi setRepPwd(String repPwd) {
-        this.rep_user_pwd = repPwd;
+        this.rep_worker_pwd = repPwd;
         return this;
     }
 }

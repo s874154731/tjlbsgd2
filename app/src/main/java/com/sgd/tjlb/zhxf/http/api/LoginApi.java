@@ -16,18 +16,18 @@ public final class LoginApi implements IRequestApi {
     }
 
     /** 用户名 */
-    private String user_tel;
+    private String worker_tel;
     /** 登录密码 */
-    private String user_pwd;//密码（md5加密 32位大写）
+    private String worker_pwd;//密码（md5加密 32位大写）
 
     public LoginApi setPhone(String phone) {
-        this.user_tel = phone;
+        this.worker_tel = phone;
         return this;
     }
 
     public LoginApi setPassword(String password) {
 //        this.user_pwd = MD5Util.MD5(password);
-        this.user_pwd = password;
+        this.worker_pwd = password;
         return this;
     }
 

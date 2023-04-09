@@ -105,7 +105,7 @@ public final class HomeActivity extends AppActivity
 
         onNewIntent(getIntent());
 
-        findHttpDatas();
+//        findHttpDatas();
     }
 
     private void findHttpDatas() {

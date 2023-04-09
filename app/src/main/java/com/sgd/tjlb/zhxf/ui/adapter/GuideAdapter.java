@@ -19,9 +19,9 @@ public final class GuideAdapter extends AppAdapter<Integer> {
 
     public GuideAdapter(Context context) {
         super(context);
-        addItem(R.drawable.guide_1_bg);
-        addItem(R.drawable.guide_2_bg);
-        addItem(R.drawable.guide_3_bg);
+        addItem(R.mipmap.img_guide_1);
+        addItem(R.mipmap.img_guide_2);
+        addItem(R.mipmap.img_guide_3);
     }
 
     @NonNull

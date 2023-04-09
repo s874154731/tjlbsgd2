@@ -109,7 +109,7 @@ public final class MineFragment extends TitleBarFragment<HomeActivity>
         sbPrivacy.setOnClickListener(v -> findAppVersion());
 
         //施单记录
-        sbConstruction.setOnClickListener(v -> ConstructionRecordActivity.start(getContext()));
+        sbConstruction.setOnClickListener(v -> ConstructionRecordActivity.start(getActivity()));
         //修改密码
         sbUpdatepwd.setOnClickListener(v ->
                 PasswordResetActivity.start(getContext(), mSelef.getTel(), ""));

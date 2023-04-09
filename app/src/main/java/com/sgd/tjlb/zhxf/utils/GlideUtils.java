@@ -38,7 +38,7 @@ public class GlideUtils {
     /*** 错误图 */
     public static int errorImage = R.mipmap.img_loading_fail;
     /*** logo */
-    public static int logo = R.mipmap.logo_icon_tjlb;
+    public static int logo = R.mipmap.logo_icon_tjlbsgd;
 
     /**
      * glide 4.12 使用概况

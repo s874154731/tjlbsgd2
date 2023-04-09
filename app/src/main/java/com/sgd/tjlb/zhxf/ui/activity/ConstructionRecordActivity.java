@@ -1,15 +1,23 @@
 package com.sgd.tjlb.zhxf.ui.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hjq.http.EasyHttp;
+import com.hjq.http.listener.HttpCallback;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.AppActivity;
 import com.sgd.tjlb.zhxf.entity.ConstructionRecordData;
+import com.sgd.tjlb.zhxf.entity.ShopInfo;
+import com.sgd.tjlb.zhxf.http.api.MyWarrantyRecordListApi;
+import com.sgd.tjlb.zhxf.http.api.WarrantyListApi;
+import com.sgd.tjlb.zhxf.http.model.HttpData;
 import com.sgd.tjlb.zhxf.ui.adapter.ConstructionRecordAdapter;
+import com.sgd.tjlb.zhxf.utils.ConstantUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +32,12 @@ public class ConstructionRecordActivity extends AppActivity {
     private ConstructionRecordAdapter mAdapter;
 
     private List<ConstructionRecordData> dataList = new ArrayList<>();
+    private int mPage = ConstantUtil.PAGE_INDEX;
 
-    public static void start(Context context) {
+    public static void start(Activity context) {
         Intent starter = new Intent(context, ConstructionRecordActivity.class);
 //        starter.putExtra();
-        context.startActivity(starter);
+        context.startActivityForResult(starter, 0);
     }
 
     @Override
@@ -67,6 +76,31 @@ public class ConstructionRecordActivity extends AppActivity {
             dataList.add(recordData);
         }
         mAdapter.initData(dataList);
+
+        findMyWarrantyRecordList();
+    }
+
+    //获取我的施工单记录
+    private void findMyWarrantyRecordList() {
+        EasyHttp.post(this)
+                .api(new MyWarrantyRecordListApi()
+                        .setPage(mPage)
+                )
+                .request(new HttpCallback<HttpData<List<ShopInfo>>>(this) {
+
+                    @Override
+                    public void onSucceed(HttpData<List<ShopInfo>> data) {
+                        if (data.getData() != null) {
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onFail(Exception e) {
+                        super.onFail(e);
+                    }
+                });
     }
 
 }

@@ -6,12 +6,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class UserInfo {
 
-    @SerializedName("user_id")
+    @SerializedName("worker_id")
     private String userID;
-    @SerializedName("user_name")
+    @SerializedName("worker_name")
     private String userName;
     private int city_id;
     private int area_id = -1;
+    private String area_name;
 
     private String tel;//手机号
     private String nickname;//昵称
@@ -80,5 +81,13 @@ public class UserInfo {
 
     public void setArea_id(int area_id) {
         this.area_id = area_id;
+    }
+
+    public String getArea_name() {
+        return area_name;
+    }
+
+    public void setArea_name(String area_name) {
+        this.area_name = area_name;
     }
 }
