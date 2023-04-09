@@ -16,7 +16,6 @@ public final class WarrantyListApi implements IRequestApi {
 
     private int area_id;            //区域ID        用户状态获取
     private int page;           //页码
-    private int type;// 1申请安装 3申请维修
 
     public WarrantyListApi() {
         UserInfo userInfo = MMKVHelper.getInstance().getUserInfo();
@@ -25,11 +24,6 @@ public final class WarrantyListApi implements IRequestApi {
 
     public WarrantyListApi setPage(int page) {
         this.page = page;
-        return this;
-    }
-
-    public WarrantyListApi setType(int type) {
-        this.type = type;
         return this;
     }
 

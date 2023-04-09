@@ -28,7 +28,7 @@ public class ShopInfo {
     private String shop_info;//门店详情
     private String sell_no;//销售编码
 
-    private String status;//0成功，1申请安装，2安装异常，3申请维修，4维修
+    private int status;//0成功，1申请安装，2安装异常，3申请维修，4维修
 
     public String getUser_id() {
         return user_id;
@@ -142,11 +142,13 @@ public class ShopInfo {
         this.shop_id = shop_id;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
+
+
 }

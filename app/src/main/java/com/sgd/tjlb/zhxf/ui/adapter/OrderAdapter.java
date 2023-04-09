@@ -10,11 +10,12 @@ import com.hjq.base.BaseAdapter;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.AppAdapter;
 import com.sgd.tjlb.zhxf.entity.OrderData;
+import com.sgd.tjlb.zhxf.entity.ShopInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderAdapter extends AppAdapter<OrderData> {
+public class OrderAdapter extends AppAdapter<ShopInfo> {
 
     /**
      * 空布局 与正常布局
@@ -23,7 +24,7 @@ public class OrderAdapter extends AppAdapter<OrderData> {
     public static final int VIEW_TYPE_EMPTY = 0;
 
 
-    private List<OrderData> mDatas = new ArrayList<>();
+    private List<ShopInfo> mDatas = new ArrayList<>();
 
     public OrderAdapter(@NonNull Context context) {
         super(context);
@@ -61,7 +62,7 @@ public class OrderAdapter extends AppAdapter<OrderData> {
     /**
      * 初始化数据
      */
-    public void initData(List<OrderData> data) {
+    public void initData(List<ShopInfo> data) {
         if (data != null) {
             mDatas = data;
         }
@@ -100,11 +101,10 @@ public class OrderAdapter extends AppAdapter<OrderData> {
         @Override
         public void onBindView(int position) {
 
-            OrderData data = mDatas.get(position);
-            mTvStorename.setText(data.getName());
-            mTvStoreaddress.setText(data.getAddress());
-            mTvOrdertype.setText(data.showType());
-
+            ShopInfo shopInfo = mDatas.get(position);
+            mTvStorename.setText(shopInfo.getShop_name());
+            mTvStoreaddress.setText(shopInfo.getAddress());
+            mTvOrdertype.setText(shopInfo.getStatus()+"");
         }
 
     }

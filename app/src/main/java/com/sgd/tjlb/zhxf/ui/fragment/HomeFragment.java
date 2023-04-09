@@ -3,6 +3,9 @@ package com.sgd.tjlb.zhxf.ui.fragment;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.listener.HttpCallback;
 import com.hjq.shape.view.ShapeTextView;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.AppFragment;
 import com.sgd.tjlb.zhxf.entity.AppConfigBean;
@@ -16,10 +19,12 @@ import com.sgd.tjlb.zhxf.http.model.HttpData;
 import com.sgd.tjlb.zhxf.ui.activity.init.HomeActivity;
 import com.sgd.tjlb.zhxf.ui.adapter.OrderAdapter;
 import com.sgd.tjlb.zhxf.utils.ConstantUtil;
+import com.sgd.tjlb.zhxf.utils.SmartRefreshLayoutUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,19 +33,16 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public final class HomeFragment extends AppFragment<HomeActivity> {
 
-    private static final int Page_Type_Installation = 1;//申请安装
-    private static final int Page_Type_Maintenance = 3;//申请维修
-
     private final int mPageSize = ConstantUtil.PAGE_SIZE_20;
     private int mRefreshType = ConstantUtil.REFRESH_INIT;
     private int mPage = ConstantUtil.PAGE_INDEX;
-    private int mType = Page_Type_Installation;
 
     private List<HomeBannerData> mBannerDatas = new ArrayList<>();
     private AppConfigBean mAppConfig;
 
     private ShapeTextView mTvOrdernum;
     private RecyclerView mRvOrder;
+    private SmartRefreshLayout mRefreshLayout;
 
     private OrderAdapter mAdapter;
 
@@ -58,6 +60,7 @@ public final class HomeFragment extends AppFragment<HomeActivity> {
     @Override
     protected void initView() {
 
+        mRefreshLayout = findViewById(R.id.srl_home);
         mTvOrdernum = (ShapeTextView) findViewById(R.id.tv_home_ordernum);
         mRvOrder = (RecyclerView) findViewById(R.id.rv_home_order);
 
@@ -73,7 +76,7 @@ public final class HomeFragment extends AppFragment<HomeActivity> {
 
 
     private void initSmartRefreshLayout() {
-        /*mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 //上拉加载更多
@@ -89,7 +92,7 @@ public final class HomeFragment extends AppFragment<HomeActivity> {
                 mRefreshType = ConstantUtil.REFRESH_FIRST;
                 initData();
             }
-        });*/
+        });
     }
 
     private void initRecycler() {
@@ -100,15 +103,6 @@ public final class HomeFragment extends AppFragment<HomeActivity> {
 
     @Override
     protected void initData() {
-
-        for (int i = 0; i < 5; i++) {
-            OrderData orderData = new OrderData();
-            orderData.setType(i % 2 == 1 ? 1 : 2);
-            orderData.setAddress("地址" + i);
-            orderData.setName("门店名称" + i);
-            orderDataList.add(orderData);
-        }
-        mAdapter.initData(orderDataList);
         findWarrantyList();
     }
 
@@ -118,14 +112,14 @@ public final class HomeFragment extends AppFragment<HomeActivity> {
         EasyHttp.post(this)
                 .api(new WarrantyListApi()
                         .setPage(mPage)
-                        .setType(mType)
                 )
                 .request(new HttpCallback<HttpData<List<ShopInfo>>>(this) {
 
                     @Override
                     public void onSucceed(HttpData<List<ShopInfo>> data) {
+                        SmartRefreshLayoutUtil.complete(mRefreshLayout);
                         if (data.getData() != null) {
-
+                            mAdapter.initData(data.getData());
 
                         }
                     }
@@ -133,6 +127,7 @@ public final class HomeFragment extends AppFragment<HomeActivity> {
                     @Override
                     public void onFail(Exception e) {
                         super.onFail(e);
+                        SmartRefreshLayoutUtil.complete(mRefreshLayout);
                     }
                 });
     }

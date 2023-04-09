@@ -11,7 +11,7 @@ public final class MyWarrantyRecordListApi implements IRequestApi {
 
     @Override
     public String getApi() {
-        return "my_shop _list";
+        return "my_shop_list";
     }
 
     private String worker_id;//     用户状态获取
