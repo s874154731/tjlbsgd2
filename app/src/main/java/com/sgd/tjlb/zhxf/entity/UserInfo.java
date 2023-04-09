@@ -84,7 +84,7 @@ public class UserInfo {
     }
 
     public String getArea_name() {
-        return area_name;
+        return TextUtils.isEmpty(area_name) ? "" : area_name;
     }
 
     public void setArea_name(String area_name) {

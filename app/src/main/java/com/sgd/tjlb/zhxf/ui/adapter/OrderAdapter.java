@@ -104,7 +104,7 @@ public class OrderAdapter extends AppAdapter<ShopInfo> {
             ShopInfo shopInfo = mDatas.get(position);
             mTvStorename.setText(shopInfo.getShop_name());
             mTvStoreaddress.setText(shopInfo.getAddress());
-            mTvOrdertype.setText(shopInfo.getStatus()+"");
+            mTvOrdertype.setText(shopInfo.getStatusTip());
         }
 
     }

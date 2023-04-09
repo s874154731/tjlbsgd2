@@ -32,6 +32,7 @@ import com.sgd.tjlb.zhxf.http.model.HttpData;
 import com.sgd.tjlb.zhxf.manager.ActivityManager;
 import com.sgd.tjlb.zhxf.other.DoubleClickHelper;
 import com.sgd.tjlb.zhxf.ui.adapter.NavigationAdapter;
+import com.sgd.tjlb.zhxf.ui.fragment.ConstructionOrderFragment;
 import com.sgd.tjlb.zhxf.ui.fragment.FuncFragment;
 import com.sgd.tjlb.zhxf.ui.fragment.HomeFragment;
 import com.sgd.tjlb.zhxf.ui.fragment.MineFragment;
@@ -55,8 +56,8 @@ public final class HomeActivity extends AppActivity
     private ViewPager mViewPager;
     private RecyclerView mNavigationView;
 
-    private NavigationAdapter mNavigationAdapter;
     private FragmentPagerAdapter<AppFragment<?>> mPagerAdapter;
+    private NavigationAdapter mNavigationAdapter;
 
     private List<HomeMsgBean> mMsgList = new ArrayList<>();
 
@@ -86,7 +87,7 @@ public final class HomeActivity extends AppActivity
         mNavigationAdapter = new NavigationAdapter(this);
         mNavigationAdapter.addItem(new NavigationAdapter.MenuItem(getString(R.string.home_nav_index),
                 ContextCompat.getDrawable(this, R.drawable.nav_home_selector)));
-        mNavigationAdapter.addItem(new NavigationAdapter.MenuItem(getString(R.string.home_nav_popularize),
+        mNavigationAdapter.addItem(new NavigationAdapter.MenuItem(getString(R.string.home_nav_sgd),
                 ContextCompat.getDrawable(this, R.drawable.nav_popularize_selector)));
         mNavigationAdapter.addItem(new NavigationAdapter.MenuItem(getString(R.string.home_nav_me),
                 ContextCompat.getDrawable(this, R.drawable.nav_mine_selector)));
@@ -98,7 +99,7 @@ public final class HomeActivity extends AppActivity
     protected void initData() {
         mPagerAdapter = new FragmentPagerAdapter<>(this);
         mPagerAdapter.addFragment(HomeFragment.newInstance());
-        mPagerAdapter.addFragment(PopularizeFragment.newInstance());
+        mPagerAdapter.addFragment(ConstructionOrderFragment.newInstance());
 //        mPagerAdapter.addFragment(TestFragment.newInstance());
         mPagerAdapter.addFragment(MineFragment.newInstance());
         mViewPager.setAdapter(mPagerAdapter);

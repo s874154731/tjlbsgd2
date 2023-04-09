@@ -162,6 +162,7 @@
     <!-- 首页 -->
     <string name="home_exit_hint">再按一次退出</string>
     <string name="home_nav_index">首页</string>
+    <string name="home_nav_sgd">施工单</string>
     <string name="home_nav_popularize">消防宣传</string>
     <string name="home_nav_found">发现</string>
     <string name="home_nav_message">消息</string>
@@ -402,5 +403,8 @@
     <string name="btn_myconstructionorder_modification">修改</string>
     <string name="btn_myconstructionorder_install">安装</string>
     <string name="btn_myconstructionorder_uploadpictures">上传图片</string>
+
+    <string name="text_tip_area">区域</string>
+    <string name="text_tip_nav_sgd">施工单</string>
 
 </resources>

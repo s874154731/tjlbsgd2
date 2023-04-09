@@ -17,19 +17,16 @@ import com.sgd.tjlb.zhxf.helper.DialogHelper;
 import com.sgd.tjlb.zhxf.helper.MMKVHelper;
 import com.sgd.tjlb.zhxf.http.api.AppVersionApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
+import com.sgd.tjlb.zhxf.manager.ActivityManager;
 import com.sgd.tjlb.zhxf.other.AppConfig;
 import com.sgd.tjlb.zhxf.ui.activity.AgreementActivity;
-import com.sgd.tjlb.zhxf.ui.activity.CommunicationFlowActivity;
 import com.sgd.tjlb.zhxf.ui.activity.ConstructionRecordActivity;
-import com.sgd.tjlb.zhxf.ui.activity.MineEquipmentActivity;
-import com.sgd.tjlb.zhxf.ui.activity.MyBankActivity;
-import com.sgd.tjlb.zhxf.ui.activity.MyInsuranceActivity;
-import com.sgd.tjlb.zhxf.ui.activity.user.PasswordResetActivity;
-import com.sgd.tjlb.zhxf.ui.activity.user.PersonalDataActivity;
-import com.sgd.tjlb.zhxf.ui.activity.StoreDataActivity;
 import com.sgd.tjlb.zhxf.ui.activity.func.FuncActivity;
 import com.sgd.tjlb.zhxf.ui.activity.init.HomeActivity;
+import com.sgd.tjlb.zhxf.ui.activity.login.LoginActivity;
 import com.sgd.tjlb.zhxf.ui.activity.setting.AboutActivity;
+import com.sgd.tjlb.zhxf.ui.activity.user.PasswordResetActivity;
+import com.sgd.tjlb.zhxf.ui.activity.user.PersonalDataActivity;
 import com.sgd.tjlb.zhxf.ui.dialog.UpdateDialog;
 
 /**
@@ -49,6 +46,7 @@ public final class MineFragment extends TitleBarFragment<HomeActivity>
     private SettingBar sbAgreement;//隐私协议
     private SettingBar sbConstruction;//施单记录
     private SettingBar sbUpdatepwd;//修改面
+    private SettingBar sb_btn_mine_logout;//退出登录
 
     private VersionInfoBean mVersionInfo;
 
@@ -77,9 +75,18 @@ public final class MineFragment extends TitleBarFragment<HomeActivity>
         sbAgreement = (SettingBar) findViewById(R.id.sb_btn_main_agreement);
         sbConstruction = (SettingBar) findViewById(R.id.sb_btn_main_construction);
         sbUpdatepwd = (SettingBar) findViewById(R.id.sb_btn_main_updatepwd);
+        sb_btn_mine_logout = (SettingBar) findViewById(R.id.sb_btn_mine_logout);
 
         initListener();
 
+        refreshUI();
+    }
+
+    private void refreshUI() {
+        UserInfo self = MMKVHelper.getInstance().getUserInfo();
+        if (self != null){
+            tvUsername.setText(self.getTel());
+        }
     }
 
     private void initListener() {
@@ -113,6 +120,10 @@ public final class MineFragment extends TitleBarFragment<HomeActivity>
         //修改密码
         sbUpdatepwd.setOnClickListener(v ->
                 PasswordResetActivity.start(getContext(), mSelef.getTel(), ""));
+
+        sb_btn_mine_logout.setOnClickListener(v->{
+            logout();
+        });
     }
 
     //检查更新
@@ -166,6 +177,15 @@ public final class MineFragment extends TitleBarFragment<HomeActivity>
                         super.onFail(e);
                     }
                 });
+    }
+
+    private void logout(){
+        //清空用户信息
+        MMKVHelper.getInstance().clearAll();
+        // 进行内存优化，销毁除登录页之外的所有界面
+        ActivityManager.getInstance().finishAllActivities(LoginActivity.class);
+        //跳转登录
+        startActivity(LoginActivity.class);
     }
 
     @Override

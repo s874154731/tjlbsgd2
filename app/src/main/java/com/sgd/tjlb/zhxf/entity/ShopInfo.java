@@ -7,11 +7,17 @@ import android.text.TextUtils;
  */
 public class ShopInfo {
 
-    public static final int Page_Type_OK = 0;//申请安装
-    public static final int Page_Type_Installation = 1;//申请安装
-    public static final int Page_Type_Installation_Warring = 2;//安装异常
-    public static final int Page_Type_Apply_Maintenance = 3;//申请维修
-    public static final int Page_Type_Maintenance_Warring = 4;//维修异常
+    private static final int Type_OK = 0;//申请安装
+    private static final int Type_Installation = 1;//申请安装
+    private static final int Type_Installation_Warring = 2;//安装异常
+    private static final int Type_Apply_Maintenance = 3;//申请维修
+    private static final int Type_Maintenance_Warring = 4;//维修异常
+
+    private static final String Type_OK_TIP = "申请安装";//申请安装
+    private static final String Type_Installation_TIP = "申请安装";//申请安装
+    private static final String Type_Installation_Warring_TIP = "安装异常";//安装异常
+    private static final String Type_Apply_Maintenance_TIP = "申请维修";//申请维修
+    private static final String Type_Maintenance_Warring_TIP = "维修异常";//维修异常
 
     private String user_id;
     private String shop_id;//店铺id
@@ -150,5 +156,21 @@ public class ShopInfo {
         this.status = status;
     }
 
+
+    public String getStatusTip(){
+        switch (status){
+            case Type_Installation:
+                return Type_Installation_TIP;
+            case Type_Installation_Warring:
+                return Type_Installation_Warring_TIP;
+            case Type_Apply_Maintenance:
+                return Type_Apply_Maintenance_TIP;
+            case Type_Maintenance_Warring:
+                return Type_Maintenance_Warring_TIP;
+            case Type_OK:
+            default:
+                return Type_OK_TIP;
+        }
+    }
 
 }

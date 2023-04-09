@@ -151,6 +151,18 @@
                     app:bar_leftTextSize="@dimen/sp_14"
                     app:bar_rightDrawable="@drawable/arrows_right_ic" />
 
+                <com.hjq.widget.layout.SettingBar
+                    android:id="@+id/sb_btn_mine_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:bar_leftDrawable="@mipmap/img_ioc_checkupdates"
+                    app:bar_leftDrawableSize="@dimen/dp_20"
+                    app:bar_leftText="@string/setting_exit"
+                    app:bar_leftTextSize="@dimen/sp_14"
+                    app:bar_rightDrawable="@drawable/arrows_right_ic" />
+
             </LinearLayout>
 
             <TextView
