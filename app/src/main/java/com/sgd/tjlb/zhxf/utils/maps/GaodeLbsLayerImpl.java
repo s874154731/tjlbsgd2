@@ -84,7 +84,7 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
     private RouteSearch mRouteSearch;
     private Marker marker;
 
-    public GaodeLbsLayerImpl(Context context) {
+    public GaodeLbsLayerImpl(Context context) throws Exception {
         // 创建地图对象
         mapView = new MapView(context);
         // 获取地图管理器
