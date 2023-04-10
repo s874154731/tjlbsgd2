@@ -260,7 +260,12 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
                         "");
         //  3 创建搜索对象，异步路径规划驾车模式查询
         if (mRouteSearch == null) {
-            mRouteSearch = new RouteSearch(mContext);
+            try{
+
+                mRouteSearch = new RouteSearch(mContext);
+            }catch (AMapException e){
+                e.printStackTrace();
+            }
         }
         // 4 执行搜索
         mRouteSearch.calculateDriveRouteAsyn(query);
