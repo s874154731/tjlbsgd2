@@ -7,11 +7,6 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.os.Build;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
-
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.services.core.ServiceSettings;
 import com.bumptech.glide.Glide;
@@ -21,8 +16,6 @@ import com.hjq.http.EasyConfig;
 import com.hjq.toast.ToastUtils;
 import com.hjq.umeng.UmengClient;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
-import com.tencent.bugly.crashreport.CrashReport;
-import com.tencent.mmkv.MMKV;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.helper.MMKVHelper;
 import com.sgd.tjlb.zhxf.http.model.RequestHandler;
@@ -36,7 +29,13 @@ import com.sgd.tjlb.zhxf.other.SmartBallPulseFooter;
 import com.sgd.tjlb.zhxf.other.TitleBarStyle;
 import com.sgd.tjlb.zhxf.other.ToastLogInterceptor;
 import com.sgd.tjlb.zhxf.other.ToastStyle;
+import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.mmkv.MMKV;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
 import okhttp3.OkHttpClient;
 import timber.log.Timber;
 
@@ -77,7 +76,7 @@ public final class AppApplication extends Application {
     /**
      * 初始化一些第三方框架
      */
-    public static void initSdk(Application application) {
+    public void initSdk(Application application) {
         // 设置标题栏初始化器
         TitleBar.setDefaultStyle(new TitleBarStyle());
 
@@ -187,5 +186,6 @@ public final class AppApplication extends Application {
                 }
             });
         }
+
     }
 }

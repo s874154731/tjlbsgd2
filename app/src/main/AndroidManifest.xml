@@ -18,6 +18,11 @@
     <!-- 拍照权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <!-- 安装权限 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
@@ -313,6 +318,11 @@
         <!--隐私协议-->
         <activity
             android:name="com.sgd.tjlb.zhxf.ui.activity.AgreementActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!--添加、修改设备-->
+        <activity
+            android:name="com.sgd.tjlb.zhxf.ui.activity.AddEquipmentActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 

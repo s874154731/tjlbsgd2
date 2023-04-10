@@ -13,13 +13,16 @@ public class ShopInfo {
     private static final int Type_Apply_Maintenance = 3;//申请维修
     private static final int Type_Maintenance_Warring = 4;//维修异常
 
-    private static final String Type_OK_TIP = "申请安装";//申请安装
+    private static final String Type_OK_TIP = "成功";//申请安装
     private static final String Type_Installation_TIP = "申请安装";//申请安装
     private static final String Type_Installation_Warring_TIP = "安装异常";//安装异常
     private static final String Type_Apply_Maintenance_TIP = "申请维修";//申请维修
     private static final String Type_Maintenance_Warring_TIP = "维修异常";//维修异常
 
-    private String user_id;
+    private static final String Type_Add_Equ_TIP = "添加设备";//对应安装
+    private static final String Type_Work_Record_TIP = "维修记录";//对应申请维修
+
+    private String user_id;//用户id？？？
     private String shop_id;//店铺id
     private String shop_name;//门店名称
     private int shop_type_id;//所属行业    选中
@@ -37,7 +40,7 @@ public class ShopInfo {
     private int status;//0成功，1申请安装，2安装异常，3申请维修，4维修
 
     public String getUser_id() {
-        return user_id;
+        return TextUtils.isEmpty(user_id) ? "" : user_id;
     }
 
     public void setUser_id(String user_id) {
@@ -157,8 +160,8 @@ public class ShopInfo {
     }
 
 
-    public String getStatusTip(){
-        switch (status){
+    public String getStatusTip() {
+        switch (status) {
             case Type_Installation:
                 return Type_Installation_TIP;
             case Type_Installation_Warring:
@@ -168,6 +171,17 @@ public class ShopInfo {
             case Type_Maintenance_Warring:
                 return Type_Maintenance_Warring_TIP;
             case Type_OK:
+            default:
+                return Type_OK_TIP;
+        }
+    }
+
+    public String getBtnShowTip() {
+        switch (status) {
+            case Type_Installation:
+                return Type_Add_Equ_TIP;
+            case Type_Apply_Maintenance:
+                return Type_Work_Record_TIP;
             default:
                 return Type_OK_TIP;
         }

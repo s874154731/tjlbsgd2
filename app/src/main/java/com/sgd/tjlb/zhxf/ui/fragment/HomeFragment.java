@@ -41,6 +41,7 @@ import com.sgd.tjlb.zhxf.entity.UserInfo;
 import com.sgd.tjlb.zhxf.helper.MMKVHelper;
 import com.sgd.tjlb.zhxf.http.api.WarrantyListApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
+import com.sgd.tjlb.zhxf.ui.activity.AddEquipmentActivity;
 import com.sgd.tjlb.zhxf.ui.activity.MapActivity;
 import com.sgd.tjlb.zhxf.ui.activity.init.HomeActivity;
 import com.sgd.tjlb.zhxf.ui.adapter.InputTipsAdapter;
@@ -243,6 +244,10 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
         mAdapter = new OrderAdapter(getContext());
         mRvOrder.setLayoutManager(new LinearLayoutManager(getContext()));
         mRvOrder.setAdapter(mAdapter);
+
+        mAdapter.setmCallBack(shopInfo -> {
+            AddEquipmentActivity.start(getContext(),shopInfo.getUser_id());
+        });
     }
 
     @Override

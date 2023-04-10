@@ -145,6 +145,8 @@ dependencies {
     implementation project(':library:widget')
     // 友盟封装
     implementation project(':library:umeng')
+    // 扫码
+//    implementation project(':sscan')
 
     // 权限请求框架：https://github.com/getActivity/XXPermissions
     implementation 'com.github.getActivity:XXPermissions:12.3'
@@ -236,4 +238,10 @@ dependencies {
     implementation "com.amap.api:map2d:latest.integration"
     //联动菜单
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
+
+    //扫码 https://github.com/yipianfengye/android-zxingLibrary
+//    implementation 'cn.yipianfengye.android:zxing-library:2.2'
+    //扫码 https://github.com/yuzhiqiang1993/zxing
+    implementation 'com.github.yuzhiqiang1993:zxing:2.2.9'
+
 }

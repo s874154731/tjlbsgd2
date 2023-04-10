@@ -406,5 +406,8 @@
 
     <string name="text_tip_area">区域</string>
     <string name="text_tip_nav_sgd">施工单</string>
+    <string name="text_tip_add_equipment">添加设备</string>
+    <string name="text_tip_update_equipment">修改设备</string>
+    <string name="text_tip_equipment_sn">设备SN码</string>
 
 </resources>

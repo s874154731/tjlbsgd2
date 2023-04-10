@@ -23,8 +23,13 @@ public class OrderAdapter extends AppAdapter<ShopInfo> {
     public static final int VIEW_TYPE_ITEM = 1;
     public static final int VIEW_TYPE_EMPTY = 0;
 
-
     private List<ShopInfo> mDatas = new ArrayList<>();
+
+    private ItemClickCallBack mCallBack;
+
+    public void setmCallBack(ItemClickCallBack mCallBack) {
+        this.mCallBack = mCallBack;
+    }
 
     public OrderAdapter(@NonNull Context context) {
         super(context);
@@ -105,8 +110,20 @@ public class OrderAdapter extends AppAdapter<ShopInfo> {
             mTvStorename.setText(shopInfo.getShop_name());
             mTvStoreaddress.setText(shopInfo.getAddress());
             mTvOrdertype.setText(shopInfo.getStatusTip());
-        }
 
+            mTvOrderAcceptorder.setText(shopInfo.getBtnShowTip());
+
+            mTvOrderAcceptorder.setOnClickListener(v->{
+                if (mCallBack != null){
+                    mCallBack.onItemClick(shopInfo);
+                }
+            });
+
+
+        }
     }
 
+    public interface ItemClickCallBack{
+        void onItemClick(ShopInfo shopInfo);
+    }
 }
