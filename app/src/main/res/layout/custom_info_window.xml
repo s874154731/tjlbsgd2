@@ -4,8 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/dp_10"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    tools:context="com.sgd.tjlb.zhxf.ui.activity.setting.AboutActivity">
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_14"
+        android:text="@string/tip_title"
+        android:textColor="@color/black33333"/>
+    <TextView
+        android:id="@+id/tv_snippet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:text="@string/tip_content"
+        android:textColor="@color/gray999"
+        android:textSize="@dimen/sp_14"/>
 
 </LinearLayout>
