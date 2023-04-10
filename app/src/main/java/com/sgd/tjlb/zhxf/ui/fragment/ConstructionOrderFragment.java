@@ -3,35 +3,29 @@ package com.sgd.tjlb.zhxf.ui.fragment;
 import android.annotation.SuppressLint;
 
 import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
-import com.gyf.immersionbar.ImmersionBar;
-import com.hjq.bar.TitleBar;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.listener.HttpCallback;
 import com.hjq.widget.view.SwitchButton;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.TitleBarFragment;
-import com.sgd.tjlb.zhxf.entity.PopularizeTypeBean;
 import com.sgd.tjlb.zhxf.entity.ShopInfo;
-import com.sgd.tjlb.zhxf.helper.MMKVHelper;
-import com.sgd.tjlb.zhxf.http.api.PopularizeTypeApi;
-import com.sgd.tjlb.zhxf.http.api.WarrantyListApi;
+import com.sgd.tjlb.zhxf.http.api.MyConstructionRecordListApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
+import com.sgd.tjlb.zhxf.ui.activity.AddEquipmentActivity;
 import com.sgd.tjlb.zhxf.ui.activity.init.HomeActivity;
+import com.sgd.tjlb.zhxf.ui.adapter.MyConstructionOrderAdapter;
 import com.sgd.tjlb.zhxf.ui.adapter.OrderAdapter;
 import com.sgd.tjlb.zhxf.utils.ConstantUtil;
 import com.sgd.tjlb.zhxf.utils.SmartRefreshLayoutUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
 
 /**
  * 施工单
@@ -48,13 +42,15 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
             TAB_TITLE_KNOLWLEDGE
     };
 
+    private final int mPageSize = ConstantUtil.PAGE_SIZE_20;
+    private int mRefreshType = ConstantUtil.REFRESH_INIT;
     private int mPage = ConstantUtil.PAGE_INDEX;
 
     private TabLayout mTabLayout;
     private SmartRefreshLayout mRefreshLayout;
     private RecyclerView mRecyclerView;
 
-    private OrderAdapter mAdapter;
+    private MyConstructionOrderAdapter mAdapter;
 
     public static ConstructionOrderFragment newInstance() {
         return new ConstructionOrderFragment();
@@ -63,6 +59,7 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
     @Override
     public void onResume() {
         super.onResume();
+        initData();
     }
 
     @Override
@@ -78,13 +75,38 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
 
         // 给这个 ToolBar 设置顶部内边距，才能和 TitleBar 进行对齐
 //        ImmersionBar.setTitleBar(getAttachActivity(), mToolbar);
+        initSmartRefreshLayout();
         initRecyclerView();
     }
 
+    private void initSmartRefreshLayout() {
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                //上拉加载更多
+                mPage++;
+                mRefreshType = ConstantUtil.REFRESH_MORE;
+                initData();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                //下滑
+                mPage = 1;
+                mRefreshType = ConstantUtil.REFRESH_FIRST;
+                initData();
+            }
+        });
+    }
+
     private void initRecyclerView() {
-        mAdapter = new OrderAdapter(getContext());
+        mAdapter = new MyConstructionOrderAdapter(getContext());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
+
+        mAdapter.setmCallBack(shopInfo -> {
+            AddEquipmentActivity.start(getContext(),shopInfo.getUser_id(),"");
+        });
     }
 
     @Override
@@ -94,13 +116,13 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
 
     @Override
     protected void initData() {
-        findWarrantyList();
+        findMyWarrantyList();
     }
 
     //报修单list
-    private void findWarrantyList() {
+    private void findMyWarrantyList() {
         EasyHttp.post(this)
-                .api(new WarrantyListApi()
+                .api(new MyConstructionRecordListApi()
                         .setPage(mPage)
                 )
                 .request(new HttpCallback<HttpData<List<ShopInfo>>>(this) {
@@ -126,5 +148,4 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
     public void onCheckedChanged(SwitchButton button, boolean checked) {
 
     }
-
 }

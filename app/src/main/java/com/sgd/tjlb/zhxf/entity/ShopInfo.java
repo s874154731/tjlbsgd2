@@ -144,7 +144,7 @@ public class ShopInfo {
     }
 
     public String getShop_id() {
-        return shop_id;
+        return TextUtils.isEmpty(shop_id) ? "" : shop_id;
     }
 
     public void setShop_id(String shop_id) {

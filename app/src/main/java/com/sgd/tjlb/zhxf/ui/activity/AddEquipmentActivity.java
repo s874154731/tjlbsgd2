@@ -8,19 +8,20 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 
-import com.hjq.gson.factory.GsonFactory;
 import com.hjq.http.EasyHttp;
+import com.hjq.http.config.IRequestApi;
 import com.hjq.http.listener.HttpCallback;
 import com.hjq.permissions.XXPermissions;
 import com.hjq.widget.view.ClearEditText;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.aop.Log;
 import com.sgd.tjlb.zhxf.app.AppActivity;
-import com.sgd.tjlb.zhxf.entity.EquipmentQRCode;
+import com.sgd.tjlb.zhxf.entity.EquipmentInfo;
 import com.sgd.tjlb.zhxf.http.api.AddEquipmentApi;
+import com.sgd.tjlb.zhxf.http.api.FindEquipmentApi;
+import com.sgd.tjlb.zhxf.http.api.UpdateEquipmentApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
 import com.sgd.tjlb.zhxf.utils.StringUtil;
-import com.umeng.commonsdk.debug.E;
 import com.yzq.zxinglibrary.android.CaptureActivity;
 import com.yzq.zxinglibrary.bean.ZxingConfig;
 import com.yzq.zxinglibrary.common.Constant;
@@ -33,18 +34,27 @@ import androidx.appcompat.widget.AppCompatButton;
  */
 public final class AddEquipmentActivity extends AppActivity {
 
-    private static final String TYPE_ID = "TYPE_ID";
+    private static final String TYPE_CID = "TYPE_CID";//客户端id
+    private static final String TYPE_DEVICE_ID = "TYPE_DEVICE_ID";//设备id
     private static final int REQUEST_CODE_SCAN = 5;
 
     private ClearEditText mEditText;
     private AppCompatButton mSubBtn;
 
     private String mCsUserID;//客户端id
+    private String mDeviceID;//设备id
+    private EquipmentInfo mEquipmentInfo;//设备信息
 
+    /***
+     * 进入
+     * @param context 上下
+     * @param cID 客户端id
+     * @param deviceID 设备id
+     */
     @Log
-    public static void start(Context context, String cID) {
+    public static void start(Context context, String cID, String deviceID) {
         Intent intent = new Intent(context, AddEquipmentActivity.class);
-        intent.putExtra(TYPE_ID, cID);
+        intent.putExtra(TYPE_CID, cID);
         context.startActivity(intent);
     }
 
@@ -93,11 +103,15 @@ public final class AddEquipmentActivity extends AppActivity {
     private void submitAddEquipment() {
         String snCode = mSubBtn.getText().toString();
 
+        IRequestApi submitApi = null;
+        if (!TextUtils.isEmpty(mDeviceID) && mEquipmentInfo != null) {
+            submitApi = new UpdateEquipmentApi().setDeviceID(mDeviceID).setDeviceSn(snCode);
+        } else {
+            submitApi = new AddEquipmentApi().setShopid(mCsUserID).setDeviceSn(snCode);
+        }
+
         EasyHttp.post(this)
-                .api(new AddEquipmentApi()
-                        .setShopid(mCsUserID)
-                        .setDeviceSn(snCode)
-                )
+                .api(submitApi)
                 .request(new HttpCallback<HttpData<Void>>(this) {
 
                     @SuppressLint("SetTextI18n")
@@ -116,7 +130,6 @@ public final class AddEquipmentActivity extends AppActivity {
 
     @Override
     public void onRightClick(View view) {
-
         XXPermissions.with(this)
                 .permission(Manifest.permission.CAMERA)
                 .permission(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -157,6 +170,45 @@ public final class AddEquipmentActivity extends AppActivity {
 
     @Override
     protected void initData() {
-        mCsUserID = getString(TYPE_ID);
+        mCsUserID = getString(TYPE_CID);
+        mDeviceID = getString(TYPE_DEVICE_ID);
+
+        if (!TextUtils.isEmpty(mDeviceID)) {
+            getDeviceInfo();
+        }
+        refreshUI();
+    }
+
+    //获取设备信息
+    private void getDeviceInfo() {
+        EasyHttp.post(this)
+                .api(new FindEquipmentApi()
+                        .setDeviceID(mDeviceID)
+                )
+                .request(new HttpCallback<HttpData<EquipmentInfo>>(this) {
+
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onSucceed(HttpData<EquipmentInfo> data) {
+                        mEquipmentInfo = data.getData();
+                        refreshUI();
+                    }
+
+                    @Override
+                    public void onFail(Exception e) {
+                        super.onFail(e);
+                    }
+                });
+    }
+
+    //刷新UI
+    private void refreshUI() {
+        //设置标题
+        String title = TextUtils.isEmpty(mDeviceID) ? getResources().getString(R.string.text_tip_add_equipment) : getResources().getString(R.string.text_tip_update_equipment);
+        setTitle(title);
+
+        if (mEquipmentInfo != null) {
+            mEditText.setText(mEquipmentInfo.getDevice_sn());
+        }
     }
 }

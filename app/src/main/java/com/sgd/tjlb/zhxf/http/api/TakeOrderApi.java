@@ -5,25 +5,25 @@ import com.sgd.tjlb.zhxf.entity.UserInfo;
 import com.sgd.tjlb.zhxf.helper.MMKVHelper;
 
 /**
- * desc   : 我的施工单记录
+ * 接单
  */
-public final class MyWarrantyRecordListApi implements IRequestApi {
+public final class TakeOrderApi implements IRequestApi {
 
     @Override
     public String getApi() {
-        return "my_shop_list";
+        return "modify_shop";
     }
 
-    private String worker_id;//     用户状态获取
-    private int page;           //页码
+    private String shop_id;  		//门店ID        2中选择
+    private String worker_id;  		//用户ID        用户状态获取
 
-    public MyWarrantyRecordListApi() {
+    public TakeOrderApi() {
         UserInfo userInfo = MMKVHelper.getInstance().getUserInfo();
         this.worker_id = userInfo.getUserID();
     }
 
-    public MyWarrantyRecordListApi setPage(int page) {
-        this.page = page;
+    public TakeOrderApi setShopID(String shop_id) {
+        this.shop_id = shop_id;
         return this;
     }
 

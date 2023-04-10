@@ -4,18 +4,17 @@ import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
-import com.hjq.base.BaseAdapter;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.AppAdapter;
-import com.sgd.tjlb.zhxf.entity.OrderData;
 import com.sgd.tjlb.zhxf.entity.ShopInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderAdapter extends AppAdapter<ShopInfo> {
+import androidx.annotation.NonNull;
+
+//我的施工单
+public class MyConstructionOrderAdapter extends AppAdapter<ShopInfo> {
 
     /**
      * 空布局 与正常布局
@@ -31,7 +30,7 @@ public class OrderAdapter extends AppAdapter<ShopInfo> {
         this.mCallBack = mCallBack;
     }
 
-    public OrderAdapter(@NonNull Context context) {
+    public MyConstructionOrderAdapter(@NonNull Context context) {
         super(context);
     }
 
@@ -57,7 +56,7 @@ public class OrderAdapter extends AppAdapter<ShopInfo> {
 
     @NonNull
     @Override
-    public BaseAdapter<?>.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_EMPTY) {
             return new EmptyViewHolder();
         }
@@ -74,7 +73,7 @@ public class OrderAdapter extends AppAdapter<ShopInfo> {
         setData(data);
     }
 
-    private final class EmptyViewHolder extends BaseAdapter.ViewHolder {
+    private final class EmptyViewHolder extends ViewHolder {
 
         public EmptyViewHolder() {
             super(R.layout.item_empty_page);
@@ -86,7 +85,7 @@ public class OrderAdapter extends AppAdapter<ShopInfo> {
         }
     }
 
-    private final class OrderViewHolder extends BaseAdapter.ViewHolder {
+    private final class OrderViewHolder extends ViewHolder {
 
         private TextView mTvStorename;
         private TextView mTvOrdertype;
@@ -94,7 +93,7 @@ public class OrderAdapter extends AppAdapter<ShopInfo> {
         private TextView mTvOrderAcceptorder;
 
         public OrderViewHolder() {
-            super(R.layout.item_home_order);
+            super(R.layout.item_my_construction_order);
 
             mTvStorename = (TextView) findViewById(R.id.tv_item_home_order_storename);
             mTvOrdertype = (TextView) findViewById(R.id.tv_item_home_order_ordertype);

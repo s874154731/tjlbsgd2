@@ -24,7 +24,6 @@ import com.amap.api.services.help.InputtipsQuery;
 import com.google.android.material.tabs.TabLayout;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.listener.HttpCallback;
-import com.hjq.permissions.OnPermissionCallback;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
 import com.hjq.shape.view.ShapeTextView;
@@ -39,12 +38,10 @@ import com.sgd.tjlb.zhxf.entity.OrderData;
 import com.sgd.tjlb.zhxf.entity.ShopInfo;
 import com.sgd.tjlb.zhxf.entity.UserInfo;
 import com.sgd.tjlb.zhxf.helper.MMKVHelper;
-import com.sgd.tjlb.zhxf.http.api.WarrantyListApi;
+import com.sgd.tjlb.zhxf.http.api.TakeOrderApi;
+import com.sgd.tjlb.zhxf.http.api.ShopApplayWarrantyListApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
-import com.sgd.tjlb.zhxf.ui.activity.AddEquipmentActivity;
-import com.sgd.tjlb.zhxf.ui.activity.MapActivity;
 import com.sgd.tjlb.zhxf.ui.activity.init.HomeActivity;
-import com.sgd.tjlb.zhxf.ui.adapter.InputTipsAdapter;
 import com.sgd.tjlb.zhxf.ui.adapter.OrderAdapter;
 import com.sgd.tjlb.zhxf.utils.ConstantUtil;
 import com.sgd.tjlb.zhxf.utils.SmartRefreshLayoutUtil;
@@ -219,7 +216,6 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
 
     }
 
-
     private void initSmartRefreshLayout() {
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -245,9 +241,30 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
         mRvOrder.setLayoutManager(new LinearLayoutManager(getContext()));
         mRvOrder.setAdapter(mAdapter);
 
-        mAdapter.setmCallBack(shopInfo -> {
-            AddEquipmentActivity.start(getContext(),shopInfo.getUser_id());
-        });
+        //            AddEquipmentActivity.start(getContext(),shopInfo.getUser_id());
+        mAdapter.setmCallBack(this::takeOrders);
+    }
+
+    //接单
+    private void takeOrders(ShopInfo shopInfo) {
+        EasyHttp.post(this)
+                .api(new TakeOrderApi()
+                        .setShopID(shopInfo.getShop_id())
+                )
+                .request(new HttpCallback<HttpData<Void>>(this) {
+
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onSucceed(HttpData<Void> data) {
+                        toast("接单成功");
+                        findWarrantyList();
+                    }
+
+                    @Override
+                    public void onFail(Exception e) {
+                        super.onFail(e);
+                    }
+                });
     }
 
     @Override
@@ -255,10 +272,10 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
         findWarrantyList();
     }
 
-    //报修单list
+    //接单申请list
     private void findWarrantyList() {
         EasyHttp.post(this)
-                .api(new WarrantyListApi()
+                .api(new ShopApplayWarrantyListApi()
                         .setPage(mPage)
                 )
                 .request(new HttpCallback<HttpData<List<ShopInfo>>>(this) {

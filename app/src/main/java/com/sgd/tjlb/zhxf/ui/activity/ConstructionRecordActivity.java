@@ -1,7 +1,6 @@
 package com.sgd.tjlb.zhxf.ui.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,8 +12,7 @@ import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.AppActivity;
 import com.sgd.tjlb.zhxf.entity.ConstructionRecordData;
 import com.sgd.tjlb.zhxf.entity.ShopInfo;
-import com.sgd.tjlb.zhxf.http.api.MyWarrantyRecordListApi;
-import com.sgd.tjlb.zhxf.http.api.WarrantyListApi;
+import com.sgd.tjlb.zhxf.http.api.MyConstructionRecordListApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
 import com.sgd.tjlb.zhxf.ui.adapter.ConstructionRecordAdapter;
 import com.sgd.tjlb.zhxf.utils.ConstantUtil;
@@ -83,7 +81,7 @@ public class ConstructionRecordActivity extends AppActivity {
     //获取我的施工单记录
     private void findMyWarrantyRecordList() {
         EasyHttp.post(this)
-                .api(new MyWarrantyRecordListApi()
+                .api(new MyConstructionRecordListApi()
                         .setPage(mPage)
                 )
                 .request(new HttpCallback<HttpData<List<ShopInfo>>>(this) {
