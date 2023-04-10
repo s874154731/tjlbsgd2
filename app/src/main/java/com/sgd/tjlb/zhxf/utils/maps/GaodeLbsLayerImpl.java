@@ -148,7 +148,7 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
             options.anchor(0.5f, 0.5f);
             options.position(latLng);
             Marker marker = aMap.addMarker(options);
-            marker.setRotateAngle(rotation);
+            marker.setRotateAngle(locationInfo.getRotation());
             markerMap.put(locationInfo.getKey(), marker);
             if (KEY_MY_MARKERE.equals(locationInfo.getKey())) {
                 // 传感器控制我的位置标记的旋转角度
