@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginVertical="@dimen/dp_2"
     android:background="@drawable/bg_white_radius_4dp"
     android:padding="@dimen/dp_10">
@@ -43,9 +44,16 @@
         app:layout_constraintEnd_toStartOf="@id/tv_home_order_acceptorder"
         app:layout_constraintStart_toStartOf="@id/tv_item_home_order_storename"
         app:layout_constraintTop_toBottomOf="@id/tv_item_home_order_storename" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_shop_equipment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_home_order_storeaddress"
+        tools:itemCount="2"
+        tools:listitem="@layout/item_shop_equipment_in_item"/>
 
     <TextView
-        android:id="@+id/tv_home_order_acceptorder"
+        android:id="@+id/tv_btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_10"
@@ -55,8 +63,7 @@
         android:text="@string/text_tip_add_equipment"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_14"
-        app:layout_constraintBottom_toBottomOf="@id/tv_item_home_order_storeaddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_item_home_order_storeaddress" />
+        app:layout_constraintTop_toBottomOf="@+id/rv_shop_equipment"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

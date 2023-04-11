@@ -212,6 +212,7 @@
     <!-- 重置密码 -->
     <string name="password_reset_title">修改密码</string>
     <string name="password_reset_phone_hint1">请输入6&#8211;18位英文或字母</string>
+    <string name="password_reset_phone_new_pwd_hint">请输入新密码</string>
     <string name="password_reset_phone_hint2">请再次输入密码</string>
     <string name="password_reset_input_error">两次密码输入不一致，请重新输入</string>
     <string name="password_reset_success">修改成功</string>

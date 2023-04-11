@@ -2,6 +2,8 @@ package com.sgd.tjlb.zhxf.entity;
 
 import android.text.TextUtils;
 
+import java.util.List;
+
 /**
  * 店铺信息
  */
@@ -38,6 +40,8 @@ public class ShopInfo {
     private String sell_no;//销售编码
 
     private int status;//0成功，1申请安装，2安装异常，3申请维修，4维修
+
+    private List<EquipmentInfo> equipmentInfoList;
 
     public String getUser_id() {
         return TextUtils.isEmpty(user_id) ? "" : user_id;
@@ -159,6 +163,13 @@ public class ShopInfo {
         this.status = status;
     }
 
+    public List<EquipmentInfo> getEquipmentInfoList() {
+        return equipmentInfoList;
+    }
+
+    public void setEquipmentInfoList(List<EquipmentInfo> equipmentInfoList) {
+        this.equipmentInfoList = equipmentInfoList;
+    }
 
     public String getStatusTip() {
         switch (status) {

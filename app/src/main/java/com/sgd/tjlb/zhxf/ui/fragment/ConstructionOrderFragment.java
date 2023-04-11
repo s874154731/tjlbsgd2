@@ -11,8 +11,10 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.TitleBarFragment;
+import com.sgd.tjlb.zhxf.entity.EquipmentInfo;
 import com.sgd.tjlb.zhxf.entity.ShopInfo;
 import com.sgd.tjlb.zhxf.http.api.MyConstructionRecordListApi;
+import com.sgd.tjlb.zhxf.http.api.ShopEquipmentListApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
 import com.sgd.tjlb.zhxf.ui.activity.AddEquipmentActivity;
 import com.sgd.tjlb.zhxf.ui.activity.init.HomeActivity;
@@ -105,7 +107,7 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.setmCallBack(shopInfo -> {
-            AddEquipmentActivity.start(getContext(),shopInfo.getUser_id(),"");
+            AddEquipmentActivity.start(getContext(), shopInfo.getUser_id(), "");
         });
     }
 
@@ -133,6 +135,9 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
                         SmartRefreshLayoutUtil.complete(mRefreshLayout);
                         if (data.getData() != null) {
                             mAdapter.initData(data.getData());
+                            for (ShopInfo shop : data.getData()) {
+                                findEquipmentListByShopID(shop);
+                            }
                         }
                     }
 
@@ -140,6 +145,29 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
                     public void onFail(Exception e) {
                         super.onFail(e);
                         SmartRefreshLayoutUtil.complete(mRefreshLayout);
+                    }
+                });
+    }
+
+    private void findEquipmentListByShopID(ShopInfo shopInfo) {
+        EasyHttp.post(this)
+                .api(new ShopEquipmentListApi()
+                        .setUserID(shopInfo.getUser_id())
+                )
+                .request(new HttpCallback<HttpData<List<EquipmentInfo>>>(this) {
+
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onSucceed(HttpData<List<EquipmentInfo>> data) {
+                        if (data.getData() != null) {
+                            shopInfo.setEquipmentInfoList(data.getData());
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onFail(Exception e) {
+//                        super.onFail(e);
                     }
                 });
     }

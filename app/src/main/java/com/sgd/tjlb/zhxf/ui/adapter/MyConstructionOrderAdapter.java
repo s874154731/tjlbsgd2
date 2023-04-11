@@ -6,12 +6,16 @@ import android.widget.TextView;
 
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.AppAdapter;
+import com.sgd.tjlb.zhxf.entity.EquipmentInfo;
 import com.sgd.tjlb.zhxf.entity.ShopInfo;
+import com.sgd.tjlb.zhxf.ui.activity.AddEquipmentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 //我的施工单
 public class MyConstructionOrderAdapter extends AppAdapter<ShopInfo> {
@@ -60,7 +64,7 @@ public class MyConstructionOrderAdapter extends AppAdapter<ShopInfo> {
         if (viewType == VIEW_TYPE_EMPTY) {
             return new EmptyViewHolder();
         }
-        return new OrderViewHolder();
+        return new ConstructionViewHolder();
     }
 
     /**
@@ -72,6 +76,16 @@ public class MyConstructionOrderAdapter extends AppAdapter<ShopInfo> {
         }
         setData(data);
     }
+
+    /**
+     * 设置·
+     * @param shopInfo
+     * @param equipmentInfoList
+     */
+    public void setEquipmentDatas(ShopInfo shopInfo ,List<EquipmentInfo> equipmentInfoList){
+
+    }
+
 
     private final class EmptyViewHolder extends ViewHolder {
 
@@ -85,21 +99,24 @@ public class MyConstructionOrderAdapter extends AppAdapter<ShopInfo> {
         }
     }
 
-    private final class OrderViewHolder extends ViewHolder {
+    private final class ConstructionViewHolder extends ViewHolder {
 
         private TextView mTvStorename;
         private TextView mTvOrdertype;
         private TextView mTvStoreaddress;
-        private TextView mTvOrderAcceptorder;
+        private TextView mBtnAdd;
+        private RecyclerView mRecyclerView;
 
-        public OrderViewHolder() {
+        private ShopEquipmentAdapter mAdapter;
+
+        public ConstructionViewHolder() {
             super(R.layout.item_my_construction_order);
 
             mTvStorename = (TextView) findViewById(R.id.tv_item_home_order_storename);
             mTvOrdertype = (TextView) findViewById(R.id.tv_item_home_order_ordertype);
             mTvStoreaddress = (TextView) findViewById(R.id.tv_item_home_order_storeaddress);
-            mTvOrderAcceptorder = (TextView) findViewById(R.id.tv_home_order_acceptorder);
-
+            mBtnAdd = (TextView) findViewById(R.id.tv_btn_add);
+            mRecyclerView = findViewById(R.id.rv_shop_equipment);
         }
 
         @Override
@@ -112,12 +129,27 @@ public class MyConstructionOrderAdapter extends AppAdapter<ShopInfo> {
 
 //            mTvOrderAcceptorder.setText(shopInfo.getBtnShowTip());
 
-            mTvOrderAcceptorder.setOnClickListener(v->{
+            initRecyclerView(shopInfo);
+
+            mBtnAdd.setOnClickListener(v->{
                 if (mCallBack != null){
                     mCallBack.onItemClick(shopInfo);
                 }
             });
+        }
 
+        private void initRecyclerView(ShopInfo shopInfo) {
+            mAdapter = new ShopEquipmentAdapter(getContext());
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            mRecyclerView.setAdapter(mAdapter);
+
+            mAdapter.setItemCallBack(info -> {
+                AddEquipmentActivity.start(getContext(),shopInfo.getUser_id(),info.getId());
+            });
+
+            if (shopInfo.getEquipmentInfoList() != null){
+                mAdapter.setData(shopInfo.getEquipmentInfoList());
+            }
 
         }
     }

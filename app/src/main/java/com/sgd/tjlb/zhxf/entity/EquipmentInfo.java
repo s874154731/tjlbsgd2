@@ -22,7 +22,7 @@ public class EquipmentInfo {
     private boolean isWaring;
 
     public String getId() {
-        return id;
+        return TextUtils.isEmpty(id) ? "" : id;
     }
 
     public void setId(String id) {
@@ -30,7 +30,7 @@ public class EquipmentInfo {
     }
 
     public String getName() {
-        return name;
+        return TextUtils.isEmpty(name) ? "" : name;
     }
 
     public void setName(String name) {
