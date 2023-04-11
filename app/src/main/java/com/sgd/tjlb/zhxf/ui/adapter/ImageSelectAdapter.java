@@ -16,6 +16,7 @@ import com.sgd.tjlb.zhxf.app.AppAdapter;
 import com.sgd.tjlb.zhxf.entity.EquipmentInfo;
 import com.sgd.tjlb.zhxf.http.glide.GlideApp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ import java.util.List;
  */
 public final class ImageSelectAdapter extends AppAdapter<String> {
 
-    private List<String> mSelectImages;
+    private List<String> mSelectImages = new ArrayList<>();
 
     public static final int No_Check = 1;//没有选择
 

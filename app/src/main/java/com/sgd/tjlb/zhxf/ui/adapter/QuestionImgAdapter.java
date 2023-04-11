@@ -1,6 +1,7 @@
 package com.sgd.tjlb.zhxf.ui.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -37,6 +38,16 @@ public class QuestionImgAdapter extends AppAdapter<QuestionImgData> {
             mDatas = data;
         }
         setData(data);
+    }
+
+    public String getImgData() {
+        List<Object> stringList = new ArrayList<>();
+        for (int i = 0; i < mDatas.size(); i++) {
+            if (mDatas.get(i).getType() == QuestionImgData.Add_Gone) {
+                stringList.add(mDatas.get(i).getUrl());
+            }
+        }
+        return TextUtils.join(",", stringList);
     }
 
     private final class QuestionImgHolder extends ViewHolder {
@@ -110,6 +121,7 @@ public class QuestionImgAdapter extends AppAdapter<QuestionImgData> {
 
     public interface OnItemClick {
         void onItemClick(int position);
+
         void onCloseItemClick(int position);
     }
 }

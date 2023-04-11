@@ -11,19 +11,19 @@ import com.hjq.base.BaseAdapter;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.AppAdapter;
 import com.sgd.tjlb.zhxf.entity.BankInfo;
-import com.sgd.tjlb.zhxf.entity.ConstructionRecordData;
+import com.sgd.tjlb.zhxf.entity.ConstructionRecordBean;
 import com.sgd.tjlb.zhxf.entity.ContractData;
 import com.sgd.tjlb.zhxf.entity.OrderData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConstructionRecordAdapter extends AppAdapter<ConstructionRecordData> {
+public class ConstructionRecordAdapter extends AppAdapter<ConstructionRecordBean> {
 
     public static final int VIEW_TYPE_ITEM = 1;
     public static final int VIEW_TYPE_EMPTY = 0;
 
-    private List<ConstructionRecordData> mDatas = new ArrayList<>();
+    private List<ConstructionRecordBean> mDatas = new ArrayList<>();
 
     private CallBack mCallBack;
 
@@ -66,7 +66,7 @@ public class ConstructionRecordAdapter extends AppAdapter<ConstructionRecordData
     /**
      * 初始化数据
      */
-    public void initData(List<ConstructionRecordData> data) {
+    public void initData(List<ConstructionRecordBean> data) {
         if (data != null) {
             mDatas = data;
         }
@@ -104,9 +104,9 @@ public class ConstructionRecordAdapter extends AppAdapter<ConstructionRecordData
 
         @Override
         public void onBindView(int position) {
-            ConstructionRecordData data = mDatas.get(position);
-            mTvITime.setText(data.getTime());
-            mTvIName.setText(data.getName());
+            ConstructionRecordBean data = mDatas.get(position);
+            mTvITime.setText(data.getCreate_time());
+            mTvIName.setText(data.getShop_name());
             mTvIAddress.setText(data.getAddress());
             mTvIWorkrecord.setOnClickListener(view ->
                     mCallBack.onItemClick(data)
@@ -115,8 +115,8 @@ public class ConstructionRecordAdapter extends AppAdapter<ConstructionRecordData
 
     }
 
-    public interface CallBack{
-        void onItemClick(ConstructionRecordData data);
+    public interface CallBack {
+        void onItemClick(ConstructionRecordBean data);
     }
 
 }

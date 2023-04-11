@@ -7,6 +7,14 @@ import android.text.TextUtils;
  */
 public class ConstructionRecordBean {
 
+   public static final int Type_OK = 0;//申请安装
+   public static final int Type_Installation_Warring = 2;//安装异常
+   public static final int Type_Maintenance_Warring = 4;//维修异常
+
+   public static final String Type_OK_TIP = "成功";//申请安装
+   public static final String Type_Installation_Warring_TIP = "安装异常";//安装异常
+   public static final String Type_Maintenance_Warring_TIP = "维修异常";//维修异常
+
    private String device_work_id;//记录ID
    private String device_id;//设备ID
    private String status_img;//施工图片
@@ -79,4 +87,18 @@ public class ConstructionRecordBean {
    public void setAddress(String address) {
       this.address = address;
    }
+
+
+   public String getStatusTip() {
+      switch (status) {
+         case Type_Installation_Warring:
+            return Type_Installation_Warring_TIP;
+         case Type_Maintenance_Warring:
+            return Type_Maintenance_Warring_TIP;
+         case Type_OK:
+         default:
+            return Type_OK_TIP;
+      }
+   }
+
 }

@@ -11,7 +11,7 @@ import com.hjq.http.listener.HttpCallback;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.AppActivity;
 import com.sgd.tjlb.zhxf.entity.ConstructionRecordData;
-import com.sgd.tjlb.zhxf.entity.ShopInfo;
+import com.sgd.tjlb.zhxf.entity.ConstructionRecordBean;
 import com.sgd.tjlb.zhxf.http.api.MyConstructionRecordListApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
 import com.sgd.tjlb.zhxf.ui.adapter.ConstructionRecordAdapter;
@@ -29,7 +29,6 @@ public class ConstructionRecordActivity extends AppActivity {
 
     private ConstructionRecordAdapter mAdapter;
 
-    private List<ConstructionRecordData> dataList = new ArrayList<>();
     private int mPage = ConstantUtil.PAGE_INDEX;
 
     public static void start(Activity context) {
@@ -56,25 +55,25 @@ public class ConstructionRecordActivity extends AppActivity {
         mAdapter = new ConstructionRecordAdapter(this);
         mRvConstructionRecord.setLayoutManager(new LinearLayoutManager(this));
         mRvConstructionRecord.setAdapter(mAdapter);
-        mAdapter.setmCallBack(new ConstructionRecordAdapter.CallBack() {
-            @Override
-            public void onItemClick(ConstructionRecordData data) {
-                WorkRecordActivity.start(ConstructionRecordActivity.this);
+        mAdapter.setmCallBack(data -> {
+            if (data != null) {
+                WorkRecordActivity.start(ConstructionRecordActivity.this, data.getDevice_work_id());
             }
         });
     }
 
     @Override
     protected void initData() {
+        List<ConstructionRecordBean> dataList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            ConstructionRecordData recordData = new ConstructionRecordData();
+            ConstructionRecordBean recordData = new ConstructionRecordBean();
+            recordData.setDevice_id("" + i + 1);
             recordData.setAddress("地址" + i);
-            recordData.setName("店铺名称" + i);
-            recordData.setTime("2023-01-" + i);
+            recordData.setShop_name("店铺名称" + i);
+            recordData.setCreate_time("2023-01-" + i);
             dataList.add(recordData);
         }
         mAdapter.initData(dataList);
-
         findMyWarrantyRecordList();
     }
 
@@ -84,13 +83,12 @@ public class ConstructionRecordActivity extends AppActivity {
                 .api(new MyConstructionRecordListApi()
                         .setPage(mPage)
                 )
-                .request(new HttpCallback<HttpData<List<ShopInfo>>>(this) {
+                .request(new HttpCallback<HttpData<List<ConstructionRecordBean>>>(this) {
 
                     @Override
-                    public void onSucceed(HttpData<List<ShopInfo>> data) {
+                    public void onSucceed(HttpData<List<ConstructionRecordBean>> data) {
                         if (data.getData() != null) {
-
-
+//                            mAdapter.initData(data.getData());
                         }
                     }
 

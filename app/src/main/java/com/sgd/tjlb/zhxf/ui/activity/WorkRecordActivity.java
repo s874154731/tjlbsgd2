@@ -2,6 +2,7 @@ package com.sgd.tjlb.zhxf.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.hjq.base.BaseDialog;
 import com.hjq.toast.ToastUtils;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.AppActivity;
+import com.sgd.tjlb.zhxf.entity.ConstructionRecordBean;
 import com.sgd.tjlb.zhxf.entity.WorkRecordDetailsData;
 import com.sgd.tjlb.zhxf.manager.InputTextManager;
 import com.sgd.tjlb.zhxf.other.GridSpaceDecoration;
@@ -22,12 +24,15 @@ import com.sgd.tjlb.zhxf.ui.dialog.PayPasswordDialog;
 import com.sgd.tjlb.zhxf.ui.dialog.UpdateWorkRecordDialog;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * 工作记录 --- activity
  */
 public class WorkRecordActivity extends AppActivity {
+
+    private static final String INTENT_KEY_PARAME = "INTENT_KEY_PARAME";
 
     private TextView mTvTime;
     private RecyclerView mRvImg;
@@ -39,12 +44,15 @@ public class WorkRecordActivity extends AppActivity {
 
     private List<String> mImages = new ArrayList<>();
 
-    public static void start(Context context) {
+    String mRecordId;
+
+    private ConstructionRecordBean recordBean;
+
+    public static void start(Context context, String id) {
         Intent starter = new Intent(context, WorkRecordActivity.class);
-//        starter.putExtra();
+        starter.putExtra(INTENT_KEY_PARAME, id);
         context.startActivity(starter);
     }
-
 
     @Override
     protected int getLayoutId() {
@@ -53,6 +61,7 @@ public class WorkRecordActivity extends AppActivity {
 
     @Override
     protected void initView() {
+        mRecordId = getIntent().getStringExtra(INTENT_KEY_PARAME);
 
         mTvTime = (TextView) findViewById(R.id.tv_work_record_time);
         mRvImg = (RecyclerView) findViewById(R.id.rv_work_record_img);
@@ -67,12 +76,9 @@ public class WorkRecordActivity extends AppActivity {
 
     private void initRecyclerView() {
         mAdapter = new ImageSelectAdapter(this, ImageSelectAdapter.No_Check);
-        mAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(RecyclerView recyclerView, View itemView, int position) {
-                if (mImages.size() != 0) {
-
-                }
+        mAdapter.setOnItemClickListener((recyclerView, itemView, position) -> {
+            if (mImages.size() != 0) {
+                ImagePreviewActivity.start(getActivity(), mImages.get(position));
             }
         });
         mRvImg.setAdapter(mAdapter);
@@ -95,16 +101,16 @@ public class WorkRecordActivity extends AppActivity {
      * 修改工作记录弹窗
      */
     private void updateWorkRecord() {
-        WorkRecordDetailsData data = new WorkRecordDetailsData();
-        data.setDescribe("工作描述按个高危岗位");
-        data.setExamine("安装异常");
+        if (recordBean == null) {
+            return;
+        }
         new UpdateWorkRecordDialog.Builder(this)
-                .setData(data)
+                .setData(recordBean)
+                .setBaseActivity(WorkRecordActivity.this)
                 //.setAutoDismiss(false) // 设置点击按钮后不关闭对话框
                 .setListener(new UpdateWorkRecordDialog.OnListener() {
                     @Override
-                    public void onSubmit(BaseDialog dialog, WorkRecordDetailsData data) {
-                        ToastUtils.show(data.getDescribe());
+                    public void onSubmit(BaseDialog dialog, ConstructionRecordBean data) {
                         dialog.dismiss();
                     }
                 })
@@ -113,11 +119,15 @@ public class WorkRecordActivity extends AppActivity {
 
     @Override
     protected void initData() {
-        mImages.add("https://img1.baidu.com/it/u=3012806272,1276873993&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500");
-        mImages.add("https://img1.baidu.com/it/u=3012806272,1276873993&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500");
-        mImages.add("https://img1.baidu.com/it/u=3012806272,1276873993&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500");
-        mImages.add("https://img1.baidu.com/it/u=3012806272,1276873993&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500");
-        mAdapter.initData(mImages);
+        recordBean = new ConstructionRecordBean();
+        mTvTime.setText(recordBean.getCreate_time());
+        if (!TextUtils.isEmpty(recordBean.getStatus_img())) {
+            String img = recordBean.getStatus_img() + ",";
+            mImages = Arrays.asList(img.split(","));
+            mAdapter.initData(mImages);
+        }
+        mTvDescription.setText(recordBean.getStatus_info());
+        mTvExamine.setText("检查：" + recordBean.getStatusTip());
     }
 
 }
