@@ -64,16 +64,16 @@ public class ConstructionRecordActivity extends AppActivity {
 
     @Override
     protected void initData() {
-        List<ConstructionRecordBean> dataList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            ConstructionRecordBean recordData = new ConstructionRecordBean();
-            recordData.setDevice_id("" + i + 1);
-            recordData.setAddress("地址" + i);
-            recordData.setShop_name("店铺名称" + i);
-            recordData.setCreate_time("2023-01-" + i);
-            dataList.add(recordData);
-        }
-        mAdapter.initData(dataList);
+//        List<ConstructionRecordBean> dataList = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            ConstructionRecordBean recordData = new ConstructionRecordBean();
+//            recordData.setDevice_id("" + i + 1);
+//            recordData.setAddress("地址" + i);
+//            recordData.setShop_name("店铺名称" + i);
+//            recordData.setCreate_time("2023-01-" + i);
+//            dataList.add(recordData);
+//        }
+//        mAdapter.initData(dataList);
         findMyWarrantyRecordList();
     }
 
@@ -88,7 +88,7 @@ public class ConstructionRecordActivity extends AppActivity {
                     @Override
                     public void onSucceed(HttpData<List<ConstructionRecordBean>> data) {
                         if (data.getData() != null) {
-//                            mAdapter.initData(data.getData());
+                            mAdapter.initData(data.getData());
                         }
                     }
 
