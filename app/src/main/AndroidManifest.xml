@@ -380,7 +380,7 @@
         <!--高德地图-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="f46707638c576df8b0b87a3942049c7d" />
+            android:value="4e345f3d50a93c6eb092284b87aa2983" />
 
     </application>
 

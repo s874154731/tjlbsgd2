@@ -9,16 +9,20 @@ import java.util.List;
  */
 public class ShopInfo {
 
-    private static final int Type_OK = 0;//申请安装
-    private static final int Type_Installation = 1;//申请安装
-    private static final int Type_Installation_Warring = 2;//安装异常
+    private static final int Type_OK = 0;//成功
+    private static final int Type_Installation_Apply = 1;//申请安装
+    private static final int Type_Installation_ING = 2;//安装中
     private static final int Type_Apply_Maintenance = 3;//申请维修
-    private static final int Type_Maintenance_Warring = 4;//维修异常
+    private static final int Type_Maintenance_ING = 4;//维修中
+    private static final int Type_Installation_Warring = 5;//安装异常
+    private static final int Type_Maintenance_Warring = 6;//维修异常
 
     private static final String Type_OK_TIP = "成功";//申请安装
-    private static final String Type_Installation_TIP = "申请安装";//申请安装
-    private static final String Type_Installation_Warring_TIP = "安装异常";//安装异常
+    private static final String Type_Installation_Apply_TIP = "申请安装";//申请安装
+    private static final String Type_Installation_ing_TIP = "安装中";//安装中
     private static final String Type_Apply_Maintenance_TIP = "申请维修";//申请维修
+    private static final String Type_Maintenance_ING_TIP = "维修中";//维修中
+    private static final String Type_Installation_Warring_TIP = "安装异常";//安装异常
     private static final String Type_Maintenance_Warring_TIP = "维修异常";//维修异常
 
     private static final String Type_Add_Equ_TIP = "添加设备";//对应安装
@@ -41,7 +45,7 @@ public class ShopInfo {
 
     private int status;//0成功，1申请安装，2安装异常，3申请维修，4维修
 
-    private List<EquipmentInfo> equipmentInfoList;
+    private List<EquipmentInfo> devicelist;
 
     public String getUser_id() {
         return TextUtils.isEmpty(user_id) ? "" : user_id;
@@ -163,22 +167,26 @@ public class ShopInfo {
         this.status = status;
     }
 
-    public List<EquipmentInfo> getEquipmentInfoList() {
-        return equipmentInfoList;
+    public List<EquipmentInfo> getDevicelist() {
+        return devicelist;
     }
 
-    public void setEquipmentInfoList(List<EquipmentInfo> equipmentInfoList) {
-        this.equipmentInfoList = equipmentInfoList;
+    public void setDevicelist(List<EquipmentInfo> devicelist) {
+        this.devicelist = devicelist;
     }
 
     public String getStatusTip() {
         switch (status) {
-            case Type_Installation:
-                return Type_Installation_TIP;
-            case Type_Installation_Warring:
-                return Type_Installation_Warring_TIP;
+            case Type_Installation_Apply:
+                return Type_Installation_Apply_TIP;
+            case Type_Installation_ING:
+                return Type_Installation_ing_TIP;
             case Type_Apply_Maintenance:
                 return Type_Apply_Maintenance_TIP;
+            case Type_Maintenance_ING:
+                return Type_Maintenance_ING_TIP;
+            case Type_Installation_Warring:
+                return Type_Installation_Warring_TIP;
             case Type_Maintenance_Warring:
                 return Type_Maintenance_Warring_TIP;
             case Type_OK:
@@ -189,13 +197,27 @@ public class ShopInfo {
 
     public String getBtnShowTip() {
         switch (status) {
-            case Type_Installation:
-                return Type_Add_Equ_TIP;
-            case Type_Apply_Maintenance:
+            case Type_Maintenance_ING:
                 return Type_Work_Record_TIP;
+            case Type_Installation_Apply:
             default:
-                return Type_OK_TIP;
+                return Type_Add_Equ_TIP;
         }
     }
 
+    /**
+     * 添加设备状态
+     * @return 状态
+     */
+    public boolean isAddDeviceStatus(){
+        return status == Type_Installation_ING;
+    }
+
+    /**
+     * 工作记录状态
+     * @return 状态
+     */
+    public boolean isAddRecordStatus(){
+        return status == Type_Maintenance_ING;
+    }
 }

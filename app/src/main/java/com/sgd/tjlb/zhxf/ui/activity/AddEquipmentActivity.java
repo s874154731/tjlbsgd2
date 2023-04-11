@@ -55,6 +55,7 @@ public final class AddEquipmentActivity extends AppActivity {
     public static void start(Context context, String cID, String deviceID) {
         Intent intent = new Intent(context, AddEquipmentActivity.class);
         intent.putExtra(TYPE_CID, cID);
+        intent.putExtra(TYPE_DEVICE_ID, deviceID);
         context.startActivity(intent);
     }
 
@@ -101,7 +102,7 @@ public final class AddEquipmentActivity extends AppActivity {
     }
 
     private void submitAddEquipment() {
-        String snCode = mSubBtn.getText().toString();
+        String snCode = mEditText.getText().toString().trim();
 
         IRequestApi submitApi = null;
         if (!TextUtils.isEmpty(mDeviceID) && mEquipmentInfo != null) {

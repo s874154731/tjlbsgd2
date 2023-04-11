@@ -127,7 +127,7 @@ public class MyConstructionOrderAdapter extends AppAdapter<ShopInfo> {
             mTvStoreaddress.setText(shopInfo.getAddress());
             mTvOrdertype.setText(shopInfo.getStatusTip());
 
-//            mTvOrderAcceptorder.setText(shopInfo.getBtnShowTip());
+            mBtnAdd.setText(shopInfo.getBtnShowTip());
 
             initRecyclerView(shopInfo);
 
@@ -147,10 +147,9 @@ public class MyConstructionOrderAdapter extends AppAdapter<ShopInfo> {
                 AddEquipmentActivity.start(getContext(),shopInfo.getUser_id(),info.getId());
             });
 
-            if (shopInfo.getEquipmentInfoList() != null){
-                mAdapter.setData(shopInfo.getEquipmentInfoList());
+            if (shopInfo.getDevicelist() != null){
+                mAdapter.initData(shopInfo.getDevicelist());
             }
-
         }
     }
 

@@ -13,8 +13,8 @@ package com.sgd.tjlb.zhxf.utils.maps;
  */
 public class LocationInfo {
     private String key;
-    private String  name;
-    private double  latitude;
+    private String name;
+    private double latitude;
     private double longitude;
     private float rotation;
     private String time;

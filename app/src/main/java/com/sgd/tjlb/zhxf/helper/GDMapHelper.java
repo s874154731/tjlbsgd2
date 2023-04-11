@@ -53,6 +53,8 @@ public enum GDMapHelper {
     private void initLocation() throws Exception {
         mLocationClient = new AMapLocationClient(mContext);
         mLocationOption = new AMapLocationClientOption();
+        //使用单次定位
+        mLocationOption.setOnceLocation(true);
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         mLocationOption.setNeedAddress(true);
         mLocationOption.setHttpTimeOut(20000);

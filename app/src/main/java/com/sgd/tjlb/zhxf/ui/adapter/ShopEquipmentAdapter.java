@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.AppAdapter;
 import com.sgd.tjlb.zhxf.entity.EquipmentInfo;
+import com.sgd.tjlb.zhxf.entity.ShopInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,16 @@ public final class ShopEquipmentAdapter extends AppAdapter<EquipmentInfo> {
         return mDatas.size();
     }
 
+    /**
+     * 初始化数据
+     */
+    public void initData(List<EquipmentInfo> data) {
+        if (data != null) {
+            mDatas = data;
+        }
+        setData(data);
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -58,7 +69,7 @@ public final class ShopEquipmentAdapter extends AppAdapter<EquipmentInfo> {
 
             EquipmentInfo equipmentInfo = mDatas.get(position);
             if (equipmentInfo != null) {
-                tv_equipment_name.setText(equipmentInfo.getName());
+                tv_equipment_name.setText(equipmentInfo.getDevice_sn());
 
                 tv_btn_state.setOnClickListener(v -> {
                     if (itemCallBack != null) {

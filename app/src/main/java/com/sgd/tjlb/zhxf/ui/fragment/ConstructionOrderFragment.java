@@ -1,31 +1,48 @@
 package com.sgd.tjlb.zhxf.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 
+import com.amap.api.maps2d.MapView;
 import com.google.android.material.tabs.TabLayout;
+import com.hjq.base.BaseDialog;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.listener.HttpCallback;
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.XXPermissions;
 import com.hjq.widget.view.SwitchButton;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.TitleBarFragment;
+import com.sgd.tjlb.zhxf.entity.ConstructionRecordBean;
 import com.sgd.tjlb.zhxf.entity.EquipmentInfo;
 import com.sgd.tjlb.zhxf.entity.ShopInfo;
 import com.sgd.tjlb.zhxf.http.api.MyConstructionRecordListApi;
 import com.sgd.tjlb.zhxf.http.api.ShopEquipmentListApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
 import com.sgd.tjlb.zhxf.ui.activity.AddEquipmentActivity;
+import com.sgd.tjlb.zhxf.ui.activity.WorkRecordActivity;
 import com.sgd.tjlb.zhxf.ui.activity.init.HomeActivity;
 import com.sgd.tjlb.zhxf.ui.adapter.MyConstructionOrderAdapter;
 import com.sgd.tjlb.zhxf.ui.adapter.OrderAdapter;
+import com.sgd.tjlb.zhxf.ui.dialog.UpdateWorkRecordDialog;
 import com.sgd.tjlb.zhxf.utils.ConstantUtil;
 import com.sgd.tjlb.zhxf.utils.SmartRefreshLayoutUtil;
+import com.sgd.tjlb.zhxf.utils.maps.GaodeLbsLayerImpl;
+import com.sgd.tjlb.zhxf.utils.maps.LocationInfo;
+import com.youth.banner.util.LogUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,17 +68,46 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
     private TabLayout mTabLayout;
     private SmartRefreshLayout mRefreshLayout;
     private RecyclerView mRecyclerView;
+    private LinearLayout layout_map;
 
     private MyConstructionOrderAdapter mAdapter;
+    private GaodeLbsLayerImpl mGaoDeMap;
 
     public static ConstructionOrderFragment newInstance() {
         return new ConstructionOrderFragment();
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        try {
+            mGaoDeMap = new GaodeLbsLayerImpl(getContext());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        mGaoDeMap.onCreate(savedInstanceState);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        if (mGaoDeMap != null)
+            mGaoDeMap.onResume();
         initData();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mGaoDeMap != null)
+            mGaoDeMap.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mGaoDeMap != null)
+            mGaoDeMap.onDestroy();
     }
 
     @Override
@@ -71,15 +117,67 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
 
     @Override
     protected void initView() {
-        mTabLayout = findViewById(R.id.tab_popularize);
+        mTabLayout = findViewById(R.id.tab_home);
         mRefreshLayout = findViewById(R.id.srl_construction);
         mRecyclerView = findViewById(R.id.rv_construction_order);
+        layout_map = findViewById(R.id.layout_map);
 
         // 给这个 ToolBar 设置顶部内边距，才能和 TitleBar 进行对齐
 //        ImmersionBar.setTitleBar(getAttachActivity(), mToolbar);
+        initTabLayout();
         initSmartRefreshLayout();
         initRecyclerView();
     }
+
+    private void initTabLayout() {
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    layout_map.setVisibility(View.GONE);
+                } else {
+                    mRecyclerView.setVisibility(View.GONE);
+                    layout_map.setVisibility(View.VISIBLE);
+                    getPermissions();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                LogUtils.d("onTabUnselected: " + tab.getText().toString());
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                LogUtils.d("onTabReselected: " + tab.getText().toString());
+            }
+        });
+    }
+
+    /**
+     * 获取位置权限
+     * 1 初始 2 点击我的位置
+     * @param
+     */
+    private void getPermissions() {
+        XXPermissions.with(this)
+                .permission(Permission.ACCESS_COARSE_LOCATION)
+                .permission(Permission.ACCESS_FINE_LOCATION)
+                // 如果不需要在后台使用定位功能，请不要申请此权限
+//                .permission(Permission.ACCESS_BACKGROUND_LOCATION)
+//                .interceptor(new PermissionInterceptor())
+                .request((permissions, allGranted) -> {
+                    if (!allGranted) {
+                        toast("缺少必要权限无法定位");
+                        return;
+                    }
+                    if (layout_map.getChildCount() == 0){
+                        layout_map.addView(mGaoDeMap.getMapView());
+                    }
+                });
+    }
+
 
     private void initSmartRefreshLayout() {
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -107,8 +205,35 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.setmCallBack(shopInfo -> {
-            AddEquipmentActivity.start(getContext(), shopInfo.getUser_id(), "");
+            if (shopInfo!= null){
+                AddWorkRecord();
+                if (true)
+                    return;
+
+                if (shopInfo.isAddDeviceStatus()){
+                    AddEquipmentActivity.start(getContext(), shopInfo.getUser_id(), "");
+                }else if (shopInfo.isAddRecordStatus()){
+                    AddWorkRecord();
+                }
+            }
         });
+    }
+
+    /**
+     * 添加工作记录弹窗
+     */
+    private void AddWorkRecord() {
+        new UpdateWorkRecordDialog.Builder(getContext())
+                .setData(null)
+                .setBaseActivity(getAttachActivity())
+                //.setAutoDismiss(false) // 设置点击按钮后不关闭对话框
+                .setListener(new UpdateWorkRecordDialog.OnListener() {
+                    @Override
+                    public void onSubmit(BaseDialog dialog, ConstructionRecordBean data) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -129,15 +254,22 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
                 )
                 .request(new HttpCallback<HttpData<List<ShopInfo>>>(this) {
 
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onSucceed(HttpData<List<ShopInfo>> data) {
                         SmartRefreshLayoutUtil.complete(mRefreshLayout);
                         if (data.getData() != null) {
                             mAdapter.initData(data.getData());
-                            for (ShopInfo shop : data.getData()) {
-                                findEquipmentListByShopID(shop);
+
+                            List<LocationInfo> locationInfoList = data.getData().stream().map(shopInfo -> {
+                                return new LocationInfo(shopInfo.getLatitude(),shopInfo.getLongitude());
+                            }).collect(Collectors.toList());
+
+                            if (mGaoDeMap != null){
+                                mGaoDeMap.addPoiOverlay(locationInfoList);
                             }
+
                         }
                     }
 
@@ -160,7 +292,7 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
                     @Override
                     public void onSucceed(HttpData<List<EquipmentInfo>> data) {
                         if (data.getData() != null) {
-                            shopInfo.setEquipmentInfoList(data.getData());
+                            shopInfo.setDevicelist(data.getData());
                             mAdapter.notifyDataSetChanged();
                         }
                     }

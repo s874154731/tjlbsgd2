@@ -15,10 +15,12 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps2d.AMap;
+import com.amap.api.maps2d.AMapOptions;
 import com.amap.api.maps2d.CameraUpdate;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.LocationSource;
 import com.amap.api.maps2d.MapView;
+import com.amap.api.maps2d.UiSettings;
 import com.amap.api.maps2d.model.BitmapDescriptor;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.CameraPosition;
@@ -92,16 +94,36 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
         // 创建定位对象
         mlocationClient = new AMapLocationClient(context);
         mLocationOption = new AMapLocationClientOption();
+
+        //使用单次定位
+        mLocationOption.setOnceLocation(true);
         //设置为高精度定位模式
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+//        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
         //设置定位参数
         mlocationClient.setLocationOption(mLocationOption);
+
+        aMap.setMapType(AMap.MAP_TYPE_NORMAL);// 矢量地图模式
+        //设置 地图 UI
+        //设置地图默认的比例尺是否显示
+        UiSettings mUiSettings = aMap.getUiSettings();
+        mUiSettings.setScaleControlsEnabled(false);
+        //设置地图默认的缩放按钮是否显示
+        mUiSettings.setZoomControlsEnabled(true);
+        //设置地图默认的指南针是否显示
+        mUiSettings.setCompassEnabled(false);
+        //设置地图默认的定位按钮是否显示
+        mUiSettings.setMyLocationButtonEnabled(true);
+        //设置logo位置
+        mUiSettings.setLogoPosition(AMapOptions.LOGO_POSITION_BOTTOM_LEFT);// 设置地图logo显示在左下方
+        //设置地图是否可以手势滑动
+        mUiSettings.setScrollGesturesEnabled(true);
+        //设置地图是否可以手势缩放大小
+        mUiSettings.setZoomGesturesEnabled(true);
 
         // 传感器对象
         mSensorHelper = new SensorEventHelper(context);
         mSensorHelper.registerSensorListener();
         mContext = context;
-
     }
 
     @Override
@@ -164,7 +186,7 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
             MarkerOptions markerOption = new MarkerOptions().icon(BitmapDescriptorFactory
                             .fromView(getBitmapView(mContext, locationInfo)))
                     .position(latlng)
-                    .title(locationInfo.getTime())
+                    .title(locationInfo.getName())
                     .snippet(locationInfo.getOil())
                     .draggable(false);
             marker = aMap.addMarker(markerOption);
@@ -177,9 +199,9 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
     private View getBitmapView(Context context, LocationInfo locationInfo) {
         LayoutInflater factory = LayoutInflater.from(context);
         View view = factory.inflate(R.layout.custom_info_window, null);
-        TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
-        TextView tvSnippet = (TextView) view.findViewById(R.id.tv_snippet);
-        tvTitle.setText(locationInfo.getTime());
+        TextView tvTitle = view.findViewById(R.id.tv_title);
+        TextView tvSnippet = view.findViewById(R.id.tv_snippet);
+        tvTitle.setText(locationInfo.getName());
         tvSnippet.setText(locationInfo.getOil());
         return view;
 
@@ -368,7 +390,7 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
             }
         });
         // 设置默认定位按钮是否显示，这里先不想业务使用方开放
-        aMap.getUiSettings().setMyLocationButtonEnabled(false);
+        aMap.getUiSettings().setMyLocationButtonEnabled(true);
         // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false，这里先不想业务使用方开放
         aMap.setMyLocationEnabled(true);
 

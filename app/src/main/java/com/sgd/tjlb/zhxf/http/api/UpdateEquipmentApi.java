@@ -16,6 +16,12 @@ public final class UpdateEquipmentApi implements IRequestApi {
 
     private String device_id;//设备ID
     private String device_sn;//设备SN码  输入或者扫描---安装的弹窗显示
+    private String worker_id;//
+
+    public UpdateEquipmentApi() {
+        UserInfo userInfo = MMKVHelper.getInstance().getUserInfo();
+        this.worker_id = userInfo.getUserID();
+    }
 
     public UpdateEquipmentApi setDeviceID(String device_id) {
         this.device_id = device_id;

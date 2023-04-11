@@ -174,11 +174,13 @@ public class UpdateWorkRecordDialog {
 
         public UpdateWorkRecordDialog.Builder setData(ConstructionRecordBean recordBean) {
             this.data = recordBean;
-            mEtDescription.setText(data.getStatus_info());
-            mTvExamine.setText(data.getStatusTip());
-            if (!TextUtils.isEmpty(recordBean.getStatus_img())) {
-                String img = recordBean.getStatus_img() + ",";
-                mImages = Arrays.asList(img.split(","));
+            if (recordBean != null) {
+                mEtDescription.setText(recordBean.getStatus_info());
+                mTvExamine.setText(recordBean.getStatusTip());
+                if (!TextUtils.isEmpty(recordBean.getStatus_img())) {
+                    String img = recordBean.getStatus_img() + ",";
+                    mImages = Arrays.asList(img.split(","));
+                }
             }
             setAdapterData(1);
             return this;

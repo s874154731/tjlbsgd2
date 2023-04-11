@@ -25,7 +25,7 @@ public class ConstructionRecordBean {
    private String create_time;//时间
 
    public String getStatus_img() {
-      return status_img;
+      return TextUtils.isEmpty(status_img) ? "" : status_img;
    }
 
    public void setStatus_img(String status_img) {

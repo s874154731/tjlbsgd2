@@ -10,7 +10,7 @@
     <com.hjq.bar.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="@string/title_myconstructionorder"
+        app:title="我的施工记录"
         app:titleSize="@dimen/sp_16" />
 
     <androidx.recyclerview.widget.RecyclerView
