@@ -270,7 +270,10 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
                             mTvOrdernum.setText("施工单：共(" + data.getData().size() + ")个");
 
                             List<LocationInfo> locationInfoList = data.getData().stream().map(shopInfo -> {
-                                return new LocationInfo(shopInfo.getLatitude(), shopInfo.getLongitude());
+                                LocationInfo locationInfo = new LocationInfo(shopInfo.getLatitude(), shopInfo.getLongitude());
+                                locationInfo.setName(shopInfo.getShop_name());
+                                locationInfo.setOil(shopInfo.getAddress());
+                                return locationInfo;
                             }).collect(Collectors.toList());
 
                             if (mGaoDeMap != null) {

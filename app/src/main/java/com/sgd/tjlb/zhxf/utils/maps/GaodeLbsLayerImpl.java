@@ -184,13 +184,16 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
     public void addPoiOverlay(List<LocationInfo> locationInfos) {
         for (LocationInfo locationInfo : locationInfos) {
             LatLng latlng = new LatLng(locationInfo.getLatitude(), locationInfo.getLongitude());
-            MarkerOptions markerOption = new MarkerOptions().icon(BitmapDescriptorFactory
-                            .fromView(getBitmapView(mContext, locationInfo)))
+            MarkerOptions markerOption = new MarkerOptions()
+//                    .icon(BitmapDescriptorFactory.fromView(getBitmapView(mContext, locationInfo)))
                     .position(latlng)
                     .title(locationInfo.getName())
                     .snippet(locationInfo.getOil())
                     .draggable(false);
             marker = aMap.addMarker(markerOption);
+
+//            marker.setTitle(locationInfo.getName());
+//            marker.setSnippet(locationInfo.getOil());
             marker.setObject(locationInfo);
             marker.showInfoWindow();
         }
