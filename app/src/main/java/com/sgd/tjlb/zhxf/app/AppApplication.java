@@ -157,8 +157,8 @@ public final class AppApplication extends Application {
         // 设置 Json 解析容错监听
         GsonFactory.setJsonCallback((typeToken, fieldName, jsonToken) -> {
             // 上报到 Bugly 错误列表
-            CrashReport.postCatchedException(new IllegalArgumentException(
-                    "类型解析异常：" + typeToken + "#" + fieldName + "，后台返回的类型为：" + jsonToken));
+            /*CrashReport.postCatchedException(new IllegalArgumentException(
+                    "类型解析异常：" + typeToken + "#" + fieldName + "，后台返回的类型为：" + jsonToken));*/
         });
 
         // 初始化日志打印

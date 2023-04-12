@@ -42,6 +42,7 @@ import com.amap.api.services.route.DriveStep;
 import com.amap.api.services.route.RideRouteResult;
 import com.amap.api.services.route.RouteSearch;
 import com.amap.api.services.route.WalkRouteResult;
+import com.hjq.gson.factory.GsonFactory;
 import com.sgd.tjlb.zhxf.R;
 
 import java.util.ArrayList;
@@ -466,13 +467,15 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
     @Override
     public void onPause() {
         mapView.onPause();
-        mlocationClient.stopLocation();
+        if (mlocationClient !=null)
+            mlocationClient.stopLocation();
     }
 
     @Override
     public void onDestroy() {
         mapView.onDestroy();
-        mlocationClient.onDestroy();
+        if (mlocationClient !=null)
+            mlocationClient.onDestroy();
     }
 
     @Override
