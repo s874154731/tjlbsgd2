@@ -461,7 +461,7 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
     @Override
     public void onResume() {
         mapView.onResume();
-        setUpLocation();
+//        setUpLocation();
     }
 
     @Override

@@ -3,26 +3,16 @@ package com.sgd.tjlb.zhxf.ui.fragment;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps2d.AMap;
-import com.amap.api.maps2d.AMapOptions;
-import com.amap.api.maps2d.CameraUpdateFactory;
-import com.amap.api.maps2d.MapView;
-import com.amap.api.maps2d.UiSettings;
-import com.amap.api.maps2d.model.LatLng;
-import com.amap.api.maps2d.model.Marker;
-import com.amap.api.maps2d.model.MarkerOptions;
-import com.amap.api.services.core.ServiceSettings;
-import com.amap.api.services.help.Inputtips;
-import com.amap.api.services.help.InputtipsQuery;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.tabs.TabLayout;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.listener.HttpCallback;
@@ -39,29 +29,22 @@ import com.sgd.tjlb.zhxf.entity.HomeBannerData;
 import com.sgd.tjlb.zhxf.entity.OrderData;
 import com.sgd.tjlb.zhxf.entity.ShopInfo;
 import com.sgd.tjlb.zhxf.entity.UserInfo;
-import com.sgd.tjlb.zhxf.helper.GDMapHelper;
 import com.sgd.tjlb.zhxf.helper.MMKVHelper;
-import com.sgd.tjlb.zhxf.http.api.TakeOrderApi;
 import com.sgd.tjlb.zhxf.http.api.ShopApplayWarrantyListApi;
+import com.sgd.tjlb.zhxf.http.api.TakeOrderApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
 import com.sgd.tjlb.zhxf.ui.activity.init.HomeActivity;
 import com.sgd.tjlb.zhxf.ui.adapter.OrderAdapter;
 import com.sgd.tjlb.zhxf.utils.ConstantUtil;
 import com.sgd.tjlb.zhxf.utils.SmartRefreshLayoutUtil;
 import com.sgd.tjlb.zhxf.utils.maps.GaodeLbsLayerImpl;
+import com.sgd.tjlb.zhxf.utils.maps.ILbsLayer;
 import com.sgd.tjlb.zhxf.utils.maps.LocationInfo;
-import com.umeng.commonsdk.debug.E;
 import com.youth.banner.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 消防宣传页
@@ -100,14 +83,32 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initMapClient(savedInstanceState);
+    }
+
+    private void initMapClient(Bundle savedInstanceState) {
         try {
             mGaoDeMap = new GaodeLbsLayerImpl(getContext());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if (mGaoDeMap !=null)
+        if (mGaoDeMap != null) {
             mGaoDeMap.onCreate(savedInstanceState);
+            mGaoDeMap.setLocationRes(R.mipmap.img_icon_location_blue);
+            mGaoDeMap.setLocationChangeListener(new ILbsLayer.CommonLocationChangeListener() {
+                @Override
+                public void onLocationChanged(LocationInfo locationInfo) {
+
+                }
+
+                @Override
+                public void onLocation(LocationInfo locationInfo) {
+
+                }
+            });
+        }
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -269,10 +270,10 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
                             mTvOrdernum.setText("施工单：共(" + data.getData().size() + ")个");
 
                             List<LocationInfo> locationInfoList = data.getData().stream().map(shopInfo -> {
-                                return new LocationInfo(shopInfo.getLatitude(),shopInfo.getLongitude());
+                                return new LocationInfo(shopInfo.getLatitude(), shopInfo.getLongitude());
                             }).collect(Collectors.toList());
 
-                            if (mGaoDeMap != null){
+                            if (mGaoDeMap != null) {
                                 mGaoDeMap.addPoiOverlay(locationInfoList);
                             }
 
@@ -295,6 +296,7 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
     /**
      * 获取位置权限
      * 1 初始 2 点击我的位置
+     *
      * @param
      */
     private void getPermissions() {
@@ -309,9 +311,11 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
                         toast("缺少必要权限无法定位");
                         return;
                     }
-
-                    if (layout_map.getChildCount() == 0){
+                    if (layout_map.getChildCount() == 0) {
                         layout_map.addView(mGaoDeMap.getMapView());
+                    }
+                    if (mGaoDeMap != null){
+                        mGaoDeMap.setUpLocation();
                     }
                 });
     }
