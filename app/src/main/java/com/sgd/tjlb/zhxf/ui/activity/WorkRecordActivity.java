@@ -12,11 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hjq.base.BaseAdapter;
 import com.hjq.base.BaseDialog;
+import com.hjq.http.EasyHttp;
+import com.hjq.http.listener.HttpCallback;
 import com.hjq.toast.ToastUtils;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.AppActivity;
 import com.sgd.tjlb.zhxf.entity.ConstructionRecordBean;
 import com.sgd.tjlb.zhxf.entity.WorkRecordDetailsData;
+import com.sgd.tjlb.zhxf.http.api.FindConstructionRecordByIDApi;
+import com.sgd.tjlb.zhxf.http.api.MyConstructionRecordListApi;
+import com.sgd.tjlb.zhxf.http.api.UpdateConstructionRecordByIDApi;
+import com.sgd.tjlb.zhxf.http.model.HttpData;
 import com.sgd.tjlb.zhxf.manager.InputTextManager;
 import com.sgd.tjlb.zhxf.other.GridSpaceDecoration;
 import com.sgd.tjlb.zhxf.ui.adapter.ImageSelectAdapter;
@@ -44,7 +50,7 @@ public class WorkRecordActivity extends AppActivity {
 
     private List<String> mImages = new ArrayList<>();
 
-    String mRecordId;
+    private String mRecordId;//工作记录id
 
     private ConstructionRecordBean recordBean;
 
@@ -89,12 +95,7 @@ public class WorkRecordActivity extends AppActivity {
     }
 
     private void initListener() {
-        mBtnModification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateWorkRecord();
-            }
-        });
+        mBtnModification.setOnClickListener(view -> updateWorkRecord());
     }
 
     /**
@@ -111,23 +112,72 @@ public class WorkRecordActivity extends AppActivity {
                 .setListener(new UpdateWorkRecordDialog.OnListener() {
                     @Override
                     public void onSubmit(BaseDialog dialog, ConstructionRecordBean data) {
-                        dialog.dismiss();
+                        updateConstructionRecord(dialog, data);
                     }
                 })
                 .show();
     }
 
+    /**
+     * 修改工作记录详情
+     */
+    private void updateConstructionRecord(BaseDialog dialog, ConstructionRecordBean data) {
+        EasyHttp.post(this)
+                .api(new UpdateConstructionRecordByIDApi()
+                        .setDeviceWorkID(data.getDevice_work_id())
+                        .setStatusImg(data.getStatus_img())
+                        .setStatusInfo(data.getStatus_info())
+                        .setStatus(data.getStatus())
+                        .setDeviceId(data.getDevice_id())
+                )
+                .request(new HttpCallback<HttpData<Void>>(this) {
+
+                    @Override
+                    public void onSucceed(HttpData<Void> data) {
+                        ToastUtils.show("修改成功");
+                        dialog.dismiss();
+                        initData();
+                    }
+
+                    @Override
+                    public void onFail(Exception e) {
+                        super.onFail(e);
+                    }
+                });
+    }
+
     @Override
     protected void initData() {
-        recordBean = new ConstructionRecordBean();
-        mTvTime.setText(recordBean.getCreate_time());
-        if (!TextUtils.isEmpty(recordBean.getStatus_img())) {
-            String img = recordBean.getStatus_img() + ",";
-            mImages = Arrays.asList(img.split(","));
-            mAdapter.initData(mImages);
-        }
-        mTvDescription.setText(recordBean.getStatus_info());
-        mTvExamine.setText("检查：" + recordBean.getStatusTip());
+        findConstructionRecord();
+    }
+
+    private void findConstructionRecord() {
+        EasyHttp.post(this)
+                .api(new FindConstructionRecordByIDApi()
+                        .setDeviceID(mRecordId)
+                )
+                .request(new HttpCallback<HttpData<ConstructionRecordBean>>(this) {
+
+                    @Override
+                    public void onSucceed(HttpData<ConstructionRecordBean> data) {
+                        if (data.getData() != null) {
+                            recordBean = data.getData();
+                            mTvTime.setText(recordBean.getCreate_time());
+                            if (!TextUtils.isEmpty(recordBean.getStatus_img())) {
+                                String img = recordBean.getStatus_img() + ",";
+                                mImages = Arrays.asList(img.split(","));
+                                mAdapter.initData(mImages);
+                            }
+                            mTvDescription.setText(recordBean.getStatus_info());
+                            mTvExamine.setText("检查：" + recordBean.getStatusTip());
+                        }
+                    }
+
+                    @Override
+                    public void onFail(Exception e) {
+                        super.onFail(e);
+                    }
+                });
     }
 
 }

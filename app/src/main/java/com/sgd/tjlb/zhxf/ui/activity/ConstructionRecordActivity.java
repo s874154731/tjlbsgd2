@@ -3,19 +3,29 @@ package com.sgd.tjlb.zhxf.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hjq.base.BaseDialog;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.listener.HttpCallback;
+import com.hjq.toast.ToastUtils;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.AppActivity;
 import com.sgd.tjlb.zhxf.entity.ConstructionRecordData;
 import com.sgd.tjlb.zhxf.entity.ConstructionRecordBean;
+import com.sgd.tjlb.zhxf.http.api.AddDeviceMaintenanceApi;
 import com.sgd.tjlb.zhxf.http.api.MyConstructionRecordListApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
+import com.sgd.tjlb.zhxf.ui.activity.login.LoginActivity;
 import com.sgd.tjlb.zhxf.ui.adapter.ConstructionRecordAdapter;
+import com.sgd.tjlb.zhxf.ui.dialog.UpdateWorkRecordDialog;
 import com.sgd.tjlb.zhxf.utils.ConstantUtil;
+import com.sgd.tjlb.zhxf.utils.SmartRefreshLayoutUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +36,12 @@ import java.util.List;
 public class ConstructionRecordActivity extends AppActivity {
 
     private RecyclerView mRvConstructionRecord;
+    private SmartRefreshLayout mRefreshLayout;
 
     private ConstructionRecordAdapter mAdapter;
 
     private int mPage = ConstantUtil.PAGE_INDEX;
+    private int mRefreshType = ConstantUtil.REFRESH_INIT;
 
     public static void start(Activity context) {
         Intent starter = new Intent(context, ConstructionRecordActivity.class);
@@ -46,9 +58,31 @@ public class ConstructionRecordActivity extends AppActivity {
     protected void initView() {
 
         mRvConstructionRecord = (RecyclerView) findViewById(R.id.rv_construction_record);
+        mRefreshLayout = (SmartRefreshLayout) findViewById(R.id.srl_construction_record);
 
+        initSmartRefreshLayout();
         initRecycler();
 
+    }
+
+    private void initSmartRefreshLayout() {
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                //上拉加载更多
+                mPage++;
+                mRefreshType = ConstantUtil.REFRESH_MORE;
+                initData();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                //下滑
+                mPage = 1;
+                mRefreshType = ConstantUtil.REFRESH_FIRST;
+                initData();
+            }
+        });
     }
 
     private void initRecycler() {
@@ -64,17 +98,43 @@ public class ConstructionRecordActivity extends AppActivity {
 
     @Override
     protected void initData() {
-//        List<ConstructionRecordBean> dataList = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            ConstructionRecordBean recordData = new ConstructionRecordBean();
-//            recordData.setDevice_id("" + i + 1);
-//            recordData.setAddress("地址" + i);
-//            recordData.setShop_name("店铺名称" + i);
-//            recordData.setCreate_time("2023-01-" + i);
-//            dataList.add(recordData);
-//        }
-//        mAdapter.initData(dataList);
+        //添加安装维修记录
+        new UpdateWorkRecordDialog.Builder(ConstructionRecordActivity.this)
+                .setData(null)
+                .setBaseActivity(ConstructionRecordActivity.this)
+                //.setAutoDismiss(false) // 设置点击按钮后不关闭对话框
+                .setListener(new UpdateWorkRecordDialog.OnListener() {
+                    @Override
+                    public void onSubmit(BaseDialog dialog, ConstructionRecordBean data) {
+                        addDeviceMaintenance(dialog, data);
+                    }
+                })
+                .show();
+        //清空用户信息
         findMyWarrantyRecordList();
+    }
+
+    private void addDeviceMaintenance(BaseDialog dialog, ConstructionRecordBean data) {
+        EasyHttp.post(this)
+                .api(new AddDeviceMaintenanceApi()
+                        .setDevice_id("7")
+                        .setStatus_img("https://upload-bbs.miyoushe.com/upload/2023/04/11/282500742/7d6eb3e2ad0cd6cb95084a37aed80053_7018267278107824332.jpg")
+                        .setStatus_info(data.getStatus_info())
+                        .setStatus(data.getStatus())
+                )
+                .request(new HttpCallback<HttpData<Void>>(this) {
+
+                    @Override
+                    public void onSucceed(HttpData<Void> data) {
+                        ToastUtils.show("已添加");
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onFail(Exception e) {
+                        super.onFail(e);
+                    }
+                });
     }
 
     //获取我的施工单记录
@@ -89,12 +149,16 @@ public class ConstructionRecordActivity extends AppActivity {
                     public void onSucceed(HttpData<List<ConstructionRecordBean>> data) {
                         if (data.getData() != null) {
                             mAdapter.initData(data.getData());
+                            //关闭刷新
+                            SmartRefreshLayoutUtil.complete(mRefreshLayout);
                         }
                     }
 
                     @Override
                     public void onFail(Exception e) {
                         super.onFail(e);
+                        //关闭刷新
+                        SmartRefreshLayoutUtil.complete(mRefreshLayout);
                     }
                 });
     }

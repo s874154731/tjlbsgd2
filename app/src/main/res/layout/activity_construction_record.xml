@@ -13,12 +13,20 @@
         app:title="我的施工记录"
         app:titleSize="@dimen/sp_16" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_construction_record"
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/srl_construction_record"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginVertical="@dimen/dp_5"
-        tools:itemCount="3"
-        tools:listitem="@layout/item_construction_record"/>
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_construction_record"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="@dimen/dp_5"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_construction_record"/>
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
 
 </LinearLayout>

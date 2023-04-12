@@ -47,6 +47,9 @@ public class QuestionImgAdapter extends AppAdapter<QuestionImgData> {
                 stringList.add(mDatas.get(i).getUrl());
             }
         }
+        if (stringList.size() == 0) {
+            return "";
+        }
         return TextUtils.join(",", stringList);
     }
 

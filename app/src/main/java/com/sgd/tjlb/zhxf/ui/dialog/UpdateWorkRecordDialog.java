@@ -50,6 +50,10 @@ public class UpdateWorkRecordDialog {
 
         private ConstructionRecordBean data;
         private int status;
+        private int Add_Record = 1;//添加
+        private int Update_Record = 2;//修改
+
+        private int addOrUpdate = Add_Record;//修改/添加
 
         private Uri mQuestionUrl;
         private QuestionImgAdapter mAdapter;
@@ -145,17 +149,19 @@ public class UpdateWorkRecordDialog {
                     return;
                 }
                 ConstructionRecordBean recordBean = new ConstructionRecordBean();
-                recordBean.setDevice_work_id(data.getDevice_work_id());
-                recordBean.setDevice_id(data.getDevice_id());
-                recordBean.setShop_name(data.getShop_name());
-                recordBean.setAddress(data.getAddress());
-                recordBean.setCreate_time(data.getCreate_time());
+                if (addOrUpdate == Update_Record) {
+                    recordBean.setDevice_work_id(data.getDevice_work_id());
+                    recordBean.setDevice_id(data.getDevice_id());
+                    recordBean.setShop_name(data.getShop_name());
+                    recordBean.setAddress(data.getAddress());
+                    recordBean.setCreate_time(data.getCreate_time());
+                }
                 //描述
                 recordBean.setStatus_info(describe);
                 //检查状态
                 recordBean.setStatus(status);
                 //图片
-                String img = mAdapter.getImgData()+",";
+                String img = mAdapter.getImgData();
                 recordBean.setStatus_img(img);
                 mListener.onSubmit(getDialog(), recordBean);
             });
@@ -172,7 +178,12 @@ public class UpdateWorkRecordDialog {
             return this;
         }
 
+        /**
+         * @param recordBean 数据
+         * @return
+         */
         public UpdateWorkRecordDialog.Builder setData(ConstructionRecordBean recordBean) {
+            addOrUpdate = recordBean == null ? Add_Record : Update_Record;
             this.data = recordBean;
             if (recordBean != null) {
                 mEtDescription.setText(recordBean.getStatus_info());

@@ -11,7 +11,7 @@ public final class MyConstructionRecordListApi implements IRequestApi {
 
     @Override
     public String getApi() {
-        return "my_shop_list";
+        return "re_device_work_list";
     }
 
     private String worker_id;//     用户状态获取
