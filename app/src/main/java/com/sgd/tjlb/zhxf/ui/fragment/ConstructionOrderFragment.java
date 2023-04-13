@@ -6,14 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.amap.api.maps2d.MapView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.tabs.TabLayout;
 import com.hjq.base.BaseDialog;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.listener.HttpCallback;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
-import com.hjq.toast.ToastUtils;
 import com.hjq.widget.view.SwitchButton;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
@@ -24,14 +28,12 @@ import com.sgd.tjlb.zhxf.entity.ConstructionRecordBean;
 import com.sgd.tjlb.zhxf.entity.EquipmentInfo;
 import com.sgd.tjlb.zhxf.entity.ShopInfo;
 import com.sgd.tjlb.zhxf.http.api.AddDeviceMaintenanceApi;
-import com.sgd.tjlb.zhxf.http.api.MyConstructionRecordListApi;
+import com.sgd.tjlb.zhxf.http.api.MyOrderListApi;
 import com.sgd.tjlb.zhxf.http.api.ShopEquipmentListApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
 import com.sgd.tjlb.zhxf.ui.activity.AddEquipmentActivity;
-import com.sgd.tjlb.zhxf.ui.activity.WorkRecordActivity;
 import com.sgd.tjlb.zhxf.ui.activity.init.HomeActivity;
 import com.sgd.tjlb.zhxf.ui.adapter.MyConstructionOrderAdapter;
-import com.sgd.tjlb.zhxf.ui.adapter.OrderAdapter;
 import com.sgd.tjlb.zhxf.ui.dialog.UpdateWorkRecordDialog;
 import com.sgd.tjlb.zhxf.utils.ConstantUtil;
 import com.sgd.tjlb.zhxf.utils.SmartRefreshLayoutUtil;
@@ -42,12 +44,6 @@ import com.youth.banner.util.LogUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 施工单
@@ -298,7 +294,7 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
     //报修单list
     private void findMyWarrantyList() {
         EasyHttp.post(this)
-                .api(new MyConstructionRecordListApi()
+                .api(new MyOrderListApi()
                         .setPage(mPage)
                 )
                 .request(new HttpCallback<HttpData<List<ShopInfo>>>(this) {

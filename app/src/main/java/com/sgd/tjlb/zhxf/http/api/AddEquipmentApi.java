@@ -14,7 +14,6 @@ public final class AddEquipmentApi implements IRequestApi {
         return "add_device";
     }
 
-
     private String worker_id;        //用户ID        用户状态获取
     private String user_id;          //客户端用户ID
     private String device_sn;       //设备SN码  输入或者扫描---安装的弹窗显示

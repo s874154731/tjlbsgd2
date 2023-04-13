@@ -5,7 +5,7 @@ import com.sgd.tjlb.zhxf.entity.UserInfo;
 import com.sgd.tjlb.zhxf.helper.MMKVHelper;
 
 /**
- * desc   : 根据id获取记录
+ * desc   : 修改维修记录
  */
 public final class UpdateConstructionRecordByIDApi implements IRequestApi {
 
