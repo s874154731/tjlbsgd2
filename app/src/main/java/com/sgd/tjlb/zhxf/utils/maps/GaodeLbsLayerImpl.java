@@ -77,6 +77,7 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
     private boolean firstLocation = true;
     private SensorEventHelper mSensorHelper;
     private CommonLocationChangeListener mLocationChangeListener;
+    private OnMarkClickListener mOnMarkClickListener;
     private MyLocationStyle myLocationStyle;
     // 管理地图标记集合
     private Map<String, Marker> markerMap = new HashMap<>();
@@ -125,6 +126,8 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
         mSensorHelper = new SensorEventHelper(context);
         mSensorHelper.registerSensorListener();
         mContext = context;
+
+        initMarkClickListener();
     }
 
     @Override
@@ -199,6 +202,12 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
         }
     }
 
+    //初始化mark点击事件
+    private void initMarkClickListener(){
+        // 绑定 Marker 被点击事件
+        aMap.setOnMarkerClickListener(markerClickListener);
+    }
+
     //自定义布局，解决只显示最后一个的问题
     private View getBitmapView(Context context, LocationInfo locationInfo) {
         LayoutInflater factory = LayoutInflater.from(context);
@@ -251,7 +260,6 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
                     }
                 }
             });
-
         }
     }
 
@@ -488,6 +496,11 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
     }
 
     @Override
+    public void setMarkClickListener(OnMarkClickListener markClickListener) {
+        this.mOnMarkClickListener = markClickListener;
+    }
+
+    @Override
     public void moveCamera(LocationInfo locationInfo1, LocationInfo locationInfo2) {
         try {
             LatLng latLng =
@@ -505,4 +518,18 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
             Log.e(TAG, "moveCamera: " + e.getMessage());
         }
     }
+
+    // 定义 Marker 点击事件监听
+    AMap.OnMarkerClickListener markerClickListener = new AMap.OnMarkerClickListener() {
+        // marker 对象被点击时回调的接口
+        // 返回 true 则表示接口已响应事件，否则返回false
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+            if (mOnMarkClickListener != null){
+                mOnMarkClickListener.onClick(marker);
+                return true;
+            }
+            return false;
+        }
+    };
 }

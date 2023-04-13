@@ -57,7 +57,7 @@ public class ConstructionRecordBean {
    }
 
    public String getDevice_id() {
-      return device_id;
+      return TextUtils.isEmpty(device_id) ? "" : device_id;
    }
 
    public void setDevice_id(String device_id) {

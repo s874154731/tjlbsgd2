@@ -98,7 +98,7 @@ public class ConstructionRecordActivity extends AppActivity {
 
     @Override
     protected void initData() {
-        //添加安装维修记录
+        /*//添加安装维修记录
         new UpdateWorkRecordDialog.Builder(ConstructionRecordActivity.this)
                 .setData(null)
                 .setBaseActivity(ConstructionRecordActivity.this)
@@ -109,7 +109,7 @@ public class ConstructionRecordActivity extends AppActivity {
                         addDeviceMaintenance(dialog, data);
                     }
                 })
-                .show();
+                .show();*/
         //清空用户信息
         findMyWarrantyRecordList();
     }

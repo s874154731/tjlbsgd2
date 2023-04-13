@@ -13,6 +13,7 @@ import com.hjq.http.EasyHttp;
 import com.hjq.http.listener.HttpCallback;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
+import com.hjq.toast.ToastUtils;
 import com.hjq.widget.view.SwitchButton;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
@@ -22,6 +23,7 @@ import com.sgd.tjlb.zhxf.app.TitleBarFragment;
 import com.sgd.tjlb.zhxf.entity.ConstructionRecordBean;
 import com.sgd.tjlb.zhxf.entity.EquipmentInfo;
 import com.sgd.tjlb.zhxf.entity.ShopInfo;
+import com.sgd.tjlb.zhxf.http.api.AddDeviceMaintenanceApi;
 import com.sgd.tjlb.zhxf.http.api.MyConstructionRecordListApi;
 import com.sgd.tjlb.zhxf.http.api.ShopEquipmentListApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
@@ -34,6 +36,7 @@ import com.sgd.tjlb.zhxf.ui.dialog.UpdateWorkRecordDialog;
 import com.sgd.tjlb.zhxf.utils.ConstantUtil;
 import com.sgd.tjlb.zhxf.utils.SmartRefreshLayoutUtil;
 import com.sgd.tjlb.zhxf.utils.maps.GaodeLbsLayerImpl;
+import com.sgd.tjlb.zhxf.utils.maps.ILbsLayer;
 import com.sgd.tjlb.zhxf.utils.maps.LocationInfo;
 import com.youth.banner.util.LogUtils;
 
@@ -80,12 +83,30 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initMapClient(savedInstanceState);
+    }
+
+    private void initMapClient(Bundle savedInstanceState) {
         try {
             mGaoDeMap = new GaodeLbsLayerImpl(getContext());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        mGaoDeMap.onCreate(savedInstanceState);
+        if (mGaoDeMap != null) {
+            mGaoDeMap.onCreate(savedInstanceState);
+            mGaoDeMap.setLocationRes(R.mipmap.img_icon_location_blue);
+            mGaoDeMap.setLocationChangeListener(new ILbsLayer.CommonLocationChangeListener() {
+                @Override
+                public void onLocationChanged(LocationInfo locationInfo) {
+
+                }
+
+                @Override
+                public void onLocation(LocationInfo locationInfo) {
+
+                }
+            });
+        }
     }
 
     @Override
@@ -175,6 +196,9 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
                     if (layout_map.getChildCount() == 0){
                         layout_map.addView(mGaoDeMap.getMapView());
                     }
+                    if (mGaoDeMap != null){
+                        mGaoDeMap.setUpLocation();
+                    }
                 });
     }
 
@@ -206,14 +230,14 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
 
         mAdapter.setmCallBack(shopInfo -> {
             if (shopInfo!= null){
-                AddWorkRecord();
+                /*AddWorkRecord(shopInfo);
                 if (true)
-                    return;
+                    return;*/
 
                 if (shopInfo.isAddDeviceStatus()){
                     AddEquipmentActivity.start(getContext(), shopInfo.getUser_id(), "");
                 }else if (shopInfo.isAddRecordStatus()){
-                    AddWorkRecord();
+                    AddWorkRecord(shopInfo);
                 }
             }
         });
@@ -222,7 +246,8 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
     /**
      * 添加工作记录弹窗
      */
-    private void AddWorkRecord() {
+    private void AddWorkRecord(ShopInfo shopInfo) {
+        //添加安装维修记录
         new UpdateWorkRecordDialog.Builder(getContext())
                 .setData(null)
                 .setBaseActivity(getAttachActivity())
@@ -230,10 +255,34 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
                 .setListener(new UpdateWorkRecordDialog.OnListener() {
                     @Override
                     public void onSubmit(BaseDialog dialog, ConstructionRecordBean data) {
-                        dialog.dismiss();
+                        addDeviceMaintenance(dialog, data);
                     }
                 })
                 .show();
+    }
+
+    private void addDeviceMaintenance(BaseDialog dialog, ConstructionRecordBean data) {
+
+        EasyHttp.post(this)
+                .api(new AddDeviceMaintenanceApi()
+                        .setDevice_id(data.getDevice_id())
+                        .setStatus_img(data.getStatus_img())
+                        .setStatus_info(data.getStatus_info())
+                        .setStatus(data.getStatus())
+                )
+                .request(new HttpCallback<HttpData<Void>>(this) {
+
+                    @Override
+                    public void onSucceed(HttpData<Void> data) {
+                        toast("添加成功");
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onFail(Exception e) {
+                        super.onFail(e);
+                    }
+                });
     }
 
     @Override
@@ -263,10 +312,13 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
                             mAdapter.initData(data.getData());
 
                             List<LocationInfo> locationInfoList = data.getData().stream().map(shopInfo -> {
-                                return new LocationInfo(shopInfo.getLatitude(),shopInfo.getLongitude());
+                                LocationInfo locationInfo = new LocationInfo(shopInfo.getLatitude(), shopInfo.getLongitude());
+                                locationInfo.setName(shopInfo.getShop_name());
+                                locationInfo.setOil(shopInfo.getAddress());
+                                return locationInfo;
                             }).collect(Collectors.toList());
 
-                            if (mGaoDeMap != null){
+                            if (mGaoDeMap != null) {
                                 mGaoDeMap.addPoiOverlay(locationInfoList);
                             }
 

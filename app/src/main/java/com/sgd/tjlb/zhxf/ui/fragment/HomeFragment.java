@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amap.api.maps2d.model.Marker;
 import com.google.android.material.tabs.TabLayout;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.listener.HttpCallback;
@@ -106,6 +107,10 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
 
                 }
             });
+
+            mGaoDeMap.setMarkClickListener(marker -> {
+                toast(marker.getTitle());
+            });
         }
     }
 
@@ -114,7 +119,7 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
         super.onResume();
         if (mGaoDeMap != null)
             mGaoDeMap.onResume();
-        initData();
+//        initData();
     }
 
     @Override

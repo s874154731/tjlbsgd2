@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 
+import com.amap.api.maps2d.model.Marker;
+
 import java.util.List;
 
 /**
@@ -95,6 +97,15 @@ public interface ILbsLayer {
     interface OnRouteCompleteListener {
         void onComplete(RouteInfo result);
     }
+
+    interface OnMarkClickListener{
+        void onClick(Marker marker);
+    }
+
+    /**
+     *  标记点点击回调
+     */
+    void setMarkClickListener(OnMarkClickListener markClickListener);
 
     /**
      *  移动相机到两点之间的视野范围
