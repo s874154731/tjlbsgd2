@@ -143,8 +143,18 @@ public class MyConstructionOrderAdapter extends AppAdapter<ShopInfo> {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             mRecyclerView.setAdapter(mAdapter);
 
-            mAdapter.setItemCallBack(info -> {
-                AddEquipmentActivity.start(getContext(),shopInfo.getUser_id(),info.getId());
+            mAdapter.setItemCallBack(new ShopEquipmentAdapter.ItemCallBack() {
+                @Override
+                public void onItemClick(EquipmentInfo info) {
+                    AddEquipmentActivity.start(getContext(),shopInfo.getUser_id(),info.getId());
+                }
+
+                @Override
+                public void onItemAddRecord(EquipmentInfo info) {
+                    if (mCallBack != null){
+                        mCallBack.onItemAddRecord(info);
+                    }
+                }
             });
 
             if (shopInfo.getDevicelist() != null){
@@ -155,5 +165,6 @@ public class MyConstructionOrderAdapter extends AppAdapter<ShopInfo> {
 
     public interface ItemClickCallBack{
         void onItemClick(ShopInfo shopInfo);
+        void onItemAddRecord(EquipmentInfo info);
     }
 }

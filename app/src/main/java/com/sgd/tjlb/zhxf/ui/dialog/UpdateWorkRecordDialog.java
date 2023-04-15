@@ -9,18 +9,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hjq.base.BaseActivity;
 import com.hjq.base.BaseDialog;
+import com.hjq.http.EasyHttp;
+import com.hjq.http.listener.HttpCallback;
+import com.hjq.http.listener.OnHttpListener;
 import com.hjq.http.model.FileContentResolver;
 import com.hjq.toast.ToastUtils;
 import com.hjq.widget.view.RegexEditText;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.entity.ConstructionRecordBean;
 import com.sgd.tjlb.zhxf.entity.QuestionImgData;
+import com.sgd.tjlb.zhxf.http.api.UpdateImageApi;
+import com.sgd.tjlb.zhxf.http.model.HttpData;
 import com.sgd.tjlb.zhxf.ui.activity.ApplyForMaintenanceActivity;
 import com.sgd.tjlb.zhxf.ui.activity.ImageCropActivity;
 import com.sgd.tjlb.zhxf.ui.activity.ImagePreviewActivity;
@@ -60,8 +66,11 @@ public class UpdateWorkRecordDialog {
         private List<QuestionImgData> imgList = new ArrayList<>();
         private List<String> mImages = new ArrayList<>();
 
-        public Builder(Context context) {
+        private AppCompatActivity mAppCompatActivity;
+
+        public Builder(AppCompatActivity context) {
             super(context);
+            this.mAppCompatActivity = context;
             setContentView(R.layout.dialog_update_work_record);
             setAnimStyle(BaseDialog.ANIM_TOAST);
 //            setBackgroundDimEnabled(false);
@@ -255,7 +264,7 @@ public class UpdateWorkRecordDialog {
          * 上传裁剪后的图片
          */
         private void updateCropImage(File file, boolean deleteFile) {
-            if (true) {
+            /*if (true) {
                 if (file instanceof FileContentResolver) {
                     mQuestionUrl = ((FileContentResolver) file).getContentUri();
                 } else {
@@ -263,24 +272,28 @@ public class UpdateWorkRecordDialog {
                 }
                 setAdapterData(2);
                 return;
-            }
-        /*EasyHttp.post(this)
+            }*/
+        EasyHttp.post(mAppCompatActivity)
                 .api(new UpdateImageApi()
                         .setImage(file))
-                .request(new HttpCallback<HttpData<String>>(this) {
-
+                .request(new HttpCallback<HttpData<?>>(new OnHttpListener() {
                     @Override
-                    public void onSucceed(HttpData<String> data) {
-                        mQuestionUrl = Uri.parse(data.getData());
-                        GlideApp.with(getActivity())
+                    public void onSucceed(Object result) {
+//                        mQuestionUrl = Uri.parse(result.getData());
+                        /*GlideApp.with(getActivity())
                                 .load(mQuestionUrl)
                                 .transform(new MultiTransformation<>(new CenterCrop(), new CircleCrop()))
                                 .into(mAvatarView);
                         if (deleteFile) {
                             file.delete();
-                        }
+                        }*/
                     }
-                });*/
+
+                    @Override
+                    public void onFail(Exception e) {
+
+                    }
+                }));
         }
 
     }

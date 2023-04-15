@@ -13,7 +13,7 @@ package com.sgd.tjlb.zhxf.utils;
  */
 public class ConstantUtil {
 
-    public static final int PAGE_INDEX= 0;
+    public static final int PAGE_INDEX= 1;
     /**
      * 页容量20
      */

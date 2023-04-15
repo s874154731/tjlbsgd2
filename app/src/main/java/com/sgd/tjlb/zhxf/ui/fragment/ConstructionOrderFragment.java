@@ -27,7 +27,7 @@ import com.sgd.tjlb.zhxf.app.TitleBarFragment;
 import com.sgd.tjlb.zhxf.entity.ConstructionRecordBean;
 import com.sgd.tjlb.zhxf.entity.EquipmentInfo;
 import com.sgd.tjlb.zhxf.entity.ShopInfo;
-import com.sgd.tjlb.zhxf.http.api.AddDeviceMaintenanceApi;
+import com.sgd.tjlb.zhxf.http.api.AddDeviceMaintenanceRecordApi;
 import com.sgd.tjlb.zhxf.http.api.MyOrderListApi;
 import com.sgd.tjlb.zhxf.http.api.ShopEquipmentListApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
@@ -175,6 +175,7 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
     /**
      * 获取位置权限
      * 1 初始 2 点击我的位置
+     *
      * @param
      */
     private void getPermissions() {
@@ -189,10 +190,10 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
                         toast("缺少必要权限无法定位");
                         return;
                     }
-                    if (layout_map.getChildCount() == 0){
+                    if (layout_map.getChildCount() == 0) {
                         layout_map.addView(mGaoDeMap.getMapView());
                     }
-                    if (mGaoDeMap != null){
+                    if (mGaoDeMap != null) {
                         mGaoDeMap.setUpLocation();
                     }
                 });
@@ -224,17 +225,19 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setmCallBack(shopInfo -> {
-            if (shopInfo!= null){
-                /*AddWorkRecord(shopInfo);
-                if (true)
-                    return;*/
-
-                if (shopInfo.isAddDeviceStatus()){
-                    AddEquipmentActivity.start(getContext(), shopInfo.getUser_id(), "");
-                }else if (shopInfo.isAddRecordStatus()){
-                    AddWorkRecord(shopInfo);
+        mAdapter.setmCallBack(new MyConstructionOrderAdapter.ItemClickCallBack() {
+            @Override
+            public void onItemClick(ShopInfo shopInfo) {
+                if (shopInfo != null) {
+                    if (shopInfo.isAddDeviceStatus()) {
+                        AddEquipmentActivity.start(getContext(), shopInfo.getUser_id(), "");
+                    }
                 }
+            }
+
+            @Override
+            public void onItemAddRecord(EquipmentInfo info) {
+                AddWorkRecord(info);
             }
         });
     }
@@ -242,15 +245,16 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
     /**
      * 添加工作记录弹窗
      */
-    private void AddWorkRecord(ShopInfo shopInfo) {
+    private void AddWorkRecord(EquipmentInfo deviceInfo) {
         //添加安装维修记录
-        new UpdateWorkRecordDialog.Builder(getContext())
+        new UpdateWorkRecordDialog.Builder(getAttachActivity())
                 .setData(null)
                 .setBaseActivity(getAttachActivity())
                 //.setAutoDismiss(false) // 设置点击按钮后不关闭对话框
                 .setListener(new UpdateWorkRecordDialog.OnListener() {
                     @Override
                     public void onSubmit(BaseDialog dialog, ConstructionRecordBean data) {
+                        data.setDevice_id(deviceInfo.getId());
                         addDeviceMaintenance(dialog, data);
                     }
                 })
@@ -260,7 +264,7 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
     private void addDeviceMaintenance(BaseDialog dialog, ConstructionRecordBean data) {
 
         EasyHttp.post(this)
-                .api(new AddDeviceMaintenanceApi()
+                .api(new AddDeviceMaintenanceRecordApi()
                         .setDevice_id(data.getDevice_id())
                         .setStatus_img(data.getStatus_img())
                         .setStatus_info(data.getStatus_info())

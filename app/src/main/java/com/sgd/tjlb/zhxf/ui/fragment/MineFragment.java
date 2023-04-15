@@ -93,7 +93,8 @@ public final class MineFragment extends TitleBarFragment<HomeActivity>
 
 //        llUserdata.setOnClickListener(view -> startActivity(StoreDataActivity.class));
         //个人信息
-        sbPersonal.setOnClickListener(view -> startActivity(PersonalDataActivity.class));
+        llUserdata.setOnClickListener(view -> startActivity(PersonalDataActivity.class));
+//        sbPersonal.setOnClickListener(view -> startActivity(PersonalDataActivity.class));
         //隐私协议
         sbAgreement.setOnClickListener(view ->
 //                BrowserActivity.start(getContext(), "https://github.com/getActivity/Donate")

@@ -56,12 +56,14 @@ public final class ShopEquipmentAdapter extends AppAdapter<EquipmentInfo> {
 
         private TextView tv_equipment_name;
         private TextView tv_btn_state;
+        private TextView tv_btn_addrecord;
 
         private ViewHolder() {
             super(R.layout.item_shop_equipment_in_item);
 
             tv_equipment_name = findViewById(R.id.tv_equipment_name);
             tv_btn_state = findViewById(R.id.tv_btn_state);
+            tv_btn_addrecord = findViewById(R.id.tv_btn_addrecord);
         }
 
         @Override
@@ -76,11 +78,18 @@ public final class ShopEquipmentAdapter extends AppAdapter<EquipmentInfo> {
                         itemCallBack.onItemClick(equipmentInfo);
                     }
                 });
+
+                tv_btn_addrecord.setOnClickListener(v->{
+                    if (itemCallBack != null){
+                        itemCallBack.onItemAddRecord(equipmentInfo);
+                    }
+                });
             }
         }
     }
 
     public interface ItemCallBack {
         void onItemClick(EquipmentInfo info);
+        void onItemAddRecord(EquipmentInfo info);
     }
 }

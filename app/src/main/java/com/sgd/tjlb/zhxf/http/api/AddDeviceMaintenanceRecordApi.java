@@ -5,9 +5,9 @@ import com.sgd.tjlb.zhxf.entity.UserInfo;
 import com.sgd.tjlb.zhxf.helper.MMKVHelper;
 
 /**
- * 添加设备维修
+ * 添加设备维修记录
  */
-public final class AddDeviceMaintenanceApi implements IRequestApi {
+public final class AddDeviceMaintenanceRecordApi implements IRequestApi {
 
     @Override
     public String getApi() {
@@ -20,27 +20,27 @@ public final class AddDeviceMaintenanceApi implements IRequestApi {
     private String status_info;//申请内容
     private String status;//0成功，2安装异常，4维修异常
 
-    public AddDeviceMaintenanceApi() {
+    public AddDeviceMaintenanceRecordApi() {
         UserInfo userInfo = MMKVHelper.getInstance().getUserInfo();
         this.worker_id = userInfo.getUserID();
     }
 
-    public AddDeviceMaintenanceApi setDevice_id(String device_id) {
+    public AddDeviceMaintenanceRecordApi setDevice_id(String device_id) {
         this.device_id = device_id;
         return this;
     }
 
-    public AddDeviceMaintenanceApi setStatus_img(String status_img) {
+    public AddDeviceMaintenanceRecordApi setStatus_img(String status_img) {
         this.status_img = status_img;
         return this;
     }
 
-    public AddDeviceMaintenanceApi setStatus_info(String status_info) {
+    public AddDeviceMaintenanceRecordApi setStatus_info(String status_info) {
         this.status_info = status_info;
         return this;
     }
 
-    public AddDeviceMaintenanceApi setStatus(int status) {
+    public AddDeviceMaintenanceRecordApi setStatus(int status) {
         this.status = String.valueOf(status);
         return this;
     }

@@ -16,18 +16,14 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.AppActivity;
-import com.sgd.tjlb.zhxf.entity.ConstructionRecordData;
 import com.sgd.tjlb.zhxf.entity.ConstructionRecordBean;
-import com.sgd.tjlb.zhxf.http.api.AddDeviceMaintenanceApi;
+import com.sgd.tjlb.zhxf.http.api.AddDeviceMaintenanceRecordApi;
 import com.sgd.tjlb.zhxf.http.api.MyConstructionRecordListApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
-import com.sgd.tjlb.zhxf.ui.activity.login.LoginActivity;
 import com.sgd.tjlb.zhxf.ui.adapter.ConstructionRecordAdapter;
-import com.sgd.tjlb.zhxf.ui.dialog.UpdateWorkRecordDialog;
 import com.sgd.tjlb.zhxf.utils.ConstantUtil;
 import com.sgd.tjlb.zhxf.utils.SmartRefreshLayoutUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -116,7 +112,7 @@ public class ConstructionRecordActivity extends AppActivity {
 
     private void addDeviceMaintenance(BaseDialog dialog, ConstructionRecordBean data) {
         EasyHttp.post(this)
-                .api(new AddDeviceMaintenanceApi()
+                .api(new AddDeviceMaintenanceRecordApi()
                         .setDevice_id("7")
                         .setStatus_img("https://upload-bbs.miyoushe.com/upload/2023/04/11/282500742/7d6eb3e2ad0cd6cb95084a37aed80053_7018267278107824332.jpg")
                         .setStatus_info(data.getStatus_info())

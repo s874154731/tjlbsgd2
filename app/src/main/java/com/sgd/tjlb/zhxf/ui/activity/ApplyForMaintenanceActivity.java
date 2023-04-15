@@ -18,8 +18,7 @@ import com.hjq.widget.view.RegexEditText;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.AppActivity;
 import com.sgd.tjlb.zhxf.entity.QuestionImgData;
-import com.sgd.tjlb.zhxf.http.api.AddDeviceMaintenanceApi;
-import com.sgd.tjlb.zhxf.http.glide.GlideApp;
+import com.sgd.tjlb.zhxf.http.api.AddDeviceMaintenanceRecordApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
 import com.sgd.tjlb.zhxf.manager.InputTextManager;
 import com.sgd.tjlb.zhxf.ui.adapter.QuestionImgAdapter;
@@ -237,7 +236,7 @@ public class ApplyForMaintenanceActivity extends AppActivity {
         }
 
         EasyHttp.post(this)
-                .api(new AddDeviceMaintenanceApi()
+                .api(new AddDeviceMaintenanceRecordApi()
                         .setDevice_id(mDeviceID)
                         .setStatus_img("图片地址")
                         .setStatus_info(mEtQuestion.getText().toString().trim())

@@ -208,7 +208,7 @@ public final class PersonalDataActivity extends AppActivity {
      * 上传裁剪后的图片
      */
     private void updateCropImage(File file, boolean deleteFile) {
-        if (true) {
+        /*if (true) {
             if (file instanceof FileContentResolver) {
                 mAvatarUrl = ((FileContentResolver) file).getContentUri();
             } else {
@@ -219,7 +219,7 @@ public final class PersonalDataActivity extends AppActivity {
                     .transform(new MultiTransformation<>(new CenterCrop(), new CircleCrop()))
                     .into(mAvatarView);
             return;
-        }
+        }*/
 
         EasyHttp.post(this)
                 .api(new UpdateImageApi()
