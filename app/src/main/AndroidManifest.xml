@@ -260,6 +260,10 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.sgd.tjlb.zhxf.ui.activity.func.AgreementActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.sgd.tjlb.zhxf.ui.activity.PopularizeDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
@@ -316,10 +320,6 @@
             android:screenOrientation="portrait" />
 
         <!--隐私协议-->
-        <activity
-            android:name="com.sgd.tjlb.zhxf.ui.activity.AgreementActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
         <!--添加、修改设备-->
         <activity
             android:name="com.sgd.tjlb.zhxf.ui.activity.AddEquipmentActivity"

@@ -1,20 +1,11 @@
 package com.sgd.tjlb.zhxf.ui.dialog;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.hjq.base.BaseActivity;
 import com.hjq.base.BaseDialog;
 import com.hjq.http.EasyHttp;
 import com.hjq.http.listener.HttpCallback;
@@ -23,11 +14,11 @@ import com.hjq.http.model.FileContentResolver;
 import com.hjq.toast.ToastUtils;
 import com.hjq.widget.view.RegexEditText;
 import com.sgd.tjlb.zhxf.R;
+import com.sgd.tjlb.zhxf.app.AppActivity;
 import com.sgd.tjlb.zhxf.entity.ConstructionRecordBean;
 import com.sgd.tjlb.zhxf.entity.QuestionImgData;
 import com.sgd.tjlb.zhxf.http.api.UpdateImageApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
-import com.sgd.tjlb.zhxf.ui.activity.ApplyForMaintenanceActivity;
 import com.sgd.tjlb.zhxf.ui.activity.ImageCropActivity;
 import com.sgd.tjlb.zhxf.ui.activity.ImagePreviewActivity;
 import com.sgd.tjlb.zhxf.ui.activity.ImageSelectActivity;
@@ -39,6 +30,11 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class UpdateWorkRecordDialog {
 
@@ -52,7 +48,7 @@ public class UpdateWorkRecordDialog {
         private AppCompatButton mBtnModification;
 
         private OnListener mListener;
-        private BaseActivity activity;
+        private AppActivity activity;
 
         private ConstructionRecordBean data;
         private int status;
@@ -91,7 +87,8 @@ public class UpdateWorkRecordDialog {
                     if (imgList.get(position).getType() == QuestionImgData.Add_Visible) {
                         // 裁剪
                         ImageSelectActivity.start(activity, data -> {
-                            cropImageFile(new File(data.get(0)));
+                            uploadImage(new File(data.get(0)),false);
+//                            cropImageFile(new File(data.get(0)));
                         });
                     } else {
                         // 查看图片
@@ -182,7 +179,7 @@ public class UpdateWorkRecordDialog {
             return this;
         }
 
-        public UpdateWorkRecordDialog.Builder setBaseActivity(BaseActivity basActivity) {
+        public UpdateWorkRecordDialog.Builder setBaseActivity(AppActivity basActivity) {
             activity = basActivity;
             return this;
         }
@@ -202,17 +199,17 @@ public class UpdateWorkRecordDialog {
                     mImages = Arrays.asList(img.split(","));
                 }
             }
-            setAdapterData(1);
+            setAdapterData(1,"");
             return this;
         }
 
         /**
          * @param type 1 初始数据 2 选择图片后
          */
-        private void setAdapterData(int type) {
+        private void setAdapterData(int type, String imgUrl) {
             if (type == 2) {
                 QuestionImgData data = new QuestionImgData();
-                data.setUrl(mQuestionUrl);
+                data.setUrl(imgUrl);
                 data.setType(QuestionImgData.Add_Gone);
                 imgList.add(imgList.size() - 1, data);
             } else {
@@ -273,12 +270,12 @@ public class UpdateWorkRecordDialog {
                 setAdapterData(2);
                 return;
             }*/
-        EasyHttp.post(mAppCompatActivity)
-                .api(new UpdateImageApi()
-                        .setImage(file))
-                .request(new HttpCallback<HttpData<?>>(new OnHttpListener() {
-                    @Override
-                    public void onSucceed(Object result) {
+            EasyHttp.post(mAppCompatActivity)
+                    .api(new UpdateImageApi()
+                            .setImage(file))
+                    .request(new HttpCallback<HttpData<?>>(new OnHttpListener() {
+                        @Override
+                        public void onSucceed(Object result) {
 //                        mQuestionUrl = Uri.parse(result.getData());
                         /*GlideApp.with(getActivity())
                                 .load(mQuestionUrl)
@@ -287,15 +284,31 @@ public class UpdateWorkRecordDialog {
                         if (deleteFile) {
                             file.delete();
                         }*/
-                    }
+                        }
 
-                    @Override
-                    public void onFail(Exception e) {
+                        @Override
+                        public void onFail(Exception e) {
 
-                    }
-                }));
+                        }
+                    }));
         }
 
+        //上传图片
+        private void uploadImage(File sourceFile, boolean isDeleteSourceFile) {
+            EasyHttp.post(activity)
+                    .api(new UpdateImageApi()
+                            .setImage(sourceFile))
+                    .request(new HttpCallback<HttpData<UpdateImageApi.Bean>>(activity) {
+
+                        @Override
+                        public void onSucceed(HttpData<UpdateImageApi.Bean> data) {
+                            if (data.getData() != null) {
+                                String imageurl = data.getData().getPath();
+                                setAdapterData(2, imageurl);
+                            }
+                        }
+                    });
+        }
     }
 
     public interface OnListener {

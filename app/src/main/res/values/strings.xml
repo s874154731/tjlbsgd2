@@ -411,4 +411,10 @@
     <string name="text_tip_update_equipment">修改设备</string>
     <string name="text_tip_equipment_sn">设备SN码</string>
 
+    <string name="str_text_readagreed">我已阅读并同意</string>
+    <string name="str_text_userknow">《用户须知》</string>
+    <string name="str_text_privacy_greement">《隐私协议》</string>
+
+    <string name="str_tip_logoff_content">是否要注销账号？\n注销后您在平台上的信息将会被清除。请谨慎操作！</string>
+
 </resources>

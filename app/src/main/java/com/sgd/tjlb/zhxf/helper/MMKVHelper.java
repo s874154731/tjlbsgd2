@@ -29,6 +29,7 @@ import java.util.List;
  */
 public class MMKVHelper {
 
+    public static final String KEY_FIRST_AGREE_USE = "KEY_FIRST_AGREE_USE";//同意使用软件-隐私协议
     public static final String KEY_FIRST_OPEN_APP = "KEY_FIRST_OPEN_APP";//首次使用app
     public static final String KEY_USERINFO = "KEY_FIRST_USERINFO";//用户信息
     public static final String KEY_SHOPINFO = "KEY_SHOPINFO";//门店信息

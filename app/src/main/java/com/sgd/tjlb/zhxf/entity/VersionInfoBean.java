@@ -15,8 +15,9 @@ public class VersionInfoBean {
 
     private int version_id;//版本号id
     private String version_name;//版本名称
-    private String version_no;//版本号
+    private int version_no;//版本号
     private String version_url;//下载地址
+    private String version_content;//更新内容
 
     public int getVersion_id() {
         return version_id;
@@ -34,11 +35,11 @@ public class VersionInfoBean {
         this.version_name = version_name;
     }
 
-    public String getVersion_no() {
+    public int getVersion_no() {
         return version_no;
     }
 
-    public void setVersion_no(String version_no) {
+    public void setVersion_no(int version_no) {
         this.version_no = version_no;
     }
 
@@ -48,5 +49,13 @@ public class VersionInfoBean {
 
     public void setVersion_url(String version_url) {
         this.version_url = version_url;
+    }
+
+    public String getVersion_content() {
+        return version_content;
+    }
+
+    public void setVersion_content(String version_content) {
+        this.version_content = version_content;
     }
 }

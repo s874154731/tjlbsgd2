@@ -12,9 +12,15 @@
         app:title="@string/setting_agreement"
         app:titleSize="@dimen/sp_16" />
 
-    <TextView
-        android:id="@+id/tv_content"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/dp_10">
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

@@ -2,22 +2,32 @@ package com.sgd.tjlb.zhxf.ui.activity.init;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.viewpager2.widget.ViewPager2;
-
 import com.gyf.immersionbar.ImmersionBar;
+import com.hjq.base.BaseDialog;
+import com.hjq.http.EasyHttp;
+import com.hjq.http.listener.HttpCallback;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.aop.SingleClick;
 import com.sgd.tjlb.zhxf.app.AppActivity;
+import com.sgd.tjlb.zhxf.entity.AppConfigBean;
 import com.sgd.tjlb.zhxf.helper.MMKVHelper;
+import com.sgd.tjlb.zhxf.http.api.AppConfigApi;
+import com.sgd.tjlb.zhxf.http.model.HttpData;
+import com.sgd.tjlb.zhxf.manager.ActivityManager;
+import com.sgd.tjlb.zhxf.ui.activity.func.AgreementActivity;
 import com.sgd.tjlb.zhxf.ui.activity.login.LoginActivity;
 import com.sgd.tjlb.zhxf.ui.adapter.GuideAdapter;
+import com.sgd.tjlb.zhxf.ui.dialog.PrivacyGreementDialog;
 
+import androidx.annotation.NonNull;
+import androidx.viewpager2.widget.ViewPager2;
 import me.relex.circleindicator.CircleIndicator3;
 
 /**
@@ -53,8 +63,6 @@ public final class GuideActivity extends AppActivity {
         mCompleteView = findViewById(R.id.btn_guide_complete);
         mSkipBtn = findViewById(R.id.tv_btn_skip);
         setOnClickListener(mCompleteView, mSkipBtn);
-        //设置首次打开
-        MMKVHelper.getInstance().putBoolean(MMKVHelper.KEY_FIRST_OPEN_APP, true);
     }
 
     @Override
@@ -63,12 +71,42 @@ public final class GuideActivity extends AppActivity {
         mViewPager.setAdapter(mAdapter);
         mViewPager.registerOnPageChangeCallback(mCallback);
         mIndicatorView.setViewPager(mViewPager);
+
+        //是否同意使用
+        boolean isAgreeUse = MMKVHelper.getInstance().getBooleanByKey(MMKVHelper.KEY_FIRST_AGREE_USE);
+        if (!isAgreeUse)
+            openPrivacyGreementDialog();
+    }
+
+    private void openPrivacyGreementDialog() {
+        new PrivacyGreementDialog.Builder(getContext())
+                .setCanceledOnTouchOutside(false)
+                .setCancelable(false)
+                .setListener(new PrivacyGreementDialog.OnListener() {
+                    @Override
+                    public void onAgreement(BaseDialog dialog) {
+                        MMKVHelper.getInstance().putBoolean(MMKVHelper.KEY_FIRST_AGREE_USE, true);
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        exitApp();
+                    }
+
+                    @Override
+                    public void onSee() {
+                        findAppConfig();
+                    }
+                }).show();
     }
 
     @SingleClick
     @Override
     public void onClick(View view) {
         if (view == mCompleteView || view == mSkipBtn) {
+            //设置首次打开
+            MMKVHelper.getInstance().putBoolean(MMKVHelper.KEY_FIRST_OPEN_APP, true);
             LoginActivity.start(getContext());
             finish();
         }
@@ -121,4 +159,50 @@ public final class GuideActivity extends AppActivity {
             }
         }
     };
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    private void exitApp() {
+        postDelayed(() -> {
+            // 进行内存优化，销毁掉所有的界面
+            ActivityManager.getInstance().finishAllActivities();
+            // 销毁进程（注意：调用此 API 可能导致当前 Activity onDestroy 方法无法正常回调）
+            // System.exit(0);
+        }, 300);
+    }
+
+    //获取app常量
+    private void findAppConfig() {
+        AppConfigBean appConfig = MMKVHelper.getInstance().findAppConfig();
+        if (appConfig != null && !TextUtils.isEmpty(appConfig.getApp_agree())) {
+            AgreementActivity.start(getActivity(), appConfig.getApp_agree());
+            return;
+        }
+
+        EasyHttp.post(this)
+                .api(new AppConfigApi())
+                .request(new HttpCallback<HttpData<AppConfigBean>>(this) {
+
+                    @Override
+                    public void onSucceed(HttpData<AppConfigBean> data) {
+                        if (data.getData() != null) {
+                            MMKVHelper.getInstance().saveAppConfig(data.getData());
+
+                            AgreementActivity.start(getActivity(), data.getData().getApp_agree());
+                        }
+                    }
+
+                    @Override
+                    public void onFail(Exception e) {
+                        super.onFail(e);
+                    }
+                });
+    }
 }

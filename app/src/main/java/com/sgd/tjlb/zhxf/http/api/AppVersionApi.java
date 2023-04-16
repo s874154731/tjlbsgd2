@@ -18,11 +18,4 @@ public class AppVersionApi implements IRequestApi {
     public String getApi() {
         return "re_app_version";
     }
-
-    public final class Bean {
-        public int version_id;//版本号id
-        public String version_name;//版本名称
-        public String version_no;//版本号
-        public String version_url;//下载地址
-    }
 }

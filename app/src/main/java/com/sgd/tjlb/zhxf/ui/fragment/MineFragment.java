@@ -19,8 +19,8 @@ import com.sgd.tjlb.zhxf.http.api.AppVersionApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
 import com.sgd.tjlb.zhxf.manager.ActivityManager;
 import com.sgd.tjlb.zhxf.other.AppConfig;
-import com.sgd.tjlb.zhxf.ui.activity.AgreementActivity;
 import com.sgd.tjlb.zhxf.ui.activity.ConstructionRecordActivity;
+import com.sgd.tjlb.zhxf.ui.activity.func.AgreementActivity;
 import com.sgd.tjlb.zhxf.ui.activity.func.FuncActivity;
 import com.sgd.tjlb.zhxf.ui.activity.init.HomeActivity;
 import com.sgd.tjlb.zhxf.ui.activity.login.LoginActivity;
@@ -84,7 +84,7 @@ public final class MineFragment extends TitleBarFragment<HomeActivity>
 
     private void refreshUI() {
         UserInfo self = MMKVHelper.getInstance().getUserInfo();
-        if (self != null){
+        if (self != null) {
             tvUsername.setText(self.getTel());
         }
     }
@@ -122,24 +122,23 @@ public final class MineFragment extends TitleBarFragment<HomeActivity>
         sbUpdatepwd.setOnClickListener(v ->
                 PasswordResetActivity.start(getContext(), mSelef.getTel(), ""));
 
-        sb_btn_mine_logout.setOnClickListener(v->{
+        sb_btn_mine_logout.setOnClickListener(v -> {
             logout();
         });
     }
 
     //检查更新
     private void checkUpdate() {
-
         int versionCode = mVersionInfo.getVersion_id();
-
         // 本地的版本码和服务器的进行比较
         if (versionCode > AppConfig.getVersionCode()) {
             new UpdateDialog.Builder(getContext())
-                    .setVersionName(mVersionInfo.getVersion_no())
+                    .setVersionName(mVersionInfo.getVersion_name())
                     .setForceUpdate(false)
-                    .setUpdateLog(mVersionInfo.getVersion_name())
+                    .setUpdateLog(mVersionInfo.getVersion_content())
                     .setDownloadUrl(mVersionInfo.getVersion_url())
-                    .setFileMd5("560017dc94e8f9b65f4ca997c7feb326")
+//                    .setFileMd5("8782953268e7ac8242414c1e5d55f50b")
+                    .setFileMd5(null)
                     .show();
         } else {
             toast(R.string.update_no_update);
@@ -155,7 +154,7 @@ public final class MineFragment extends TitleBarFragment<HomeActivity>
     //获取版本信息
     private void findAppVersion() {
         mVersionInfo = MMKVHelper.getInstance().getVersionInfo();
-        if (mVersionInfo != null) {
+        if (mVersionInfo != null && mVersionInfo.getVersion_no() > 0) {
             checkUpdate();
             return;
         }
@@ -180,7 +179,7 @@ public final class MineFragment extends TitleBarFragment<HomeActivity>
                 });
     }
 
-    private void logout(){
+    private void logout() {
         //清空用户信息
         MMKVHelper.getInstance().clearAll();
         // 进行内存优化，销毁除登录页之外的所有界面

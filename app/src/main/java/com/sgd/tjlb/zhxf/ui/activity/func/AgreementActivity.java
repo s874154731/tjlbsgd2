@@ -1,5 +1,8 @@
-package com.sgd.tjlb.zhxf.ui.activity;
+package com.sgd.tjlb.zhxf.ui.activity.func;
 
+import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.hjq.http.EasyHttp;
@@ -10,12 +13,28 @@ import com.sgd.tjlb.zhxf.entity.TipBean;
 import com.sgd.tjlb.zhxf.http.api.FindTipByTypeApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
 
+import androidx.core.text.HtmlCompat;
+
+import static androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT;
+
+/**
+ * 隐私协议
+ */
 public class AgreementActivity extends AppActivity {
+
+    private final static String TYPE_CONTENT = "TYPE_CONTENT";
 
     private TextView tv_content;
 
     private int mType;
     private TipBean mTipBean;
+    private String mContent;
+
+    public static void start(Context context, String content) {
+        Intent starter = new Intent(context, AgreementActivity.class);
+        starter.putExtra(TYPE_CONTENT, content);
+        context.startActivity(starter);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -24,13 +43,16 @@ public class AgreementActivity extends AppActivity {
 
     @Override
     protected void initView() {
-
         tv_content = findViewById(R.id.tv_content);
     }
 
     @Override
     protected void initData() {
-        findTips();
+        mContent = getString(TYPE_CONTENT);
+
+        mContent = TextUtils.isEmpty(mContent) ? "" : mContent;
+
+        tv_content.setText(HtmlCompat.fromHtml(mContent,FROM_HTML_MODE_COMPACT ));
     }
 
 
@@ -58,7 +80,7 @@ public class AgreementActivity extends AppActivity {
     }
 
     private void refreshUI() {
-        if (mTipBean != null){
+        if (mTipBean != null) {
             tv_content.setText(mTipBean.getNews_info());
         }
     }

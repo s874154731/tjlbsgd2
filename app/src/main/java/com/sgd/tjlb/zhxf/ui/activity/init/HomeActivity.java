@@ -30,8 +30,10 @@ import com.sgd.tjlb.zhxf.http.api.HomeMsgsApi;
 import com.sgd.tjlb.zhxf.http.api.PopularizeTypeApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
 import com.sgd.tjlb.zhxf.manager.ActivityManager;
+import com.sgd.tjlb.zhxf.other.AppConfig;
 import com.sgd.tjlb.zhxf.other.DoubleClickHelper;
 import com.sgd.tjlb.zhxf.ui.adapter.NavigationAdapter;
+import com.sgd.tjlb.zhxf.ui.dialog.UpdateDialog;
 import com.sgd.tjlb.zhxf.ui.fragment.ConstructionOrderFragment;
 import com.sgd.tjlb.zhxf.ui.fragment.FuncFragment;
 import com.sgd.tjlb.zhxf.ui.fragment.HomeFragment;
@@ -106,6 +108,8 @@ public final class HomeActivity extends AppActivity
 
         onNewIntent(getIntent());
 
+        findAppVersion();
+        findAppConfig();
 //        findHttpDatas();
     }
 
@@ -232,6 +236,7 @@ public final class HomeActivity extends AppActivity
                     public void onSucceed(HttpData<VersionInfoBean> data) {
                         if (data.getData() != null)
                             MMKVHelper.getInstance().saveVersionInfo(data.getData());
+                        checkUpdate(data.getData());
                     }
 
                     @Override
@@ -239,6 +244,22 @@ public final class HomeActivity extends AppActivity
                         super.onFail(e);
                     }
                 });
+    }
+
+    //检查更新
+    private void checkUpdate(VersionInfoBean data) {
+        int versionCode = data.getVersion_no();
+        // 本地的版本码和服务器的进行比较
+        if (versionCode > AppConfig.getVersionCode()) {
+            new UpdateDialog.Builder(getContext())
+                    .setVersionName(data.getVersion_name())
+                    .setForceUpdate(false)
+                    .setUpdateLog(data.getVersion_content())
+                    .setDownloadUrl(data.getVersion_url())
+//                    .setFileMd5("8782953268e7ac8242414c1e5d55f50b")
+                    .setFileMd5(null)
+                    .show();
+        }
     }
 
     //获取消息
