@@ -381,7 +381,7 @@
     <string name="text_tip_add_bank_no">添加银行卡</string>
     <string name="text_tip_update_bank_no">修改银行卡</string>
 
-    <string name="text_home_ordernum">施工单：共（0）个</string>
+    <string name="text_home_ordernum">派单：共（0）个</string>
 
     <!--首页-->
     <string name="text_home_storename">门店名称</string>

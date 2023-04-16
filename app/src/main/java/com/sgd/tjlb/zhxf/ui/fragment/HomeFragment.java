@@ -274,7 +274,7 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
                         SmartRefreshLayoutUtil.complete(mRefreshLayout);
                         if (data.getData() != null) {
                             mAdapter.initData(data.getData());
-                            mTvOrdernum.setText("施工单：共(" + data.getData().size() + ")个");
+                            mTvOrdernum.setText("派单：共(" + data.getData().size() + ")个");
 
                             List<LocationInfo> locationInfoList = data.getData().stream().map(shopInfo -> {
                                 LocationInfo locationInfo = new LocationInfo(shopInfo.getLatitude(), shopInfo.getLongitude());

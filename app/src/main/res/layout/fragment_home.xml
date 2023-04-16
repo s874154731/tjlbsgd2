@@ -25,13 +25,14 @@
                     android:textColor="@color/black33333"
                     android:textSize="@dimen/sp_14"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="gone"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_tip_area"
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
-                    app:srcCompat="@mipmap/img_icon_eup"
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25"
+                    app:srcCompat="@mipmap/img_icon_location_blue"
                     app:layout_constraintTop_toBottomOf="@+id/tv_tip_area"
                     app:layout_constraintStart_toStartOf="parent"/>
 
