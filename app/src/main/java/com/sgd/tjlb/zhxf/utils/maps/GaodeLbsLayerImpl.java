@@ -99,12 +99,12 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
 
         //使用单次定位
         mLocationOption.setOnceLocation(true);
-        //设置为高精度定位模式
-//        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
+        //设置为高精度定位模式-低电量
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
         //设置定位参数
         mlocationClient.setLocationOption(mLocationOption);
 
-        aMap.setMapType(AMap.MAP_TYPE_NORMAL);// 矢量地图模式
+//        aMap.setMapType(AMap.MAP_TYPE_NORMAL);// 矢量地图模式
         //设置 地图 UI
         //设置地图默认的比例尺是否显示
         UiSettings mUiSettings = aMap.getUiSettings();
@@ -147,12 +147,16 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
         myLocationStyle.myLocationIcon(BitmapDescriptorFactory
                 .fromResource(res));
         // 设置圆形的边框颜色
-        myLocationStyle.strokeColor(Color.BLACK);
+//        myLocationStyle.strokeColor(Color.BLACK);
         // 设置圆形的填充颜色
-        myLocationStyle.radiusFillColor(Color.argb(100, 0, 0, 180));
+//        myLocationStyle.radiusFillColor(Color.argb(100, 0, 0, 180));
+
+        myLocationStyle.strokeColor(Color.argb(0, 0, 0, 0));// 设置圆形的边框颜色
+        myLocationStyle.radiusFillColor(Color.argb(0, 0, 0, 0));// 设置圆形的填充颜色
+
         // myLocationStyle.anchor(int,int)//设置小蓝点的锚点
         // 设置圆形的边框粗细
-        myLocationStyle.strokeWidth(1.0f);
+//        myLocationStyle.strokeWidth(1.0f);
     }
 
     @Override

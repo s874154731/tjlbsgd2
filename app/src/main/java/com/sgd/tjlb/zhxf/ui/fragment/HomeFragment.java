@@ -170,9 +170,11 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
+                    mRefreshLayout.setEnableRefresh(true);//启用刷新
                     mRvOrder.setVisibility(View.VISIBLE);
                     layout_map.setVisibility(View.GONE);
                 } else {
+                    mRefreshLayout.setEnableRefresh(false);//关闭刷新
                     mRvOrder.setVisibility(View.GONE);
                     layout_map.setVisibility(View.VISIBLE);
                     getPermissions();

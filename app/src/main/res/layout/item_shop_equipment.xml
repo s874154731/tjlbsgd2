@@ -77,7 +77,7 @@
             android:layout_height="@dimen/dp_55"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/img_icon_equipment" />
+            app:srcCompat="@mipmap/img_icon_eup" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_waring"

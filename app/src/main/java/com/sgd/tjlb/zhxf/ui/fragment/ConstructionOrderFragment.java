@@ -110,7 +110,7 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
         super.onResume();
         if (mGaoDeMap != null)
             mGaoDeMap.onResume();
-        initData();
+//        initData();
     }
 
     @Override
@@ -151,9 +151,11 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
+                    mRefreshLayout.setEnableRefresh(true);//开启刷新
                     mRecyclerView.setVisibility(View.VISIBLE);
                     layout_map.setVisibility(View.GONE);
                 } else {
+                    mRefreshLayout.setEnableRefresh(false);//关闭刷新
                     mRecyclerView.setVisibility(View.GONE);
                     layout_map.setVisibility(View.VISIBLE);
                     getPermissions();

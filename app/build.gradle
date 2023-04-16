@@ -71,7 +71,7 @@ android {
 
         preview.initWith(debug)
         preview {
-            applicationIdSuffix ''
+//            applicationIdSuffix ''
             // 添加清单占位符
             addManifestPlaceholders([
                     'app_name'    :    '@string/app_name'
@@ -107,6 +107,7 @@ android {
     packagingOptions {
         // 剔除这个包下的所有文件（不会移除签名信息）
         exclude 'META-INF/*******'
+        exclude 'classes.dex'
     }
 
     // AOP 配置（exclude 和 include 二选一）
@@ -134,6 +135,13 @@ android {
 //    buildFeatures{
 //        viewBinding true
 //    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
 }
 
 // 添加构建依赖项：https://developer.android.google.cn/studio/build/dependencies

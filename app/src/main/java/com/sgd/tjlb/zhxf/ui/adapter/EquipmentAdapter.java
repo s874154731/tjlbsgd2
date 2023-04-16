@@ -124,7 +124,7 @@ public class EquipmentAdapter extends AppAdapter<EquipmentInfo> {
                 //设备SN
                 mTvName.setText(bean.getDevice_sn());
                 //设备图片
-                GlideUtils.loadImage(getContext(), bean.getImgUrl(), mIVEquipment, R.mipmap.img_icon_equipment);
+                GlideUtils.loadImage(getContext(), bean.getImgUrl(), mIVEquipment, R.mipmap.img_icon_eup);
                 //在线状态
                 mTvOnlineState.setSelected(bean.isOnline());
                 mTvOnlineState.setText(bean.isOnline() ?
