@@ -17,13 +17,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingHorizontal="@dimen/dp_10">
 
             <TextView
                 android:id="@+id/tv_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="@string/btn_myconstructionorder_uploadpictures"
                 android:textColor="@color/black33333"
@@ -35,7 +35,6 @@
                 android:id="@+id/rv_dialog_work_record_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_5"
                 android:layout_marginTop="@dimen/dp_5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +44,6 @@
                 android:id="@+id/tv_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_5"
                 android:text="@string/text_myconstructionorder_description"
                 android:textColor="@color/black33333"
@@ -58,10 +56,9 @@
                 style="@style/EditTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_5"
                 android:layout_marginEnd="@dimen/dp_10"
-                android:minLines="2"
+                android:minLines="3"
                 android:maxLines="3"
                 android:gravity="top|start"
                 android:hint="@string/text_myconstructionorder_workdescription"
@@ -75,7 +72,6 @@
                 android:id="@+id/tv_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="@string/text_myconstructionorder_examine"
                 android:textColor="@color/black33333"
