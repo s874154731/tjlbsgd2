@@ -27,6 +27,7 @@ public class ShopInfo {
 
     private static final String Type_Add_Equ_TIP = "添加设备";//对应安装
     private static final String Type_Work_Record_TIP = "维修记录";//对应申请维修
+    private static final String Type_Receiving_Orders = "接单";//对应申请维修
 
     private String user_id;//用户id？？？
     private String shop_id;//店铺id
@@ -200,9 +201,18 @@ public class ShopInfo {
             case Type_Maintenance_ING:
                 return Type_Work_Record_TIP;
             case Type_Installation_Apply:
+                return Type_Add_Equ_TIP;
             default:
                 return Type_Add_Equ_TIP;
         }
+    }
+
+    /**
+     * 接单按钮提示
+     * @return
+     */
+    public String getBtnReceivingOrderTip(){
+        return Type_Receiving_Orders;
     }
 
     /**

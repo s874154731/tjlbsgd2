@@ -198,7 +198,6 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
                     .snippet(locationInfo.getOil())
                     .draggable(false);
             marker = aMap.addMarker(markerOption);
-
 //            marker.setTitle(locationInfo.getName());
 //            marker.setSnippet(locationInfo.getOil());
             marker.setObject(locationInfo);
@@ -439,11 +438,8 @@ public class GaodeLbsLayerImpl implements ILbsLayer {
 
                             mLocationChangeListener.onLocation(locationInfo);
                         }
-
-
                     }
                     if (mLocationChangeListener != null) {
-
                         mLocationChangeListener.onLocationChanged(locationInfo);
                     }
                 }

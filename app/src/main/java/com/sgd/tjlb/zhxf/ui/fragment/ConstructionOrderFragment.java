@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amap.api.maps2d.model.Marker;
 import com.google.android.material.tabs.TabLayout;
 import com.hjq.base.BaseDialog;
 import com.hjq.http.EasyHttp;
@@ -34,6 +35,7 @@ import com.sgd.tjlb.zhxf.http.model.HttpData;
 import com.sgd.tjlb.zhxf.ui.activity.AddEquipmentActivity;
 import com.sgd.tjlb.zhxf.ui.activity.init.HomeActivity;
 import com.sgd.tjlb.zhxf.ui.adapter.MyConstructionOrderAdapter;
+import com.sgd.tjlb.zhxf.ui.dialog.ShopInfoDialog;
 import com.sgd.tjlb.zhxf.ui.dialog.UpdateWorkRecordDialog;
 import com.sgd.tjlb.zhxf.utils.ConstantUtil;
 import com.sgd.tjlb.zhxf.utils.SmartRefreshLayoutUtil;
@@ -102,6 +104,16 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
 
                 }
             });
+            //标记点击事件
+            mGaoDeMap.setMarkClickListener(marker -> {
+                LocationInfo locationInfo = (LocationInfo) marker.getObject();
+                if (locationInfo != null){
+                    ShopInfo shopInfo = locationInfo.getShopInfo();
+
+                    //展示店铺弹窗，接单，其他等
+                    openShopInfoDialog(shopInfo);
+                }
+            });
         }
     }
 
@@ -110,7 +122,7 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
         super.onResume();
         if (mGaoDeMap != null)
             mGaoDeMap.onResume();
-//        initData();
+        initData();
     }
 
     @Override
@@ -199,6 +211,33 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
                         mGaoDeMap.setUpLocation();
                     }
                 });
+    }
+
+    //地图点击marker 弹窗
+    private void openShopInfoDialog(ShopInfo shopInfo) {
+        new ShopInfoDialog.Builder(getContext())
+                .setCancelable(true)
+                .setCanceledOnTouchOutside(true)
+                .setType(ShopInfoDialog.TYPE_MY_ORDER)
+                .setShopInfo(shopInfo)
+                .setListener(new ShopInfoDialog.OnListener() {
+                    @Override
+                    public void onShopBtn(int type, ShopInfo shopInfo) {
+                        if (shopInfo.isAddDeviceStatus()) {
+                            AddEquipmentActivity.start(getContext(), shopInfo.getUser_id(), "");
+                        }
+                    }
+
+                    @Override
+                    public void onUpdateDevice(EquipmentInfo device) {
+
+                    }
+
+                    @Override
+                    public void onAddRecord(EquipmentInfo device) {
+                        AddWorkRecord(device);
+                    }
+                }).show();
     }
 
 
@@ -317,10 +356,12 @@ public final class ConstructionOrderFragment extends TitleBarFragment<HomeActivi
                                 LocationInfo locationInfo = new LocationInfo(shopInfo.getLatitude(), shopInfo.getLongitude());
                                 locationInfo.setName(shopInfo.getShop_name());
                                 locationInfo.setOil(shopInfo.getAddress());
+                                locationInfo.setShopInfo(shopInfo);
                                 return locationInfo;
                             }).collect(Collectors.toList());
 
                             if (mGaoDeMap != null) {
+                                mGaoDeMap.clearAllMarkers();
                                 mGaoDeMap.addPoiOverlay(locationInfoList);
                             }
 

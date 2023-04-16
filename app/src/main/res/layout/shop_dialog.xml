@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/dp_20"
+    android:background="@drawable/bg_white_radius_4dp"
+    android:maxHeight="@dimen/dp_400"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nv_my_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/dp_2"
+            android:background="@drawable/bg_white_radius_4dp"
+            android:padding="@dimen/dp_10">
+
+            <TextView
+                android:id="@+id/tv_item_my_order_storename"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:text="@string/text_home_storename"
+                android:textColor="@color/black33333"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintEnd_toStartOf="@id/tv_item_my_order_ordertype"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_item_my_order_ordertype"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_home_ordertype"
+                android:textColor="@color/black33333"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintBottom_toBottomOf="@id/tv_item_my_order_storename"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_item_my_order_storename"
+                app:layout_constraintTop_toTopOf="@id/tv_item_my_order_storename" />
+
+            <TextView
+                android:id="@+id/tv_item_my_order_storeaddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/text_home_storeaddress"
+                android:textColor="@color/black33333"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintStart_toStartOf="@id/tv_item_my_order_storename"
+                app:layout_constraintTop_toBottomOf="@id/tv_item_my_order_storename" />
+
+            <TextView
+                android:id="@+id/tv_btn_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:background="@drawable/bg_blue_radius_8dp"
+                android:paddingHorizontal="@dimen/dp_10"
+                android:paddingVertical="@dimen/dp_5"
+                android:text="@string/text_tip_add_equipment"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_shop_equipment" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_shop_equipment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_item_my_order_storeaddress"
+                tools:itemCount="2"
+                tools:listitem="@layout/item_shop_equipment_in_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

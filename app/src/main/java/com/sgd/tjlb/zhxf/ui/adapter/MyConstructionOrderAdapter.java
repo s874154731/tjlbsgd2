@@ -112,10 +112,10 @@ public class MyConstructionOrderAdapter extends AppAdapter<ShopInfo> {
         public ConstructionViewHolder() {
             super(R.layout.item_my_construction_order);
 
-            mTvStorename = (TextView) findViewById(R.id.tv_item_home_order_storename);
-            mTvOrdertype = (TextView) findViewById(R.id.tv_item_home_order_ordertype);
-            mTvStoreaddress = (TextView) findViewById(R.id.tv_item_home_order_storeaddress);
-            mBtnAdd = (TextView) findViewById(R.id.tv_btn_add);
+            mTvStorename = findViewById(R.id.tv_item_my_order_storename);
+            mTvOrdertype = findViewById(R.id.tv_item_my_order_ordertype);
+            mTvStoreaddress = findViewById(R.id.tv_item_my_order_storeaddress);
+            mBtnAdd = findViewById(R.id.tv_btn_add);
             mRecyclerView = findViewById(R.id.rv_shop_equipment);
         }
 

@@ -1,5 +1,7 @@
 package com.sgd.tjlb.zhxf.utils.maps;
 
+import com.sgd.tjlb.zhxf.entity.ShopInfo;
+
 /**
  * @ProjectName: tjlbsgd2
  * @Package: com.sgd.tjlb.zhxf.utils.maps
@@ -19,6 +21,8 @@ public class LocationInfo {
     private float rotation;
     private String time;
     private String oil;
+
+    private ShopInfo shopInfo;
 
     public String getTime() {
         return time;
@@ -86,6 +90,14 @@ public class LocationInfo {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public ShopInfo getShopInfo() {
+        return shopInfo;
+    }
+
+    public void setShopInfo(ShopInfo shopInfo) {
+        this.shopInfo = shopInfo;
     }
 
     @Override

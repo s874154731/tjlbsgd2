@@ -26,6 +26,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.sgd.tjlb.zhxf.R;
 import com.sgd.tjlb.zhxf.app.TitleBarFragment;
 import com.sgd.tjlb.zhxf.entity.AppConfigBean;
+import com.sgd.tjlb.zhxf.entity.EquipmentInfo;
 import com.sgd.tjlb.zhxf.entity.HomeBannerData;
 import com.sgd.tjlb.zhxf.entity.OrderData;
 import com.sgd.tjlb.zhxf.entity.ShopInfo;
@@ -34,8 +35,10 @@ import com.sgd.tjlb.zhxf.helper.MMKVHelper;
 import com.sgd.tjlb.zhxf.http.api.ShopApplayWarrantyListApi;
 import com.sgd.tjlb.zhxf.http.api.TakeOrderApi;
 import com.sgd.tjlb.zhxf.http.model.HttpData;
+import com.sgd.tjlb.zhxf.ui.activity.AddEquipmentActivity;
 import com.sgd.tjlb.zhxf.ui.activity.init.HomeActivity;
 import com.sgd.tjlb.zhxf.ui.adapter.OrderAdapter;
+import com.sgd.tjlb.zhxf.ui.dialog.ShopInfoDialog;
 import com.sgd.tjlb.zhxf.utils.ConstantUtil;
 import com.sgd.tjlb.zhxf.utils.SmartRefreshLayoutUtil;
 import com.sgd.tjlb.zhxf.utils.maps.GaodeLbsLayerImpl;
@@ -108,10 +111,42 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
                 }
             });
 
+            //标记点击事件
             mGaoDeMap.setMarkClickListener(marker -> {
-                toast(marker.getTitle());
+                LocationInfo locationInfo = (LocationInfo) marker.getObject();
+                if (locationInfo != null){
+                    ShopInfo shopInfo = locationInfo.getShopInfo();
+
+                    //展示店铺弹窗，接单，其他等
+                    openShopInfoDialog(shopInfo);
+                }
             });
         }
+    }
+
+    //地图点击marker 弹窗
+    private void openShopInfoDialog(ShopInfo shopInfo) {
+        new ShopInfoDialog.Builder(getContext())
+                .setCancelable(true)
+                .setCanceledOnTouchOutside(true)
+                .setType(ShopInfoDialog.TYPE_AREA)
+                .setShopInfo(shopInfo)
+                .setListener(new ShopInfoDialog.OnListener() {
+                    @Override
+                    public void onShopBtn(int type, ShopInfo shopInfo) {
+                        takeOrders(shopInfo);
+                    }
+
+                    @Override
+                    public void onUpdateDevice(EquipmentInfo device) {
+
+                    }
+
+                    @Override
+                    public void onAddRecord(EquipmentInfo device) {
+
+                    }
+                }).show();
     }
 
     @Override
