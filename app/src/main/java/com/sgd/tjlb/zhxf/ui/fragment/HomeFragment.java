@@ -279,7 +279,7 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
                     @Override
                     public void onSucceed(HttpData<Void> data) {
                         toast("接单成功");
-                        findWarrantyList();
+                        initData();
                     }
 
                     @Override
