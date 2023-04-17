@@ -64,6 +64,12 @@ public class OrderAdapter extends AppAdapter<ShopInfo> {
         return new OrderViewHolder();
     }
 
+    public void clearData(){
+        if (mDatas!=null)
+            mDatas.clear();
+        notifyDataSetChanged();
+    }
+
     /**
      * 初始化数据
      */

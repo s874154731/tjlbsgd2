@@ -291,6 +291,10 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
 
     @Override
     protected void initData() {
+        if (mAdapter != null){
+            mAdapter.clearData();
+        }
+
         findWarrantyList();
     }
 
