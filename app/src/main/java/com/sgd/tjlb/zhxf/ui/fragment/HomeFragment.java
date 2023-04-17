@@ -114,7 +114,7 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
             //标记点击事件
             mGaoDeMap.setMarkClickListener(marker -> {
                 LocationInfo locationInfo = (LocationInfo) marker.getObject();
-                if (locationInfo != null){
+                if (locationInfo != null) {
                     ShopInfo shopInfo = locationInfo.getShopInfo();
 
                     //展示店铺弹窗，接单，其他等
@@ -291,8 +291,11 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
 
     @Override
     protected void initData() {
-        if (mAdapter != null){
+        if (mAdapter != null) {
             mAdapter.clearData();
+        }
+        if (mGaoDeMap != null) {
+            mGaoDeMap.clearAllMarkers();
         }
 
         findWarrantyList();
@@ -324,6 +327,7 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
                             }).collect(Collectors.toList());
 
                             if (mGaoDeMap != null) {
+                                mGaoDeMap.clearAllMarkers();
                                 mGaoDeMap.addPoiOverlay(locationInfoList);
                             }
 
@@ -364,7 +368,7 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
                     if (layout_map.getChildCount() == 0) {
                         layout_map.addView(mGaoDeMap.getMapView());
                     }
-                    if (mGaoDeMap != null){
+                    if (mGaoDeMap != null) {
                         mGaoDeMap.setUpLocation();
                     }
                 });
