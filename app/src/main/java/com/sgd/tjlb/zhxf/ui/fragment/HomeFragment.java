@@ -338,6 +338,7 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
                     public void onFail(Exception e) {
                         super.onFail(e);
                         SmartRefreshLayoutUtil.complete(mRefreshLayout);
+                        mTvOrdernum.setText("派单：共(" + 0 + ")个");
                     }
                 });
     }
