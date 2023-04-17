@@ -315,6 +315,7 @@ public final class HomeFragment extends TitleBarFragment<HomeActivity> {
                                 LocationInfo locationInfo = new LocationInfo(shopInfo.getLatitude(), shopInfo.getLongitude());
                                 locationInfo.setName(shopInfo.getShop_name());
                                 locationInfo.setOil(shopInfo.getAddress());
+                                locationInfo.setShopInfo(shopInfo);
                                 return locationInfo;
                             }).collect(Collectors.toList());
 
