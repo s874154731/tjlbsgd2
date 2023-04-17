@@ -1,6 +1,7 @@
 package com.sgd.tjlb.zhxf.ui.adapter;
 
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -128,6 +129,9 @@ public class MyConstructionOrderAdapter extends AppAdapter<ShopInfo> {
             mTvOrdertype.setText(shopInfo.getStatusTip());
 
             mBtnAdd.setText(shopInfo.getBtnShowTip());
+
+            boolean isShowBtn = shopInfo.getStatus() == ShopInfo.Type_Installation_ING;
+            mBtnAdd.setVisibility(isShowBtn ? View.VISIBLE : View.GONE);
 
             initRecyclerView(shopInfo);
 

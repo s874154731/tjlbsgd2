@@ -11,7 +11,7 @@ public class ShopInfo {
 
     private static final int Type_OK = 0;//成功
     private static final int Type_Installation_Apply = 1;//申请安装
-    private static final int Type_Installation_ING = 2;//安装中
+    public static final int Type_Installation_ING = 2;//安装中
     private static final int Type_Apply_Maintenance = 3;//申请维修
     private static final int Type_Maintenance_ING = 4;//维修中
     private static final int Type_Installation_Warring = 5;//安装异常
