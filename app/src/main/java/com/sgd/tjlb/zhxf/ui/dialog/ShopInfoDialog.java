@@ -70,6 +70,9 @@ public final class ShopInfoDialog {
                 } else {
                     mRecyclerView.setVisibility(View.VISIBLE);
                     mBtnAdd.setText(mShopInfo.getBtnShowTip());
+
+                    boolean isShowBtn = mShopInfo.getStatus() == ShopInfo.Type_Installation_ING;
+                    mBtnAdd.setVisibility(isShowBtn ? View.VISIBLE : View.GONE);
                 }
 
                 initRecyclerView(mShopInfo);
