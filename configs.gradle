@@ -39,11 +39,11 @@ ext {
     switch(serverType) {
         case SERVER_TYPE_TEST:
             LOG_ENABLE = true
-            HOST_URL = "http://82.157.115.45:8886/"
+            HOST_URL = "http://workerapi.beirenhz.com/"
             break
         case SERVER_TYPE_PRODUCT:
             LOG_ENABLE = false
-            HOST_URL = "http://82.157.115.45:8886/"
+            HOST_URL = "http://workerapi.beirenhz.com/"
             break
     }
 }
